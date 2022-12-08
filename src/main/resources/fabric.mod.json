@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "equipment_standard",
+  "version": "${version}",
+  "name": "EquipmentStandard",
+  "description": "",
+  "authors": [
+    "LangYue"
+  ],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/equipment_standard/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "me.langyue.equipmentstandard.client.EquipmentStandardClient"
+    ],
+    "main": [
+      "me.langyue.equipmentstandard.EquipmentStandard"
+    ],
+    "modmenu": [
+      "me.langyue.equipmentstandard.config.ModMenuIntegration"
+    ]
+  },
+  "mixins": [
+    "EquipmentStandard.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.11",
+    "fabric": "*",
+    "minecraft": "1.19.2"
+  }
+}
