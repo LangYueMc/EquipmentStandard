@@ -3,14 +3,33 @@ package me.langyue.equipmentstandard.config;
 import me.langyue.equipmentstandard.EquipmentStandard;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigData;
+import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
 
-@me.shedaniel.autoconfig.annotation.Config(name = "equipment-standard")
+@me.shedaniel.autoconfig.annotation.Config(name = EquipmentStandard.MOD_ID)
 public class Config implements ConfigData {
 
-    @Comment("Whether to show equipment durability")
+    /**
+     * 显示耐久
+     */
+    @Comment("显示耐久\nWhether to show equipment durability")
+    @ConfigEntry.Gui.Tooltip(count = 0)
     public boolean showDurability = true;
+
+    /**
+     * 在工具提示里合并同类属性修改器
+     */
+    @Comment("合并同类属性修改器\nMerge attribute modifiers of the same type in tooltips")
+    @ConfigEntry.Gui.Tooltip
+    public boolean mergeModifiers = true;
+
+    /**
+     * 在工具提示里显示 MULTIPLY_BASE 和 MULTIPLY_TOTAL 的补充说明
+     */
+    @Comment("显示 MULTIPLY_BASE 和 MULTIPLY_TOTAL 的补充说明\nShow additional notes for MULTIPLY_BASE and MULTIPLY_TOTAL")
+    @ConfigEntry.Gui.Tooltip
+    public boolean showMultiplyOperationAdditional = true;
 
     public static void init() {
         AutoConfig.register(Config.class, JanksonConfigSerializer::new);

@@ -9,6 +9,7 @@
     "PlayerEntityMixin"
   ],
   "client": [
+    "client.ItemStackClientMixin"
   ],
   "injectors": {
     "defaultRequire": 1

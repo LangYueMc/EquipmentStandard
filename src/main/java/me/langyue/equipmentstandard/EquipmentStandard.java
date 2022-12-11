@@ -5,12 +5,9 @@ import me.langyue.equipmentstandard.config.Config;
 import me.langyue.equipmentstandard.data.TemplateDataLoader;
 import me.langyue.equipmentstandard.stat.Proficiency;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.item.v1.ModifyItemAttributeModifiersCallback;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.resource.ResourceType;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.random.Random;
 import org.apache.logging.log4j.LogManager;
@@ -29,13 +26,6 @@ public class EquipmentStandard implements ModInitializer {
         Config.init();
         Proficiency.init();
         ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new TemplateDataLoader());
-        ItemTooltipCallback.EVENT.register((stack, tooltipContext, lines) -> {
-            if (CONFIG.showDurability && stack.isDamageable()) {
-                int maxDamage = stack.getMaxDamage();
-                lines.add(Text.empty());
-                lines.add(Text.translatable("tooltip.damage.label", maxDamage - stack.getDamage(), maxDamage).formatted(Formatting.WHITE));
-            }
-        });
         ModifyItemAttributeModifiersCallback.EVENT.register(ModifierUtils::modify);
     }
 

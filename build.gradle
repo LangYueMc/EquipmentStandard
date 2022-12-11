@@ -12,6 +12,7 @@ repositories {
     // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
     // See https://docs.gradle.org/current/userguide/declaring_repositories.html
     // for more information about repositories.
+    maven { url 'https://api.modrinth.com/maven' }
     maven { url "https://www.cursemaven.com" }
     maven { url "https://maven.shedaniel.me/" }
     maven { url "https://maven.terraformersmc.com/" }
@@ -23,6 +24,14 @@ repositories {
     maven {
         name = "Ladysnake Libs"
         url = "https://ladysnake.jfrog.io/artifactory/mods"
+    }
+    maven {
+        name = "KosmX's maven"
+        url = 'https://maven.kosmx.dev/'
+    }
+    maven {
+        name "Will BL Releases"
+        url "https://maven.willbl.dev/releases"
     }
 }
 
@@ -41,7 +50,7 @@ dependencies {
     }
 
     // ModMenu
-    modCompileOnly modRuntimeOnly("com.terraformersmc:modmenu:${project.mod_menu_version}") {
+    modImplementation("com.terraformersmc:modmenu:${project.mod_menu_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
 
@@ -49,7 +58,19 @@ dependencies {
     modImplementation("io.github.cottonmc:LibGui:${project.cottonmc_version}")
 
     // Trinkets
-    modCompileOnly modRuntimeOnly("dev.emi:trinkets:${project.trinkets_version}")
+    modImplementation("dev.emi:trinkets:${project.trinkets_version}")
+
+    // EMI
+    modImplementation("dev.emi:emi:${project.emi_version}")
+
+    // PlayerAnimator
+    modImplementation("dev.kosmx.player-anim:player-animation-lib-fabric:${project.player_anim_version}")
+    // Better Combat
+    modImplementation("maven.modrinth:better-combat:${project.bettercombat_version}")
+
+    // AutoTag
+    modImplementation ("com.github.apace100:autotag-api:${autotag_version}")
+    modImplementation ("com.github.apace100:autotag:${autotag_version}")
 }
 
 processResources {

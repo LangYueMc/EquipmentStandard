@@ -1,0 +1,16 @@
+{
+  "text.autoconfig.equipment_standard.title": "Equipment Standard",
+  "text.autoconfig.equipment_standard.option.showDurability": "显示装备耐久",
+  "text.autoconfig.equipment_standard.option.mergeModifiers": "合并同类属性修改器",
+  "text.autoconfig.equipment_standard.option.mergeModifiers.@Tooltip": "合并同类属性修改器",
+  "text.autoconfig.equipment_standard.option.showMultiplyOperationAdditional": "显示百分比属性的补充说明",
+  "text.autoconfig.equipment_standard.option.showMultiplyOperationAdditional.@Tooltip": "显示 MULTIPLY_BASE 和 MULTIPLY_TOTAL 的补充说明",
+
+  "attribute.modifier.additional.0": "",
+  "attribute.modifier.additional.1": "(基础)",
+  "attribute.modifier.additional.2": "(最终)",
+
+  "item.modifiers.show_details": "按住 §bShift§r 查看属性详情",
+
+  "stat.equipment_standard.proficiency": "制作熟练度"
+}

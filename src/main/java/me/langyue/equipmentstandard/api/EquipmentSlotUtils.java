@@ -1,27 +1,34 @@
 package me.langyue.equipmentstandard.api;
 
 import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.item.*;
+import net.minecraft.item.ArmorItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ShieldItem;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Set;
 
 public class EquipmentSlotUtils {
 
     /**
      * 获取默认装备槽
      */
-    public static EquipmentSlot[] getDefaultEquipmentSlot(ItemStack stack) {
+    public static Collection<EquipmentSlot> getDefaultEquipmentSlot(ItemStack stack) {
         return getDefaultEquipmentSlot(stack.getItem());
     }
 
     /**
      * 获取默认装备槽
      */
-    public static EquipmentSlot[] getDefaultEquipmentSlot(Item item) {
+    public static Collection<EquipmentSlot> getDefaultEquipmentSlot(Item item) {
         if (item instanceof ArmorItem armorItem)
-            return new EquipmentSlot[]{armorItem.getSlotType()};
+            return Collections.singleton(armorItem.getSlotType());
 
         if (item instanceof ShieldItem)
-            return new EquipmentSlot[]{EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND};
+            return Set.of(EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND);
 
-        return new EquipmentSlot[]{EquipmentSlot.MAINHAND};
+        return Collections.singleton(EquipmentSlot.MAINHAND);
     }
 }

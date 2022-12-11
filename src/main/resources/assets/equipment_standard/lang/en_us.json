@@ -1,0 +1,16 @@
+{
+  "text.autoconfig.equipment_standard.title": "Equipment Standard",
+  "text.autoconfig.equipment_standard.option.showDurability": "Show equipment durability",
+  "text.autoconfig.equipment_standard.option.mergeModifiers": "Merge attribute modifiers",
+  "text.autoconfig.equipment_standard.option.mergeModifiers.@Tooltip": "Merge attribute modifiers of the same type in tooltips",
+  "text.autoconfig.equipment_standard.option.showMultiplyOperationAdditional": "Show additional notes for multiply operation",
+  "text.autoconfig.equipment_standard.option.showMultiplyOperationAdditional.@Tooltip": "Show additional notes for MULTIPLY_BASE and MULTIPLY_TOTAL",
+
+  "attribute.modifier.additional.0": "",
+  "attribute.modifier.additional.1": " (Base)",
+  "attribute.modifier.additional.2": " (Final)",
+
+  "item.modifiers.show_details": "Hold§c shift§r to view attributes details.",
+
+  "stat.equipment_standard.proficiency": "Craft Proficiency"
+}
