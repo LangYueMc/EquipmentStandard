@@ -31,6 +31,20 @@ public class Config implements ConfigData {
     @ConfigEntry.Gui.Tooltip
     public boolean showMultiplyOperationAdditional = true;
 
+    /**
+     * 基础暴击率
+     */
+    @Comment("基础暴击率\nBase crit chance")
+    @ConfigEntry.Gui.Tooltip(count = 0)
+    public double baseCritChance = 0.01;
+
+    /**
+     * 基础暴击伤害倍率
+     */
+    @Comment("基础暴击伤害倍率\nBase crit damage multiplier")
+    @ConfigEntry.Gui.Tooltip(count = 0)
+    public double baseCritDamageMultiplier = 1.5;
+
     public static void init() {
         AutoConfig.register(Config.class, JanksonConfigSerializer::new);
         EquipmentStandard.CONFIG = AutoConfig.getConfigHolder(Config.class).getConfig();

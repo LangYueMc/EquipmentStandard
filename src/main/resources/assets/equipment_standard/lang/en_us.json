@@ -5,6 +5,12 @@
   "text.autoconfig.equipment_standard.option.mergeModifiers.@Tooltip": "Merge attribute modifiers of the same type in tooltips",
   "text.autoconfig.equipment_standard.option.showMultiplyOperationAdditional": "Show additional notes for multiply operation",
   "text.autoconfig.equipment_standard.option.showMultiplyOperationAdditional.@Tooltip": "Show additional notes for MULTIPLY_BASE and MULTIPLY_TOTAL",
+  "text.autoconfig.equipment_standard.option.baseCritChance": "Base Crit Chance",
+  "text.autoconfig.equipment_standard.option.baseCritDamageMultiplier": "Base crit damage multiplier",
+
+  "attribute.name.generic.crit_chance": "Crit Chance",
+  "attribute.name.generic.crit_damage": "Crit Damage",
+  "attribute.name.generic.real_damage": "Real Damage",
 
   "attribute.modifier.additional.0": "",
   "attribute.modifier.additional.1": " (Base)",

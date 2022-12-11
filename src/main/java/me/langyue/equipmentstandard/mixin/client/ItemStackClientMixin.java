@@ -3,6 +3,7 @@ package me.langyue.equipmentstandard.mixin.client;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
 import me.langyue.equipmentstandard.EquipmentStandard;
+import me.langyue.equipmentstandard.api.CustomEntityAttributes;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screen.Screen;
@@ -25,7 +26,10 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Mixin(ItemStack.class)
 @Environment(EnvType.CLIENT)
@@ -46,7 +50,7 @@ public abstract class ItemStackClientMixin {
 
     private Map.Entry<EntityAttribute, EntityAttributeModifier> entry;
 
-    private final Set<EntityAttributeModifier> hide = new HashSet<>();
+    private final Multimap<EntityAttribute, EntityAttributeModifier> hide = LinkedListMultimap.create();
 
     /**
      * 是否显示详情
@@ -116,7 +120,7 @@ public abstract class ItemStackClientMixin {
                     // 仅固定值的是这种结构，这里也只修改固定值的，比如武器的攻击和攻速
                     if (sibling.getContent() instanceof TranslatableTextContent content && content.getKey().startsWith("attribute.modifier.")) {
                         content.getArgs()[0] += String.format(" §7(%s%s%%§7)§r", modifier.getValue() < 0 ? "§c-" : "§9+", ItemStack.MODIFIER_FORMAT.format(modifier.getValue() * 100));
-                        hide.add(modifier);
+                        hide.put(entry.getKey(), modifier);
                         break;
                     }
                 }
@@ -136,9 +140,14 @@ public abstract class ItemStackClientMixin {
     }
 
     private boolean addTooltip(List<Text> list, Text text) {
-        if (hide.contains(entry.getValue())) return false;
-        if (EquipmentStandard.CONFIG.showMultiplyOperationAdditional && entry.getValue().getOperation() != EntityAttributeModifier.Operation.ADDITION)
+        if (hide.containsEntry(entry.getKey(), entry.getValue())) return false;
+        if (EquipmentStandard.CONFIG.showMultiplyOperationAdditional
+                && entry.getValue().getOperation() != EntityAttributeModifier.Operation.ADDITION
+                && !entry.getKey().equals(CustomEntityAttributes.CRIT_CHANCE)
+                && !entry.getKey().equals(CustomEntityAttributes.CRIT_DAMAGE)
+        ) {
             text.getSiblings().add(Text.translatable("attribute.modifier.additional." + entry.getValue().getOperation().getId()).formatted(Formatting.DARK_GRAY));
+        }
         return list.add(text);
     }
 

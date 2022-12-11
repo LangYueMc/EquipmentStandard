@@ -5,6 +5,12 @@
   "text.autoconfig.equipment_standard.option.mergeModifiers.@Tooltip": "合并同类属性修改器",
   "text.autoconfig.equipment_standard.option.showMultiplyOperationAdditional": "显示百分比属性的补充说明",
   "text.autoconfig.equipment_standard.option.showMultiplyOperationAdditional.@Tooltip": "显示 MULTIPLY_BASE 和 MULTIPLY_TOTAL 的补充说明",
+  "text.autoconfig.equipment_standard.option.baseCritChance": "基础暴击率",
+  "text.autoconfig.equipment_standard.option.baseCritDamageMultiplier": "基础暴击伤害倍率",
+
+  "attribute.name.generic.crit_chance": "暴击几率",
+  "attribute.name.generic.crit_damage": "暴击伤害",
+  "attribute.name.generic.real_damage": "真实伤害",
 
   "attribute.modifier.additional.0": "",
   "attribute.modifier.additional.1": "(基础)",

@@ -177,7 +177,15 @@ public class Attribute {
             this.type = type;
             this.merge = merge;
             this.amount = amount;
-            this.operation = operation;
+            if (type.equalsIgnoreCase(EquipmentStandard.MOD_ID + ":generic.crit_chance")
+                    || type.equalsIgnoreCase(EquipmentStandard.MOD_ID + ":generic.crit_damage"))
+                // 暴击和暴击伤害都是累加的，而且都是百分比，为了显示正常，这里固定为 MULTIPLY_BASE
+                this.operation = EntityAttributeModifier.Operation.MULTIPLY_BASE;
+            else if (type.equalsIgnoreCase(EquipmentStandard.MOD_ID + ":generic.real_damage"))
+                // 真实伤害固定为 ADDITION
+                this.operation = EntityAttributeModifier.Operation.ADDITION;
+            else
+                this.operation = operation;
             this.slots = slots == null ? Collections.emptySet() : slots;
         }
 
