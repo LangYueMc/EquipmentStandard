@@ -17,6 +17,7 @@
   "attribute.modifier.additional.2": "(最终)",
 
   "item.modifiers.show_details": "按住 §bShift§r 查看属性详情",
+  "item.maker": "制作者 : %s",
 
   "stat.equipment_standard.proficiency": "制作熟练度"
 }

@@ -4,6 +4,7 @@ import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
 import me.langyue.equipmentstandard.EquipmentStandard;
 import me.langyue.equipmentstandard.api.CustomEntityAttributes;
+import me.langyue.equipmentstandard.api.EquipmentComponents;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screen.Screen;
@@ -121,6 +122,7 @@ public abstract class ItemStackClientMixin {
                     if (sibling.getContent() instanceof TranslatableTextContent content && content.getKey().startsWith("attribute.modifier.")) {
                         content.getArgs()[0] += String.format(" §7(%s%s%%§7)§r", modifier.getValue() < 0 ? "§c-" : "§9+", ItemStack.MODIFIER_FORMAT.format(modifier.getValue() * 100));
                         hide.put(entry.getKey(), modifier);
+                        merged = true;
                         break;
                     }
                 }
@@ -167,5 +169,15 @@ public abstract class ItemStackClientMixin {
         if (!context.isAdvanced() && EquipmentStandard.CONFIG.showDurability && isDamageable()) {
             list.add(Text.translatable("item.durability", this.getMaxDamage() - this.getDamage(), this.getMaxDamage()));
         }
+    }
+
+    @Inject(method = "getTooltip", at = @At(value = "TAIL"))
+    private void getTooltipMixin(@Nullable PlayerEntity player, TooltipContext context, CallbackInfoReturnable<List<Text>> cir) {
+        List<Text> list = cir.getReturnValue();
+        EquipmentComponents components = EquipmentComponents.fromItem((ItemStack) (Object) this);
+        if (components == null) {
+            return;
+        }
+        list.add(Text.translatable("item.maker", components.getMaker()));
     }
 }

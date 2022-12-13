@@ -1,5 +1,6 @@
 package me.langyue.equipmentstandard.data;
 
+import me.langyue.equipmentstandard.api.data.Attribute;
 import net.minecraft.item.ItemStack;
 
 import java.util.List;

@@ -17,6 +17,7 @@
   "attribute.modifier.additional.2": " (Final)",
 
   "item.modifiers.show_details": "Hold§c shift§r to view attributes details.",
+  "item.maker": "Maker: %s",
 
   "stat.equipment_standard.proficiency": "Craft Proficiency"
 }

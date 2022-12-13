@@ -6,9 +6,14 @@
   "mixins": [
     "ItemMixin",
     "ItemStackMixin",
-    "PlayerEntityMixin"
+    "LivingEntityMixin",
+    "LootTableMixin",
+    "MerchantScreenHandlerMixin",
+    "PlayerEntityMixin",
+    "TradeOutputSlotMixin"
   ],
   "client": [
+    "client.ClientPlayNetworkHandlerMixin",
     "client.ItemStackClientMixin"
   ],
   "injectors": {

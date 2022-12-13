@@ -1,7 +1,8 @@
 package me.langyue.equipmentstandard.mixin;
 
+import me.langyue.equipmentstandard.api.EquipmentComponents;
 import me.langyue.equipmentstandard.api.ModifierUtils;
-import me.langyue.equipmentstandard.stat.Proficiency;
+import me.langyue.equipmentstandard.api.ProficiencyAccessor;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -18,7 +19,9 @@ public abstract class ItemMixin {
     private void onCraftMixin(ItemStack stack, World world, PlayerEntity player, CallbackInfo info) {
         if (!world.isClient && !stack.isEmpty()) {
             if (ModifierUtils.setItemStackAttribute(stack, player)) {
-                Proficiency.increment(player);
+                ProficiencyAccessor proficiencyAccessor = (ProficiencyAccessor) player;
+                new EquipmentComponents(player.getDisplayName().getString(), proficiencyAccessor.getProficiency()).save(stack);
+                proficiencyAccessor.incrementProficiency();
             }
         }
     }

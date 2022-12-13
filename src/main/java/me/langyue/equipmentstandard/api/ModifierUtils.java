@@ -4,10 +4,9 @@ import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.util.concurrent.AtomicDouble;
 import me.langyue.equipmentstandard.EquipmentStandard;
-import me.langyue.equipmentstandard.data.Attribute;
+import me.langyue.equipmentstandard.api.data.Attribute;
 import me.langyue.equipmentstandard.data.Bonus;
 import me.langyue.equipmentstandard.data.EquipmentTemplate;
-import me.langyue.equipmentstandard.stat.Proficiency;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
@@ -25,6 +24,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class ModifierUtils {
     public static final String MODIFIER_NAME = "ES modifier";
+    public static final String NBT_KEY = "ES:modifier";
 
     public static final Set<String> INVALID_ATTRIBUTE = new HashSet<>();
     public static final Map<Integer, UUID> MODIFIERS = new HashMap<>() {{
@@ -53,35 +53,40 @@ public class ModifierUtils {
     }};
 
     public static boolean setItemStackAttribute(ItemStack stack) {
-        return setItemStackAttribute(stack, null, false, false);
+        return setItemStackAttribute(stack, 0, 0);
     }
 
     public static boolean setItemStackAttribute(ItemStack stack, PlayerEntity player) {
         return setItemStackAttribute(stack, player, true, true);
     }
 
-    public static double getBonus(Bonus bonus, int proficiency, double lucky) {
+    public static boolean setItemStackAttribute(ItemStack stack, PlayerEntity player, boolean proficiencyBonus, boolean luckyBonus) {
+        double luck = player != null && luckyBonus ? player.getAttributeValue(EntityAttributes.GENERIC_LUCK) : 0;
+        int proficiency = player != null && proficiencyBonus ? ((ProficiencyAccessor) player).getProficiency() : 0;
+        return setItemStackAttribute(stack, proficiency, luck);
+    }
+
+    public static double getBonus(Bonus bonus, int proficiency, double luck) {
         double magnification = 1.0;
         if (bonus != null) {
             if (proficiency > 0) {
                 // 每一点熟练度加成百分比
                 magnification += bonus.getProficiency() * proficiency;
             }
-            if (lucky > 0) {
+            if (luck > 0) {
                 // 每一点幸运值加成百分比
-                magnification += bonus.getLuck() * lucky;
+                magnification += bonus.getLuck() * luck;
             }
         }
         return magnification;
     }
 
-    public static boolean setItemStackAttribute(ItemStack stack, PlayerEntity player, boolean proficiencyBonus, boolean luckyBonus) {
+    public static boolean setItemStackAttribute(ItemStack stack, int proficiency, double luck) {
+        if (stack.getSubNbt(NBT_KEY) != null) return false;
         var templates = EquipmentTemplateManager.get(stack);
         if (templates == null || templates.isEmpty()) {
             return false;
         }
-        double luck = player != null && proficiencyBonus ? player.getAttributeValue(EntityAttributes.GENERIC_LUCK) : 0;
-        int proficiency = player != null && luckyBonus ? Proficiency.get(player) : 0;
         Multimap<EntityAttributeModifier.Operation, Attribute.Final> nbtMultimap = LinkedListMultimap.create();
         for (EquipmentTemplate template : templates) {
             template.getAttributes().stream()
@@ -106,7 +111,7 @@ public class ModifierUtils {
                         }
                     });
         }
-        NbtCompound nbt = stack.getOrCreateSubNbt(EquipmentStandard.MOD_ID);
+        NbtCompound nbt = stack.getOrCreateSubNbt(NBT_KEY);
         for (var operation : EntityAttributeModifier.Operation.values()) {
             for (Attribute.Final attribute : nbtMultimap.get(operation)) {
                 int i = 0;
@@ -128,7 +133,7 @@ public class ModifierUtils {
      * 应用属性
      */
     public static void modify(ItemStack stack, EquipmentSlot slot, Multimap<EntityAttribute, EntityAttributeModifier> multimap) {
-        NbtCompound nbt = stack.getSubNbt(EquipmentStandard.MOD_ID);
+        NbtCompound nbt = stack.getSubNbt(NBT_KEY);
         if (nbt == null) return;
         nbt.getKeys().stream()
                 .filter(key -> !key.startsWith(CustomEntityAttributes.DURABLE))
@@ -182,7 +187,7 @@ public class ModifierUtils {
 
     public static int getMaxDamage(ItemStack stack, int original) {
         if (!stack.isDamageable()) return original;
-        NbtCompound nbt = stack.getSubNbt(EquipmentStandard.MOD_ID);
+        NbtCompound nbt = stack.getSubNbt(NBT_KEY);
         if (nbt == null) return original;
         AtomicInteger modified = new AtomicInteger(original);
         nbt.getKeys().stream()

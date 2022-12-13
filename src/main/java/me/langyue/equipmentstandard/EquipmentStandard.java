@@ -3,7 +3,7 @@ package me.langyue.equipmentstandard;
 import me.langyue.equipmentstandard.api.ModifierUtils;
 import me.langyue.equipmentstandard.config.Config;
 import me.langyue.equipmentstandard.data.TemplateDataLoader;
-import me.langyue.equipmentstandard.stat.Proficiency;
+import me.langyue.equipmentstandard.network.ServerPacket;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.item.v1.ModifyItemAttributeModifiersCallback;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
@@ -24,7 +24,7 @@ public class EquipmentStandard implements ModInitializer {
     @Override
     public void onInitialize() {
         Config.init();
-        Proficiency.init();
+        ServerPacket.init();
         ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new TemplateDataLoader());
         ModifyItemAttributeModifiersCallback.EVENT.register(ModifierUtils::modify);
     }
