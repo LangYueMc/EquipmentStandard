@@ -2,12 +2,15 @@
   "schemaVersion": 1,
   "id": "equipment_standard",
   "version": "${version}",
-  "name": "EquipmentStandard",
+  "name": "Equipment Standard",
   "description": "",
   "authors": [
     "LangYue"
   ],
-  "contact": {},
+  "contact": {
+    "sources": "https://github.com/LangYueMc/EquipmentStandard",
+    "issues": "https://github.com/LangYueMc/EquipmentStandard/issues/new"
+  },
   "license": "MIT",
   "icon": "assets/equipment_standard/icon.png",
   "environment": "*",
@@ -29,5 +32,8 @@
     "fabricloader": "*",
     "fabric": "*",
     "minecraft": "1.19.*"
+  },
+  "suggests": {
+    "autotag": "*"
   }
 }

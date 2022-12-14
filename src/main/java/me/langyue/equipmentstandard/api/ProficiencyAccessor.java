@@ -7,10 +7,14 @@ public interface ProficiencyAccessor {
     /**
      * 获取熟练度
      */
-    int getProficiency();
+    default int getProficiency() {
+        return 0;
+    }
 
     /**
      * 增加熟练度后返回
      */
-    int incrementProficiency();
+    default int incrementProficiency() {
+        return 0;
+    }
 }

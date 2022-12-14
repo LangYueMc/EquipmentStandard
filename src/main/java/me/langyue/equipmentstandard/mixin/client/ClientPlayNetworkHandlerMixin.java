@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class ClientPlayNetworkHandlerMixin {
 
     @Inject(method = "onGameJoin", at = @At(value = "TAIL"))
-    private void tickMixin(CallbackInfo ci) {
+    private void onGameJoin(CallbackInfo ci) {
         ClientPacket.onReady();
     }
 }
