@@ -69,8 +69,8 @@ dependencies {
     modImplementation("maven.modrinth:better-combat:${project.bettercombat_version}")
 
     // AutoTag
-    modImplementation ("com.github.apace100:autotag-api:${autotag_version}")
-    modImplementation ("com.github.apace100:autotag:${autotag_version}")
+//    modImplementation ("com.github.apace100:autotag-api:${autotag_version}")
+//    modImplementation ("com.github.apace100:autotag:${autotag_version}")
 }
 
 processResources {

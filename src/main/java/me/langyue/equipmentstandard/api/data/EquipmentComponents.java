@@ -1,32 +1,15 @@
-package me.langyue.equipmentstandard.api;
+package me.langyue.equipmentstandard.api.data;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 
-public class EquipmentComponents {
+/**
+ * @param maker       制作者
+ * @param proficiency 制作时的熟练度，方便鉴定时使用
+ */
+public record EquipmentComponents(String maker, int proficiency) {
     public static final String NBT_KEY = "ES:Components";
-    /**
-     * 制作者
-     */
-    private final String maker;
-    /**
-     * 制作时的熟练度，方便鉴定时使用
-     */
-    private final int proficiency;
-
-    public EquipmentComponents(String maker, int proficiency) {
-        this.maker = maker;
-        this.proficiency = proficiency;
-    }
-
-    public String getMaker() {
-        return maker;
-    }
-
-    public int getProficiency() {
-        return proficiency;
-    }
 
     public NbtCompound toNbt() {
         NbtCompound nbt = new NbtCompound();

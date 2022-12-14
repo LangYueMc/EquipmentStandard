@@ -1,6 +1,6 @@
 package me.langyue.equipmentstandard.mixin;
 
-import me.langyue.equipmentstandard.api.EquipmentComponents;
+import me.langyue.equipmentstandard.api.data.EquipmentComponents;
 import me.langyue.equipmentstandard.api.ModifierUtils;
 import me.langyue.equipmentstandard.api.ProficiencyAccessor;
 import net.minecraft.entity.player.PlayerEntity;

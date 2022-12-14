@@ -4,7 +4,7 @@ import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
 import me.langyue.equipmentstandard.EquipmentStandard;
 import me.langyue.equipmentstandard.api.CustomEntityAttributes;
-import me.langyue.equipmentstandard.api.EquipmentComponents;
+import me.langyue.equipmentstandard.api.data.EquipmentComponents;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screen.Screen;
@@ -120,7 +120,7 @@ public abstract class ItemStackClientMixin {
                 for (Text sibling : text.getSiblings()) {
                     // 仅固定值的是这种结构，这里也只修改固定值的，比如武器的攻击和攻速
                     if (sibling.getContent() instanceof TranslatableTextContent content && content.getKey().startsWith("attribute.modifier.")) {
-                        content.getArgs()[0] += String.format(" §7(%s%s%%§7)§r", modifier.getValue() < 0 ? "§c-" : "§9+", ItemStack.MODIFIER_FORMAT.format(modifier.getValue() * 100));
+                        content.getArgs()[0] += String.format(" §7(%s%s%%§7)§r", modifier.getValue() < 0 ? "§c" : "§9+", ItemStack.MODIFIER_FORMAT.format(modifier.getValue() * 100));
                         hide.put(entry.getKey(), modifier);
                         merged = true;
                         break;
@@ -178,6 +178,6 @@ public abstract class ItemStackClientMixin {
         if (components == null) {
             return;
         }
-        list.add(Text.translatable("item.maker", components.getMaker()));
+        list.add(Text.translatable("item.maker", components.maker()));
     }
 }
