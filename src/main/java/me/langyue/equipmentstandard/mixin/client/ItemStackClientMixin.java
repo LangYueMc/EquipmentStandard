@@ -5,7 +5,6 @@ import com.google.common.collect.Multimap;
 import me.langyue.equipmentstandard.EquipmentStandard;
 import me.langyue.equipmentstandard.api.CustomEntityAttributes;
 import me.langyue.equipmentstandard.api.ModifierUtils;
-import me.langyue.equipmentstandard.api.data.EquipmentComponents;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screen.Screen;
@@ -171,10 +170,11 @@ public abstract class ItemStackClientMixin {
     @Inject(method = "getTooltip", at = @At(value = "TAIL"))
     private void getTooltipMixin(@Nullable PlayerEntity player, TooltipContext context, CallbackInfoReturnable<List<Text>> cir) {
         List<Text> list = cir.getReturnValue();
-        EquipmentComponents components = EquipmentComponents.fromItem((ItemStack) (Object) this);
-        if (components == null) {
-            return;
-        }
-        list.add(Text.translatable("item.maker", components.maker()));
+        var itemStack = (ItemStack) (Object) this;
+        if (itemStack.getMaker() != null)
+            list.add(Text.translatable("item.maker", itemStack.getMaker()));
+        Integer score = itemStack.getScore();
+        if (score != null)
+            list.add(Text.translatable("item.score", score));
     }
 }

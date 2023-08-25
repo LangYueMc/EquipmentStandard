@@ -1,5 +1,6 @@
 package me.langyue.equipmentstandard.mixin;
 
+import me.langyue.equipmentstandard.EquipmentStandard;
 import me.langyue.equipmentstandard.api.ModifierUtils;
 import me.langyue.equipmentstandard.api.ProficiencyAccessor;
 import net.minecraft.entity.LivingEntity;
@@ -26,11 +27,12 @@ public abstract class MerchantScreenHandlerMixin {
     private ItemStack transferSlotMixin(ItemStack original) {
         if (merchant instanceof LivingEntity livingEntity) {
             ProficiencyAccessor proficiencyAccessor = (ProficiencyAccessor) livingEntity;
-            // 批量产品难免瑕疵, 说不定还是进的货，熟练度设置成负数吧（很合理）
-            if (ModifierUtils.setItemStackAttribute(original, -10, 0)
-                    && Random.create().nextDouble() < 0.34)
+            // 批量产品难免瑕疵, 说不定还是进的货，熟练度设置成 0 吧（很合理）
+            if (ModifierUtils.setItemStackAttribute(original, 0, 0)
+                    && EquipmentStandard.RANDOM.nextDouble() < 0.34)
                 // 批量购买的熟练度也不加那么多了, 大概三分之一
                 proficiencyAccessor.incrementProficiency();
+            original.updateScore();    // 计算评分
         }
         return original;
     }

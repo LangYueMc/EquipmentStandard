@@ -31,6 +31,7 @@ public class TradeOutputSlotMixin {
             int proficiency = proficiencyAccessor.getProficiency() / 100;   // 村民熟练度加成 100 点 = 玩家 1 点
             if (ModifierUtils.setItemStackAttribute(stack, proficiency, 0))
                 proficiencyAccessor.incrementProficiency();
+            stack.updateScore();    // 计算评分
         }
     }
 }

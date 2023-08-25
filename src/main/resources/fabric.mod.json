@@ -28,6 +28,11 @@
   "mixins": [
     "EquipmentStandard.mixins.json"
   ],
+  "custom": {
+    "loom:injected_interfaces": {
+      "net/minecraft/class_1799": ["me/langyue/equipmentstandard/api/EquipmentComponentsAccessor"]
+    }
+  },
   "depends": {
     "fabricloader": "*",
     "fabric": "*",

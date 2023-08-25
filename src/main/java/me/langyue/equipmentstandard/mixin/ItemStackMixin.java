@@ -1,14 +1,26 @@
 package me.langyue.equipmentstandard.mixin;
 
+import me.langyue.equipmentstandard.api.EquipmentComponentsAccessor;
 import me.langyue.equipmentstandard.api.ModifierUtils;
+import me.langyue.equipmentstandard.api.ProficiencyAccessor;
+import me.langyue.equipmentstandard.api.data.EquipmentComponents;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.Collections;
+import java.util.Map;
+
 @Mixin(ItemStack.class)
-public abstract class ItemStackMixin {
+public abstract class ItemStackMixin implements EquipmentComponentsAccessor {
 
     private final ItemStack _this = (ItemStack) (Object) this;
 
@@ -16,5 +28,45 @@ public abstract class ItemStackMixin {
     private void getMaxDamageMixin(CallbackInfoReturnable<Integer> info) {
         if (!_this.isDamageable()) return;
         info.setReturnValue(ModifierUtils.getMaxDamage(_this, info.getReturnValue()));
+    }
+
+    @Override
+    public EquipmentComponents getComponents() {
+        return EquipmentComponents.fromItem(_this);
+    }
+
+    @Override
+    public String getMaker() {
+        EquipmentComponents components = getComponents();
+        return components == null ? null : components.getMaker();
+    }
+
+    @Override
+    public void setMaker(PlayerEntity player) {
+        if (player.world.isClient) return;
+        if (getComponents() == null) {
+            // 仅能设置一次
+            ProficiencyAccessor proficiencyAccessor = (ProficiencyAccessor) player;
+            new EquipmentComponents(player.getDisplayName().getString(), proficiencyAccessor.getProficiency()).save(_this);
+        }
+    }
+
+    @Override
+    public Integer getScore() {
+        EquipmentComponents components = this.getComponents();
+        return components == null ? null : components.getScore();
+    }
+
+    @Override
+    public void updateScore() {
+        Map<EquipmentSlot, Double> score = ModifierUtils.getScore(_this);
+        if (score != null && !score.isEmpty()) {
+            EquipmentComponents components = getComponents();
+            if (components == null) {
+                components = new EquipmentComponents();
+            }
+            components.setScore(Collections.max(score.values()).intValue());
+            components.save(_this);
+        }
     }
 }

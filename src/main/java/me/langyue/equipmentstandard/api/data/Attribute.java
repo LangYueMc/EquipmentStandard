@@ -254,7 +254,7 @@ public class Attribute {
         /**
          * EntityAttributeModifier.Operation
          */
-        private final String operation;
+        private final EntityAttributeModifier.Operation operation;
         /**
          * 保留小数位， 默认 2
          */
@@ -272,7 +272,7 @@ public class Attribute {
          */
         private final BigDecimal max;
 
-        public AttributeModifier(Integer weights, Bonus bonus, String operation, Integer scale, BigDecimal amount, BigDecimal min, BigDecimal max) {
+        public AttributeModifier(Integer weights, Bonus bonus, EntityAttributeModifier.Operation operation, Integer scale, BigDecimal amount, BigDecimal min, BigDecimal max) {
             this.weights = weights;
             this.bonus = bonus;
             this.operation = operation;
@@ -308,7 +308,7 @@ public class Attribute {
         }
 
         public EntityAttributeModifier.Operation getOperation() {
-            return EntityAttributeModifier.Operation.valueOf(this.operation.toUpperCase());
+            return  this.operation;
         }
     }
 }

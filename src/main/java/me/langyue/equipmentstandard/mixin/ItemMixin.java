@@ -1,6 +1,5 @@
 package me.langyue.equipmentstandard.mixin;
 
-import me.langyue.equipmentstandard.api.data.EquipmentComponents;
 import me.langyue.equipmentstandard.api.ModifierUtils;
 import me.langyue.equipmentstandard.api.ProficiencyAccessor;
 import net.minecraft.entity.player.PlayerEntity;
@@ -20,9 +19,10 @@ public abstract class ItemMixin {
         if (!world.isClient && !stack.isEmpty()) {
             if (ModifierUtils.setItemStackAttribute(stack, player)) {
                 ProficiencyAccessor proficiencyAccessor = (ProficiencyAccessor) player;
-                new EquipmentComponents(player.getDisplayName().getString(), proficiencyAccessor.getProficiency()).save(stack);
+                stack.setMaker(player);
                 proficiencyAccessor.incrementProficiency();
             }
+            stack.updateScore();    // 计算评分
         }
     }
 

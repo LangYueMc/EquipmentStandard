@@ -18,6 +18,7 @@
 
   "item.modifiers.show_details": "Hold§c shift§r to view attributes details.",
   "item.maker": "Maker: %s",
+  "item.score": "Score: %d",
 
   "stat.equipment_standard.proficiency": "Craft Proficiency"
 }

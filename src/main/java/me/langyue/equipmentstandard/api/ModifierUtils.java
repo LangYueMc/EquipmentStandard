@@ -14,6 +14,9 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.screen.ScreenTexts;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
@@ -209,5 +212,25 @@ public class ModifierUtils {
                     case MULTIPLY_TOTAL -> (int) (original * attribute.amount() / 100);
                 }));
         return modified.get();
+    }
+
+    /**
+     * 计算装备分数
+     *
+     * @param stack 物品
+     * @return 装备分
+     */
+    public static Map<EquipmentSlot, Double> getScore(ItemStack stack) {
+        if (stack == null) return null;
+        Map<EquipmentSlot, Double> score = new HashMap<>();
+        for (EquipmentSlot slot : EquipmentSlot.values()) {
+            var multimap = stack.getAttributeModifiers(slot);
+            AtomicDouble atomic = new AtomicDouble(0);
+            multimap.forEach((attribute, modifier) -> {
+                atomic.addAndGet(modifier.getValue() * AttributeScoreManager.get(attribute, modifier.getOperation()));
+            });
+            score.put(slot, atomic.get());
+        }
+        return score;
     }
 }

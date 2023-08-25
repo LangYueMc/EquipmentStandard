@@ -18,6 +18,7 @@
 
   "item.modifiers.show_details": "按住 §bShift§r 查看属性详情",
   "item.maker": "制作者 : %s",
+  "item.score": "装备分 : %d",
 
   "stat.equipment_standard.proficiency": "制作熟练度"
 }

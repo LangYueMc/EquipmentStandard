@@ -1,0 +1,17 @@
+{
+  "type": "generic.armor",
+  "scores": [
+    {
+      "operation": "ADDITION",
+      "score": 100
+    },
+    {
+      "operation": "MULTIPLY_BASE",
+      "score": 750
+    },
+    {
+      "operation": "MULTIPLY_TOTAL",
+      "score": 1000
+    }
+  ]
+}
