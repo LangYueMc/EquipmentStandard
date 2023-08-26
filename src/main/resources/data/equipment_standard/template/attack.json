@@ -1,0 +1,203 @@
+{
+  "verifiers": [
+    {
+      "tag": "c:tools"
+    }
+  ],
+  "attributes": [
+    {
+      "type": "generic.attack_damage",
+      "chance": 1,
+      "step": 0.5,
+      "modifiers": [
+        {
+          "weights": 30,
+          "operation": "ADDITION_PERCENTAGE",
+          "min": -20,
+          "max": 0,
+          "bonus": {
+            "lucky": -1,
+            "proficiency": -0.07
+          }
+        },
+        {
+          "weights": 40,
+          "operation": "ADDITION",
+          "amount": 0,
+          "bonus": {
+            "lucky": -0.1,
+            "proficiency": -0.02
+          }
+        },
+        {
+          "weights": 50,
+          "operation": "ADDITION_PERCENTAGE",
+          "min": 0,
+          "max": 20,
+          "bonus": {
+            "lucky": 0.05,
+            "proficiency": 0.02
+          }
+        },
+        {
+          "weights": 1,
+          "operation": "ADDITION_PERCENTAGE",
+          "min": 20,
+          "max": 50,
+          "bonus": {
+            "lucky": 0.1,
+            "proficiency": 0.05
+          }
+        }
+      ]
+    },
+    {
+      "type": "generic.attack_speed",
+      "chance": 1,
+      "modifiers": [
+        {
+          "weights": 30,
+          "operation": "ADDITION",
+          "min": -0.2,
+          "max": 0,
+          "bonus": {
+            "lucky": -1,
+            "proficiency": -0.07
+          }
+        },
+        {
+          "weights": 40,
+          "operation": "ADDITION",
+          "amount": 0,
+          "bonus": {
+            "lucky": -0.1,
+            "proficiency": -0.02
+          }
+        },
+        {
+          "weights": 50,
+          "operation": "ADDITION",
+          "min": 0,
+          "max": 0.2,
+          "bonus": {
+            "lucky": 0.1,
+            "proficiency": 0.02
+          }
+        },
+        {
+          "weights": 1,
+          "operation": "ADDITION",
+          "min": 0.2,
+          "max": 0.5,
+          "bonus": {
+            "lucky": 0.1,
+            "proficiency": 0.05
+          }
+        }
+      ]
+    },
+    {
+      "type": "generic.attack_knockback",
+      "chance": 0.3,
+      "step": 1,
+      "modifiers": [
+        {
+          "operation": "ADDITION",
+          "min": 1,
+          "max": 3
+        }
+      ]
+    },
+    {
+      "type": "equipment_standard:generic.crit_chance",
+      "chance": 1,
+      "modifiers": [
+        {
+          "weights": 30,
+          "operation": "ADDITION",
+          "min": -0.2,
+          "max": 0,
+          "bonus": {
+            "lucky": -1,
+            "proficiency": -0.07
+          }
+        },
+        {
+          "weights": 40,
+          "operation": "ADDITION",
+          "amount": 0,
+          "bonus": {
+            "lucky": -0.1,
+            "proficiency": -0.02
+          }
+        },
+        {
+          "weights": 50,
+          "operation": "ADDITION",
+          "min": 0,
+          "max": 0.2,
+          "bonus": {
+            "lucky": 0.05,
+            "proficiency": 0.02
+          }
+        },
+        {
+          "weights": 1,
+          "operation": "ADDITION",
+          "min": 0.2,
+          "max": 0.5,
+          "bonus": {
+            "lucky": 0.1,
+            "proficiency": 0.05
+          }
+        }
+      ]
+    },
+    {
+      "type": "equipment_standard:generic.crit_damage",
+      "chance": 1,
+      "step": 0.1,
+      "modifiers": [
+        {
+          "weights": 30,
+          "operation": "ADDITION",
+          "min": -0.2,
+          "max": 0,
+          "bonus": {
+            "lucky": -1,
+            "proficiency": -0.07
+          }
+        },
+        {
+          "weights": 40,
+          "operation": "ADDITION",
+          "amount": 0,
+          "bonus": {
+            "lucky": -0.1,
+            "proficiency": -0.02
+          }
+        },
+        {
+          "weights": 50,
+          "operation": "ADDITION",
+          "min": 0,
+          "max": 0.5,
+          "bonus": {
+            "lucky": 0.1,
+            "proficiency": 0.02
+          }
+        },
+        {
+          "weights": 1,
+          "operation": "ADDITION",
+          "min": 0.5,
+          "max": 3,
+          "bonus": {
+            "lucky": 0.1,
+            "proficiency": 0.05
+          }
+        }
+      ]
+    }
+  ]
+}

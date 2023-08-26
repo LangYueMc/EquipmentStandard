@@ -20,13 +20,6 @@ public abstract class PlayerEntityMixin {
 
     private final PlayerEntity player = (PlayerEntity) (Object) this;
 
-    @Inject(method = "createPlayerAttributes", at = @At("RETURN"))
-    private static void createPlayerAttributesMixin(CallbackInfoReturnable<DefaultAttributeContainer.Builder> info) {
-        info.getReturnValue().add(CustomEntityAttributes.DIG_SPEED);
-        info.getReturnValue().add(CustomEntityAttributes.CRIT_CHANCE);
-        info.getReturnValue().add(CustomEntityAttributes.CRIT_DAMAGE);
-    }
-
     /**
      * 挖掘速度
      * 原作者 @Draylar
@@ -72,7 +65,7 @@ public abstract class PlayerEntityMixin {
             }
         }
 
-        boolean isCrit = chance >= 1 || player.world.random.nextDouble() < chance;
+        boolean isCrit = chance >= 1 || player.getWorld().random.nextDouble() < chance;
         if (!isCrit) {
             return f;
         }
@@ -86,7 +79,7 @@ public abstract class PlayerEntityMixin {
             }
         }
         damageMultiplier = Math.max(damageMultiplier, 1.1);
-        player.world.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ENTITY_PLAYER_ATTACK_CRIT, player.getSoundCategory(), 1.0F, 1.0F);
+        player.getWorld().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ENTITY_PLAYER_ATTACK_CRIT, player.getSoundCategory(), 1.0F, 1.0F);
         player.addCritParticles(target);
         return (float) (f * damageMultiplier);
     }

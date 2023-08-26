@@ -2,10 +2,11 @@ package me.langyue.equipmentstandard.data;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tag.TagKey;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.InvalidIdentifierException;
-import net.minecraft.util.registry.Registry;
 import org.apache.commons.lang3.StringUtils;
 
 public class ItemVerifier {
@@ -17,7 +18,7 @@ public class ItemVerifier {
     public ItemVerifier(String id, String tag) {
         if (StringUtils.isEmpty(id)) {
             this.id = null;
-            this.tag = TagKey.of(Registry.ITEM_KEY, new Identifier(tag));
+            this.tag = TagKey.of(RegistryKeys.ITEM, new Identifier(tag));
             this.order = 1;
         } else {
             this.id = Identifier.tryParse(id);
@@ -37,7 +38,7 @@ public class ItemVerifier {
         if (itemStack == null) {
             return false;
         } else if (id != null) {
-            return Registry.ITEM.getId(itemStack.getItem()).equals(id);
+            return Registries.ITEM.getId(itemStack.getItem()).equals(id);
         } else if (tag != null) {
             return itemStack.isIn(tag);
         }

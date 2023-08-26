@@ -1,10 +1,7 @@
 package me.langyue.equipmentstandard.api;
 
 import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ShieldItem;
+import net.minecraft.item.*;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -25,9 +22,12 @@ public class EquipmentSlotUtils {
     public static Collection<EquipmentSlot> getDefaultEquipmentSlot(Item item) {
         if (item instanceof ArmorItem armorItem)
             return Collections.singleton(armorItem.getSlotType());
-
+        if (item instanceof ElytraItem elytraItem)
+            return Collections.singleton(elytraItem.getSlotType());
         if (item instanceof ShieldItem)
             return Set.of(EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND);
+        if (item instanceof HorseArmorItem || item instanceof SaddleItem)
+            return Collections.singleton(EquipmentSlot.CHEST);
 
         return Collections.singleton(EquipmentSlot.MAINHAND);
     }

@@ -3,7 +3,8 @@ package me.langyue.equipmentstandard.api;
 import me.langyue.equipmentstandard.EquipmentStandard;
 import net.minecraft.entity.attribute.ClampedEntityAttribute;
 import net.minecraft.entity.attribute.EntityAttribute;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 
 public class CustomEntityAttributes {
     public static final String DURABLE = "durable";
@@ -17,6 +18,6 @@ public class CustomEntityAttributes {
     }
 
     private static EntityAttribute register(String id, double fallback, double min, double max) {
-        return Registry.register(Registry.ATTRIBUTE, EquipmentStandard.createIdentifier(id), new ClampedEntityAttribute("attribute.name." + id, fallback, min, max).setTracked(true));
+        return Registry.register(Registries.ATTRIBUTE, EquipmentStandard.createIdentifier(id), new ClampedEntityAttribute("attribute.name." + id, fallback, min, max).setTracked(true));
     }
 }

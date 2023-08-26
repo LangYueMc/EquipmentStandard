@@ -1,7 +1,6 @@
 package me.langyue.equipmentstandard;
 
 import me.langyue.equipmentstandard.api.ModifierUtils;
-import me.langyue.equipmentstandard.autotag.AutoItemTags;
 import me.langyue.equipmentstandard.config.Config;
 import me.langyue.equipmentstandard.data.AttributeScoreLoader;
 import me.langyue.equipmentstandard.data.TemplateDataLoader;
@@ -9,7 +8,6 @@ import me.langyue.equipmentstandard.network.ServerPacket;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.item.v1.ModifyItemAttributeModifiersCallback;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.random.Random;
@@ -28,7 +26,6 @@ public class EquipmentStandard implements ModInitializer {
     public void onInitialize() {
         Config.init();
         ServerPacket.init();
-        if (!FabricLoader.getInstance().isModLoaded("autotag")) AutoItemTags.register();
         ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new TemplateDataLoader());
         ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new AttributeScoreLoader());
         ModifyItemAttributeModifiersCallback.EVENT.register(ModifierUtils::modify);

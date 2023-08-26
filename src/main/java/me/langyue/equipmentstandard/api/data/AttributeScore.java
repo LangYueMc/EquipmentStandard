@@ -3,8 +3,8 @@ package me.langyue.equipmentstandard.api.data;
 import me.langyue.equipmentstandard.api.AttributeScoreManager;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 import java.util.Set;
 
@@ -20,7 +20,7 @@ public class AttributeScore {
     }
 
     public void register() {
-        EntityAttribute entityAttribute = Registry.ATTRIBUTE.get(new Identifier(type));
+        EntityAttribute entityAttribute = Registries.ATTRIBUTE.get(new Identifier(type));
         if (entityAttribute == null) return;
         for (var operation : EntityAttributeModifier.Operation.values()) {
             AttributeScoreManager.put(entityAttribute, getScore(operation), overWrite);

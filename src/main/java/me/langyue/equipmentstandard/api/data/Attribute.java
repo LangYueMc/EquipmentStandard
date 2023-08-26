@@ -5,6 +5,7 @@ import me.langyue.equipmentstandard.EquipmentStandard;
 import me.langyue.equipmentstandard.api.CustomEntityAttributes;
 import me.langyue.equipmentstandard.api.ModifierUtils;
 import me.langyue.equipmentstandard.data.Bonus;
+import me.langyue.equipmentstandard.data.EquipmentTemplate;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.nbt.NbtCompound;
@@ -16,15 +17,31 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Attribute {
+    /**
+     * 类型，可选值
+     *
+     * @see net.minecraft.entity.attribute.EntityAttributes
+     * @see me.langyue.equipmentstandard.api.CustomEntityAttributes
+     */
     private final String type;
+    /**
+     * 属性值步进，也可单独在 AttributeModifier 中设置
+     *
+     * @see AttributeModifier
+     */
+    private final BigDecimal step;
     private final boolean merge;
+    /**
+     * 命中这个属性的几率，最大 1
+     */
     private final BigDecimal chance;
     private final Bonus bonus;
     private final List<AttributeModifier> modifiers;
-    private final Set<Slot> slots;
+    private Set<Slot> slots;
 
-    public Attribute(String type, boolean merge, BigDecimal chance, Bonus bonus, List<AttributeModifier> modifiers, Set<Slot> slots) {
+    public Attribute(String type, BigDecimal step, boolean merge, BigDecimal chance, Bonus bonus, List<AttributeModifier> modifiers, Set<Slot> slots) {
         this.type = type;
+        this.step = step;
         this.merge = merge;
         this.chance = chance;
         this.bonus = bonus;
@@ -34,6 +51,17 @@ public class Attribute {
 
     public String getType() {
         return type;
+    }
+
+    public void init(EquipmentTemplate template) {
+        if (this.slots == null || this.slots.size() == 0) {
+            this.slots = template.getSlots();
+        }
+        modifiers.forEach(modifier -> {
+            if (modifier.step == null) {
+                modifier.setStep(step);
+            }
+        });
     }
 
     public boolean isMerge() {
@@ -95,7 +123,7 @@ public class Attribute {
             // 如果值为 0 则不存储 NBT
             return null;
         }
-        EntityAttributeModifier.Operation operation = modifier.getOperation();
+        Operation operation = modifier.getOperation();
         try {
             return new Final(
                     this.getType(),
@@ -164,10 +192,10 @@ public class Attribute {
             String type,
             boolean merge,
             double amount,
-            EntityAttributeModifier.Operation operation,
+            Operation operation,
             Set<Slot> slots
     ) {
-        public Final(String type, boolean merge, double amount, EntityAttributeModifier.Operation operation, Set<Slot> slots) {
+        public Final(String type, boolean merge, double amount, Operation operation, Set<Slot> slots) {
             if (StringUtils.isBlank(type)) throw new IllegalArgumentException("Attribute type can not be null.");
             if (amount == 0) throw new IllegalArgumentException("Attribute amount can not be 0.");
             if (operation == null) throw new IllegalArgumentException("Operation can not be null.");
@@ -177,10 +205,10 @@ public class Attribute {
             if (type.equalsIgnoreCase(EquipmentStandard.MOD_ID + ":generic.crit_chance")
                     || type.equalsIgnoreCase(EquipmentStandard.MOD_ID + ":generic.crit_damage"))
                 // 暴击和暴击伤害都是累加的，而且都是百分比，为了显示正常，这里固定为 MULTIPLY_BASE
-                this.operation = EntityAttributeModifier.Operation.MULTIPLY_BASE;
+                this.operation = Operation.MULTIPLY_BASE;
             else if (type.equalsIgnoreCase(EquipmentStandard.MOD_ID + ":generic.real_damage"))
                 // 真实伤害固定为 ADDITION
-                this.operation = EntityAttributeModifier.Operation.ADDITION;
+                this.operation = Operation.ADDITION;
             else
                 this.operation = operation;
             this.slots = slots == null ? Collections.emptySet() : slots;
@@ -208,7 +236,7 @@ public class Attribute {
 
         public static Final fromNbt(NbtCompound nbt) {
             try {
-                EntityAttributeModifier.Operation operation = EntityAttributeModifier.Operation.fromId(nbt.getInt("Operation"));
+                Operation operation = Operation.fromId(nbt.getInt("Operation"));
                 Set<Slot> slots = Collections.emptySet();
                 if (nbt.contains("Slots")) {
                     slots = Arrays.stream(nbt.getIntArray("Slots")).mapToObj(Slot::byId).collect(Collectors.toSet());
@@ -254,7 +282,7 @@ public class Attribute {
         /**
          * EntityAttributeModifier.Operation
          */
-        private final EntityAttributeModifier.Operation operation;
+        private final Operation operation;
         /**
          * 保留小数位， 默认 2
          */
@@ -271,8 +299,12 @@ public class Attribute {
          * 范围最大值，与 amount 互斥
          */
         private final BigDecimal max;
+        /**
+         * 范围步进，与 amount 互斥
+         */
+        private BigDecimal step;
 
-        public AttributeModifier(Integer weights, Bonus bonus, EntityAttributeModifier.Operation operation, Integer scale, BigDecimal amount, BigDecimal min, BigDecimal max) {
+        public AttributeModifier(Integer weights, Bonus bonus, Operation operation, Integer scale, BigDecimal amount, BigDecimal min, BigDecimal max, BigDecimal step) {
             this.weights = weights;
             this.bonus = bonus;
             this.operation = operation;
@@ -280,6 +312,7 @@ public class Attribute {
             this.amount = amount;
             this.min = min;
             this.max = max;
+            this.step = step;
         }
 
         public Integer getWeights() {
@@ -288,6 +321,10 @@ public class Attribute {
 
         public Bonus getBonus() {
             return bonus;
+        }
+
+        public void setStep(BigDecimal step) {
+            this.step = step;
         }
 
         public double getAmount() {
@@ -299,6 +336,9 @@ public class Attribute {
                     double random = EquipmentStandard.RANDOM.nextDouble();
 
                     temp = random * (max.doubleValue() - min.doubleValue()) + min.doubleValue();
+                    if (step != null) {
+                        temp = step.doubleValue() * Math.round(temp / step.doubleValue());
+                    }
                 }
                 return BigDecimal.valueOf(temp)
                         .setScale(scale == null ? 2 : scale, RoundingMode.CEILING)
@@ -307,8 +347,40 @@ public class Attribute {
             return amount.doubleValue();
         }
 
-        public EntityAttributeModifier.Operation getOperation() {
-            return  this.operation;
+        public Operation getOperation() {
+            return this.operation;
+        }
+    }
+
+
+    public enum Operation {
+        ADDITION(0),
+        MULTIPLY_BASE(1),
+        MULTIPLY_TOTAL(2),
+        ADDITION_PERCENTAGE(3);
+        private final int id;
+
+        Operation(int id) {
+            this.id = id;
+        }
+
+        public int getId() {
+            return this.id;
+        }
+
+        public static Operation fromId(int id) {
+            if (id >= 0 && id < Operation.values().length) {
+                return Operation.values()[id];
+            } else {
+                throw new IllegalArgumentException("No operation with value " + id);
+            }
+        }
+
+        public EntityAttributeModifier.Operation convert() {
+            if (this == ADDITION_PERCENTAGE) {
+                return EntityAttributeModifier.Operation.ADDITION;
+            }
+            return EntityAttributeModifier.Operation.fromId(id);
         }
     }
 }

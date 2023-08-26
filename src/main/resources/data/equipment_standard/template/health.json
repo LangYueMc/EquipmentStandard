@@ -1,0 +1,64 @@
+{
+  "verifiers": [
+    {
+      "tag": "c:armors"
+    },
+    {
+      "tag": "c:shields"
+    },
+    {
+      "tag": "c:elytra"
+    },
+    {
+      "tag": "c:horse_armors"
+    }
+  ],
+  "attributes": [
+    {
+      "type": "generic.max_health",
+      "chance": 1,
+      "step": 1,
+      "modifiers": [
+        {
+          "weights": 30,
+          "operation": "ADDITION",
+          "min": -2,
+          "max": 0,
+          "bonus": {
+            "lucky": -1,
+            "proficiency": -0.07
+          }
+        },
+        {
+          "weights": 40,
+          "operation": "ADDITION",
+          "amount": 0,
+          "bonus": {
+            "lucky": -0.1,
+            "proficiency": -0.02
+          }
+        },
+        {
+          "weights": 50,
+          "operation": "ADDITION",
+          "min": 1,
+          "max": 2,
+          "bonus": {
+            "lucky": 0.1,
+            "proficiency": 0.02
+          }
+        },
+        {
+          "weights": 1,
+          "operation": "ADDITION",
+          "min": 3,
+          "max": 5,
+          "bonus": {
+            "lucky": 0.1,
+            "proficiency": 0.05
+          }
+        }
+      ]
+    }
+  ]
+}

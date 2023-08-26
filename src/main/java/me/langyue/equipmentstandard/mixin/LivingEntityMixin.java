@@ -1,10 +1,12 @@
 package me.langyue.equipmentstandard.mixin;
 
+import me.langyue.equipmentstandard.api.CustomEntityAttributes;
 import me.langyue.equipmentstandard.api.ProficiencyAccessor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -63,6 +65,14 @@ public abstract class LivingEntityMixin extends Entity implements ProficiencyAcc
 
     public LivingEntityMixin(EntityType<?> type, World world) {
         super(type, world);
+    }
+
+    @Inject(method = "createLivingAttributes", at = @At("RETURN"))
+    private static void createLivingAttributesMixin(CallbackInfoReturnable<DefaultAttributeContainer.Builder> info) {
+        info.getReturnValue()
+                .add(CustomEntityAttributes.DIG_SPEED)
+                .add(CustomEntityAttributes.CRIT_CHANCE)
+                .add(CustomEntityAttributes.CRIT_DAMAGE);
     }
 
     /**

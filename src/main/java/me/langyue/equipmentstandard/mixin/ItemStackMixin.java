@@ -4,13 +4,9 @@ import me.langyue.equipmentstandard.api.EquipmentComponentsAccessor;
 import me.langyue.equipmentstandard.api.ModifierUtils;
 import me.langyue.equipmentstandard.api.ProficiencyAccessor;
 import me.langyue.equipmentstandard.api.data.EquipmentComponents;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.MinecraftServer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -43,7 +39,7 @@ public abstract class ItemStackMixin implements EquipmentComponentsAccessor {
 
     @Override
     public void setMaker(PlayerEntity player) {
-        if (player.world.isClient) return;
+        if (player.getWorld().isClient) return;
         if (getComponents() == null) {
             // 仅能设置一次
             ProficiencyAccessor proficiencyAccessor = (ProficiencyAccessor) player;

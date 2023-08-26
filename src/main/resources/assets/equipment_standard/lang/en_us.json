@@ -8,6 +8,15 @@
   "text.autoconfig.equipment_standard.option.baseCritChance": "Base Crit Chance",
   "text.autoconfig.equipment_standard.option.baseCritDamageMultiplier": "Base crit damage multiplier",
 
+  "tag.item.c.helmets": "Helmets",
+  "tag.item.c.chestplates": "Chest Plates",
+  "tag.item.c.leggings": "Leggings",
+  "tag.item.c.boots": "Boots",
+  "tag.item.c.tridents": "Tridents",
+  "tag.item.c.elytra": "Elytra",
+  "tag.item.c.horse_armors": "Horse Armors",
+
+  "attribute.name.generic.dig_speed": "Dig Speed",
   "attribute.name.generic.crit_chance": "Crit Chance",
   "attribute.name.generic.crit_damage": "Crit Damage",
   "attribute.name.generic.real_damage": "Real Damage",

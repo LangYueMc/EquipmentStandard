@@ -23,8 +23,8 @@ public abstract class MerchantScreenHandlerMixin {
     @Final
     private Merchant merchant;
 
-    @ModifyVariable(method = "transferSlot", at = @At(value = "INVOKE", target = "Lnet/minecraft/screen/MerchantScreenHandler;insertItem(Lnet/minecraft/item/ItemStack;IIZ)Z", ordinal = 0), ordinal = 1)
-    private ItemStack transferSlotMixin(ItemStack original) {
+    @ModifyVariable(method = "quickMove", at = @At(value = "INVOKE", target = "Lnet/minecraft/screen/MerchantScreenHandler;insertItem(Lnet/minecraft/item/ItemStack;IIZ)Z", ordinal = 0), ordinal = 1)
+    private ItemStack quickMoveMixin(ItemStack original) {
         if (merchant instanceof LivingEntity livingEntity) {
             ProficiencyAccessor proficiencyAccessor = (ProficiencyAccessor) livingEntity;
             // 批量产品难免瑕疵, 说不定还是进的货，熟练度设置成 0 吧（很合理）

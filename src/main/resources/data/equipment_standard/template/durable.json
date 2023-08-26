@@ -1,0 +1,61 @@
+{
+  "verifiers": [
+    {
+      "tag": "c:armors"
+    },
+    {
+      "tag": "c:tools"
+    },
+    {
+      "tag": "c:bows"
+    },
+    {
+      "tag": "c:elytra"
+    },
+    {
+      "tag": "c:shields"
+    },
+    {
+      "id": "minecraft:fishing_rod"
+    }
+  ],
+  "attributes": [
+    {
+      "type": "durable",
+      "chance": 1,
+      "step": 1,
+      "modifiers": [
+        {
+          "weights": 50,
+          "operation": "ADDITION_PERCENTAGE",
+          "min": -5,
+          "max": 0,
+          "bonus": {
+            "lucky": -1,
+            "proficiency": -0.07
+          }
+        },
+        {
+          "weights": 50,
+          "operation": "ADDITION_PERCENTAGE",
+          "min": 0,
+          "max": 15,
+          "bonus": {
+            "lucky": 0.1,
+            "proficiency": 0.02
+          }
+        },
+        {
+          "weights": 1,
+          "operation": "ADDITION_PERCENTAGE",
+          "min": 15,
+          "max": 30,
+          "bonus": {
+            "lucky": 0.1,
+            "proficiency": 0.05
+          }
+        }
+      ]
+    }
+  ]
+}

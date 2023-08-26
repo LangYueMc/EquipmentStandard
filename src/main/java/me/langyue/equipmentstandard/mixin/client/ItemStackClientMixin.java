@@ -64,6 +64,7 @@ public abstract class ItemStackClientMixin {
 
     @ModifyVariable(method = "getTooltip", at = @At(value = "INVOKE", target = "Lcom/google/common/collect/Multimap;isEmpty()Z"))
     private Multimap<EntityAttribute, EntityAttributeModifier> mergeModifier(Multimap<EntityAttribute, EntityAttributeModifier> modifiers) {
+        this.modifiers.clear();
         if (modifiers.isEmpty() || !hideModifierDetails()) return modifiers;
         Multimap<EntityAttribute, EntityAttributeModifier> processed = LinkedListMultimap.create();
         for (var entry : modifiers.entries()) {
@@ -79,9 +80,7 @@ public abstract class ItemStackClientMixin {
                     continue;
                 }
                 switch (modifier.getOperation()) {
-                    case ADDITION -> {
-                        count += temp.getValue();
-                    }
+                    case ADDITION -> count += temp.getValue();
                     case MULTIPLY_BASE, MULTIPLY_TOTAL ->
                         // 应该不可能会有多个百分比加成的, 但万一有多个，MC 的算法就是这样的
                         // 比如 10 攻击力，第一个加 10% ，会先计算得出攻击力为 11，然后又有一个加成 20%，则会用11*(1+0.2)=13.2
@@ -90,7 +89,8 @@ public abstract class ItemStackClientMixin {
                 processed.put(attribute, temp);
             }
             modifier = new EntityAttributeModifier(modifier.getId(), modifier.getName(), count, modifier.getOperation());
-            this.modifiers.put(attribute, modifier);
+            if (!this.modifiers.containsEntry(attribute, modifier))
+                this.modifiers.put(attribute, modifier);
         }
         processed.clear();
         for (var entry : this.modifiers.entries()) {
@@ -150,10 +150,7 @@ public abstract class ItemStackClientMixin {
     }
 
     @Inject(method = "getTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;hasNbt()Z", ordinal = 1), locals = LocalCapture.CAPTURE_FAILHARD)
-    private void showDetails(
-            @Nullable PlayerEntity player, TooltipContext context, CallbackInfoReturnable<List<Text>> cir,
-            List<Text> list
-    ) {
+    private void showDetails(@Nullable PlayerEntity player, TooltipContext context, CallbackInfoReturnable<List<Text>> cir, List<Text> list) {
         if (list != null && merged && hideModifierDetails()) {
             list.add(ScreenTexts.EMPTY);
             list.add(Text.translatable("item.modifiers.show_details").formatted(Formatting.GRAY));
@@ -173,8 +170,9 @@ public abstract class ItemStackClientMixin {
         var itemStack = (ItemStack) (Object) this;
         if (itemStack.getMaker() != null)
             list.add(Text.translatable("item.maker", itemStack.getMaker()));
-        Integer score = itemStack.getScore();
-        if (score != null)
-            list.add(Text.translatable("item.score", score));
+        // TODO 暂时删除评分显示，后面再做
+//        Integer score = itemStack.getScore();
+//        if (score != null)
+//            list.add(Text.translatable("item.score", score));
     }
 }

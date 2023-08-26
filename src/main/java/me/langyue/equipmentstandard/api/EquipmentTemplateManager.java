@@ -1,6 +1,7 @@
 package me.langyue.equipmentstandard.api;
 
 import me.langyue.equipmentstandard.EquipmentStandard;
+import me.langyue.equipmentstandard.api.data.Attribute;
 import me.langyue.equipmentstandard.data.EquipmentTemplate;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
@@ -16,6 +17,7 @@ public class EquipmentTemplateManager {
     private static final Map<Identifier, EquipmentTemplate> TEMPLATES = new HashMap<>();
 
     public static void put(Identifier id, EquipmentTemplate template) {
+        template.init();
         TEMPLATES.put(id, template);
     }
 
