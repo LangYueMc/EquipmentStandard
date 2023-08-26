@@ -2,11 +2,16 @@ package me.langyue.equipmentstandard.api;
 
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
+import me.langyue.equipmentstandard.api.data.Attribute;
 import me.langyue.equipmentstandard.api.data.AttributeScore;
 import net.minecraft.entity.attribute.EntityAttribute;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.registry.Registries;
+import net.minecraft.util.Identifier;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class AttributeScoreManager {
     private static final Multimap<EntityAttribute, AttributeScore.Score> ATTRIBUTE_SCORES = LinkedListMultimap.create();
@@ -15,10 +20,11 @@ public class AttributeScoreManager {
         ATTRIBUTE_SCORES.clear();
     }
 
-    private static final Map<EntityAttributeModifier.Operation, AttributeScore.Score> _DEFAULT_SCORE = new LinkedHashMap<>() {{
-        put(EntityAttributeModifier.Operation.ADDITION, new AttributeScore.Score(EntityAttributeModifier.Operation.ADDITION, 300));
-        put(EntityAttributeModifier.Operation.MULTIPLY_BASE, new AttributeScore.Score(EntityAttributeModifier.Operation.MULTIPLY_BASE, 2500));
-        put(EntityAttributeModifier.Operation.MULTIPLY_TOTAL, new AttributeScore.Score(EntityAttributeModifier.Operation.MULTIPLY_TOTAL, 3000));
+    private static final Map<Attribute.Operation, AttributeScore.Score> _DEFAULT_SCORE = new LinkedHashMap<>() {{
+        put(Attribute.Operation.ADDITION, new AttributeScore.Score(Attribute.Operation.ADDITION, 100));
+        put(Attribute.Operation.ADDITION_PERCENTAGE, new AttributeScore.Score(Attribute.Operation.ADDITION_PERCENTAGE, 1));
+        put(Attribute.Operation.MULTIPLY_BASE, new AttributeScore.Score(Attribute.Operation.MULTIPLY_BASE, 500));
+        put(Attribute.Operation.MULTIPLY_TOTAL, new AttributeScore.Score(Attribute.Operation.MULTIPLY_TOTAL, 550));
     }};
 
     public static void put(EntityAttribute attribute, AttributeScore.Score score, boolean overWrite) {
@@ -30,7 +36,6 @@ public class AttributeScoreManager {
         }
         ATTRIBUTE_SCORES.put(attribute, score);
     }
-
 
     public static Collection<AttributeScore.Score> get(EntityAttribute attribute) {
         if (ATTRIBUTE_SCORES.containsKey(attribute))
@@ -44,11 +49,15 @@ public class AttributeScoreManager {
         return ATTRIBUTE_SCORES.keySet();
     }
 
-    public static double get(EntityAttribute attribute, EntityAttributeModifier.Operation operation) {
+    public static double get(EntityAttribute attribute, Attribute.Operation operation) {
         return get(attribute).stream()
                 .filter(it -> it.getOperation() == operation)
                 .findFirst()
                 .orElse(_DEFAULT_SCORE.getOrDefault(operation, new AttributeScore.Score(null, 100)))
                 .getScore();
+    }
+
+    public static double get(String attribute, Attribute.Operation operation) {
+        return get(Registries.ATTRIBUTE.get(new Identifier(attribute)), operation);
     }
 }

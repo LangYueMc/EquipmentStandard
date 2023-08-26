@@ -165,7 +165,7 @@ public class ModifierUtils {
                             }
                             UUID uuid = attribute.merge() ? UUID.randomUUID() : getModifierId(attribute, slot);
                             String name = attribute.merge() ? "es:merge" : MODIFIER_NAME;
-                            if (amount.get() != 0){
+                            if (amount.get() != 0) {
                                 multimap.put(entityAttribute, new EntityAttributeModifier(uuid, name, amount.get(), operation));
                             }
                         }
@@ -218,15 +218,15 @@ public class ModifierUtils {
      * @param stack 物品
      * @return 装备分
      */
-    public static Map<EquipmentSlot, Double> getScore(ItemStack stack) {
-        if (stack == null) return null;
-        Map<EquipmentSlot, Double> score = new HashMap<>();
-        for (EquipmentSlot slot : EquipmentSlot.values()) {
-            var multimap = stack.getAttributeModifiers(slot);
-            AtomicDouble atomic = new AtomicDouble(0);
-            multimap.forEach((attribute, modifier) -> atomic.addAndGet(modifier.getValue() * AttributeScoreManager.get(attribute, modifier.getOperation())));
-            score.put(slot, atomic.get());
-        }
-        return score;
+    public static double getScore(ItemStack stack) {
+        if (stack == null) return 0;
+        NbtCompound nbt = stack.getSubNbt(NBT_KEY);
+        if (nbt == null) return 0;
+        AtomicDouble atomic = new AtomicDouble(0);
+        nbt.getKeys().stream()
+                .map(key -> Attribute.Final.fromNbt(nbt.getCompound(key)))
+                .filter(Objects::nonNull)
+                .forEach(attribute -> atomic.addAndGet(attribute.amount() * AttributeScoreManager.get(attribute.type(), attribute.operation())));
+        return atomic.get();
     }
 }

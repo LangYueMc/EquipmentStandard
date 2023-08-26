@@ -4,16 +4,12 @@ import me.langyue.equipmentstandard.api.EquipmentComponentsAccessor;
 import me.langyue.equipmentstandard.api.ModifierUtils;
 import me.langyue.equipmentstandard.api.ProficiencyAccessor;
 import me.langyue.equipmentstandard.api.data.EquipmentComponents;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import java.util.Collections;
-import java.util.Map;
 
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin implements EquipmentComponentsAccessor {
@@ -58,15 +54,12 @@ public abstract class ItemStackMixin implements EquipmentComponentsAccessor {
 
     @Override
     public void updateScore() {
-        Map<EquipmentSlot, Double> score = ModifierUtils.getScore(_this);
-        if (score != null && !score.isEmpty()) {
-            EquipmentComponents components = getComponents();
-            if (components == null) {
-                components = new EquipmentComponents();
-            }
-            components.setScore(Math.max(Collections.max(score.values()).intValue(), 0));
-            components.save(_this);
-            _updateScore = true;
+        EquipmentComponents components = getComponents();
+        if (components == null) {
+            components = new EquipmentComponents();
         }
+        components.setScore((int) Math.max(ModifierUtils.getScore(_this), 0));
+        components.save(_this);
+        _updateScore = true;
     }
 }

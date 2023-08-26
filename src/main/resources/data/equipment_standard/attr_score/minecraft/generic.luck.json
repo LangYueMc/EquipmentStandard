@@ -3,15 +3,19 @@
   "scores": [
     {
       "operation": "ADDITION",
-      "score": 700
+      "score": 200
+    },
+    {
+      "operation": "ADDITION_PERCENTAGE",
+      "score": 200
     },
     {
       "operation": "MULTIPLY_BASE",
-      "score": 280000
+      "score": 1000
     },
     {
       "operation": "MULTIPLY_TOTAL",
-      "score": 300000
+      "score": 1200
     }
   ]
 }

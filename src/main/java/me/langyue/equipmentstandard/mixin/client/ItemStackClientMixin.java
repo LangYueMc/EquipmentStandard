@@ -183,7 +183,8 @@ public abstract class ItemStackClientMixin {
         if (itemStack.getMaker() != null)
             list.add(Text.translatable("item.maker", itemStack.getMaker()));
         Integer score = itemStack.getScore();
-        if (score != null)
+        if (context.isAdvanced() && score != null) {
             list.add(Text.translatable("item.score", score));
+        }
     }
 }

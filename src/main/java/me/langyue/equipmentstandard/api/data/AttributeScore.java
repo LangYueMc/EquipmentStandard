@@ -2,7 +2,6 @@ package me.langyue.equipmentstandard.api.data;
 
 import me.langyue.equipmentstandard.api.AttributeScoreManager;
 import net.minecraft.entity.attribute.EntityAttribute;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 
@@ -22,7 +21,7 @@ public class AttributeScore {
     public void register() {
         EntityAttribute entityAttribute = Registries.ATTRIBUTE.get(new Identifier(type));
         if (entityAttribute == null) return;
-        for (var operation : EntityAttributeModifier.Operation.values()) {
+        for (var operation : Attribute.Operation.values()) {
             AttributeScoreManager.put(entityAttribute, getScore(operation), overWrite);
         }
     }
@@ -31,7 +30,7 @@ public class AttributeScore {
         return type;
     }
 
-    public Score getScore(EntityAttributeModifier.Operation operation) {
+    public Score getScore(Attribute.Operation operation) {
         if (scores == null || operation == null) return null;
         return scores.stream()
                 .filter(it -> it.operation == operation)
@@ -39,15 +38,15 @@ public class AttributeScore {
     }
 
     public static class Score {
-        private final EntityAttributeModifier.Operation operation;
+        private final Attribute.Operation operation;
         private final double score;
 
-        public Score(EntityAttributeModifier.Operation operation, float score) {
+        public Score(Attribute.Operation operation, float score) {
             this.operation = operation;
             this.score = score;
         }
 
-        public EntityAttributeModifier.Operation getOperation() {
+        public Attribute.Operation getOperation() {
             return operation;
         }
 
