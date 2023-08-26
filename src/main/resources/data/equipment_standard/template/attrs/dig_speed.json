@@ -1,15 +1,15 @@
 {
   "verifiers": [
     {
-      "tag": "c:tools"
+      "tag": "es:tools"
     }
   ],
   "exclude": [
     {
-      "tag": "c:swords"
+      "tag": "es:swords"
     },
     {
-      "tag": "c:tridents"
+      "tag": "es:tridents"
     }
   ],
   "attributes": [

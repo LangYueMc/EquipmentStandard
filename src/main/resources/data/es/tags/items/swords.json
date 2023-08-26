@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#c:swords",
+      "required": false
+    },
+    {
+      "id": "#minecraft:swords",
+      "required": false
+    },
+    {
+      "id": "#fabric:swords",
+      "required": false
+    },
+    {
+      "id": "mythicmetals:steel_swords",
+      "required": false
+    }
+  ]
+}

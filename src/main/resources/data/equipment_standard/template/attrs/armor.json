@@ -1,10 +1,10 @@
 {
   "verifiers": [
     {
-      "tag": "c:elytra"
+      "tag": "es:elytra"
     },
     {
-      "tag": "c:horse_armors"
+      "tag": "es:horse_armors"
     }
   ],
   "attributes": [

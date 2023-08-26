@@ -1,19 +1,19 @@
 {
   "verifiers": [
     {
-      "tag": "c:armors"
+      "tag": "es:armors"
     },
     {
-      "tag": "c:tools"
+      "tag": "es:tools"
     },
     {
-      "tag": "c:bows"
+      "tag": "es:bows"
     },
     {
-      "tag": "c:elytra"
+      "tag": "es:elytra"
     },
     {
-      "tag": "c:shields"
+      "tag": "es:shields"
     },
     {
       "id": "minecraft:fishing_rod"

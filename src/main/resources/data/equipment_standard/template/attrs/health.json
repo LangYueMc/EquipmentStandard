@@ -1,16 +1,16 @@
 {
   "verifiers": [
     {
-      "tag": "c:armors"
+      "tag": "es:armors"
     },
     {
-      "tag": "c:shields"
+      "tag": "es:shields"
     },
     {
-      "tag": "c:elytra"
+      "tag": "es:elytra"
     },
     {
-      "tag": "c:horse_armors"
+      "tag": "es:horse_armors"
     }
   ],
   "attributes": [
