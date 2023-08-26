@@ -100,6 +100,9 @@ public class ModifierUtils {
                         if (chance <= 0) {
                             return false;
                         }
+                        if (chance >= 1) {
+                            return true;
+                        }
                         return EquipmentStandard.RANDOM.nextDouble() < chance;
                     }).forEach(attribute -> {
                         Attribute.Final attributeFinal = attribute.getFinal(proficiency, luck);
@@ -221,9 +224,7 @@ public class ModifierUtils {
         for (EquipmentSlot slot : EquipmentSlot.values()) {
             var multimap = stack.getAttributeModifiers(slot);
             AtomicDouble atomic = new AtomicDouble(0);
-            multimap.forEach((attribute, modifier) -> {
-                atomic.addAndGet(modifier.getValue() * AttributeScoreManager.get(attribute, modifier.getOperation()));
-            });
+            multimap.forEach((attribute, modifier) -> atomic.addAndGet(modifier.getValue() * AttributeScoreManager.get(attribute, modifier.getOperation())));
             score.put(slot, atomic.get());
         }
         return score;

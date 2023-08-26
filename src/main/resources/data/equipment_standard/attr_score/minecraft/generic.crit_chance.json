@@ -1,0 +1,9 @@
+{
+  "type": "equipment_standard:generic.crit_chance",
+  "scores": [
+    {
+      "operation": "MULTIPLY_BASE",
+      "score": 10000
+    }
+  ]
+}

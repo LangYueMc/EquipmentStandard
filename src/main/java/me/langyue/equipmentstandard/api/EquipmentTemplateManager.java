@@ -16,6 +16,10 @@ public class EquipmentTemplateManager {
 
     private static final Map<Identifier, EquipmentTemplate> TEMPLATES = new HashMap<>();
 
+    public static void clear() {
+        TEMPLATES.clear();
+    }
+
     public static void put(Identifier id, EquipmentTemplate template) {
         template.init();
         TEMPLATES.put(id, template);

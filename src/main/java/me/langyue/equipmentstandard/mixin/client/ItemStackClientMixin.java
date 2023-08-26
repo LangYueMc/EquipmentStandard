@@ -4,6 +4,7 @@ import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
 import me.langyue.equipmentstandard.EquipmentStandard;
 import me.langyue.equipmentstandard.api.CustomEntityAttributes;
+import me.langyue.equipmentstandard.api.ItemRarityManager;
 import me.langyue.equipmentstandard.api.ModifierUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -53,6 +54,17 @@ public abstract class ItemStackClientMixin {
      */
     private static boolean hideModifierDetails() {
         return EquipmentStandard.CONFIG.mergeModifiers && !Screen.hasShiftDown();
+    }
+
+    @Inject(method = "getName", at = @At("RETURN"))
+    private void getNameMixin(CallbackInfoReturnable<Text> cir) {
+        var itemStack = (ItemStack) (Object) this;
+        var rarity = ItemRarityManager.get(itemStack);
+        if (rarity != null) {
+            MutableText name = (MutableText) cir.getReturnValue();
+            name.getSiblings().add(0, rarity.getPrefix());
+            name.formatted(rarity.getFormattings());
+        }
     }
 
     @Inject(method = "getTooltip", at = @At("HEAD"))
@@ -170,9 +182,8 @@ public abstract class ItemStackClientMixin {
         var itemStack = (ItemStack) (Object) this;
         if (itemStack.getMaker() != null)
             list.add(Text.translatable("item.maker", itemStack.getMaker()));
-        // TODO 暂时删除评分显示，后面再做
-//        Integer score = itemStack.getScore();
-//        if (score != null)
-//            list.add(Text.translatable("item.score", score));
+        Integer score = itemStack.getScore();
+        if (score != null)
+            list.add(Text.translatable("item.score", score));
     }
 }

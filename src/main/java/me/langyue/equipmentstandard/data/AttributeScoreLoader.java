@@ -25,6 +25,7 @@ public class AttributeScoreLoader extends BaseDataLoader {
 
     @Override
     protected void apply(Map<Identifier, JsonElement> prepared, ResourceManager manager, Profiler profiler) {
+        AttributeScoreManager.clear();
         for (Map.Entry<Identifier, JsonElement> entry : prepared.entrySet()) {
             var attributeScore = GSON.fromJson(entry.getValue(), AttributeScore.class);
             attributeScore.register();

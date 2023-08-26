@@ -1,9 +1,6 @@
 {
   "verifiers": [
     {
-      "tag": "c:armors"
-    },
-    {
       "tag": "c:elytra"
     },
     {

@@ -20,6 +20,8 @@ public abstract class ItemStackMixin implements EquipmentComponentsAccessor {
 
     private final ItemStack _this = (ItemStack) (Object) this;
 
+    private boolean _updateScore = false;
+
     @Inject(method = "getMaxDamage", at = @At("TAIL"), cancellable = true)
     private void getMaxDamageMixin(CallbackInfoReturnable<Integer> info) {
         if (!_this.isDamageable()) return;
@@ -49,6 +51,7 @@ public abstract class ItemStackMixin implements EquipmentComponentsAccessor {
 
     @Override
     public Integer getScore() {
+        if (!_updateScore) updateScore();
         EquipmentComponents components = this.getComponents();
         return components == null ? null : components.getScore();
     }
@@ -61,8 +64,9 @@ public abstract class ItemStackMixin implements EquipmentComponentsAccessor {
             if (components == null) {
                 components = new EquipmentComponents();
             }
-            components.setScore(Collections.max(score.values()).intValue());
+            components.setScore(Math.max(Collections.max(score.values()).intValue(), 0));
             components.save(_this);
+            _updateScore = true;
         }
     }
 }

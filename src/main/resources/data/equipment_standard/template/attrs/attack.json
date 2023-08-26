@@ -114,7 +114,6 @@
       "modifiers": [
         {
           "weights": 30,
-          "operation": "ADDITION",
           "min": -0.2,
           "max": 0,
           "bonus": {
@@ -124,7 +123,6 @@
         },
         {
           "weights": 40,
-          "operation": "ADDITION",
           "amount": 0,
           "bonus": {
             "lucky": -0.1,
@@ -133,7 +131,6 @@
         },
         {
           "weights": 50,
-          "operation": "ADDITION",
           "min": 0,
           "max": 0.2,
           "bonus": {
@@ -143,7 +140,6 @@
         },
         {
           "weights": 1,
-          "operation": "ADDITION",
           "min": 0.2,
           "max": 0.5,
           "bonus": {
@@ -160,7 +156,6 @@
       "modifiers": [
         {
           "weights": 30,
-          "operation": "ADDITION",
           "min": -0.2,
           "max": 0,
           "bonus": {
@@ -170,7 +165,6 @@
         },
         {
           "weights": 40,
-          "operation": "ADDITION",
           "amount": 0,
           "bonus": {
             "lucky": -0.1,
@@ -179,7 +173,6 @@
         },
         {
           "weights": 50,
-          "operation": "ADDITION",
           "min": 0,
           "max": 0.5,
           "bonus": {
@@ -189,7 +182,6 @@
         },
         {
           "weights": 1,
-          "operation": "ADDITION",
           "min": 0.5,
           "max": 3,
           "bonus": {

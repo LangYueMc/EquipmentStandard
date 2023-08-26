@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import me.langyue.equipmentstandard.EquipmentStandard;
-import me.langyue.equipmentstandard.api.EquipmentTemplateManager;
+import me.langyue.equipmentstandard.api.ItemRarityManager;
 import me.langyue.equipmentstandard.gson.ItemVerifierDeserializer;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
@@ -12,25 +12,25 @@ import net.minecraft.util.profiler.Profiler;
 
 import java.util.Map;
 
-public class TemplateDataLoader extends BaseDataLoader {
+public class ItemRarityLoader extends BaseDataLoader {
     private static final Gson GSON = new GsonBuilder()
             .setPrettyPrinting()
             .disableHtmlEscaping()
             .registerTypeAdapter(ItemVerifier.class, new ItemVerifierDeserializer())
             .create();
 
-    public TemplateDataLoader() {
-        super(GSON, "template");
+    public ItemRarityLoader() {
+        super(GSON, "rarity");
     }
 
     @Override
     protected void apply(Map<Identifier, JsonElement> prepared, ResourceManager manager, Profiler profiler) {
-        EquipmentTemplateManager.clear();
+        ItemRarityManager.clear();
         for (Map.Entry<Identifier, JsonElement> entry : prepared.entrySet()) {
-            EquipmentTemplate template = GSON.fromJson(entry.getValue(), EquipmentTemplate.class);
-            EquipmentTemplateManager.put(entry.getKey(), template);
+            ItemRarity itemRarity = GSON.fromJson(entry.getValue(), ItemRarity.class);
+            ItemRarityManager.put(entry.getKey(), itemRarity);
         }
-        EquipmentStandard.LOGGER.info("Loaded {} equipment templates", EquipmentTemplateManager.size());
+        EquipmentStandard.LOGGER.info("Loaded {} item rarity", ItemRarityManager.size());
     }
 
     @Override

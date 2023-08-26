@@ -119,7 +119,11 @@ public class Attribute {
             return null;
         }
         AttributeModifier modifier = this.getNextModifier(proficiency, luck);
-        if (modifier == null || modifier.getAmount() == 0) {
+        if (modifier == null) {
+            return null;
+        }
+        double amount = modifier.getAmount();
+        if (amount == 0) {
             // 如果值为 0 则不存储 NBT
             return null;
         }
@@ -128,7 +132,7 @@ public class Attribute {
             return new Final(
                     this.getType(),
                     !this.getType().equalsIgnoreCase(CustomEntityAttributes.DURABLE) && this.isMerge(),
-                    modifier.getAmount(),
+                    amount,
                     operation,
                     this.getSlots()
             );
@@ -198,7 +202,7 @@ public class Attribute {
         public Final(String type, boolean merge, double amount, Operation operation, Set<Slot> slots) {
             if (StringUtils.isBlank(type)) throw new IllegalArgumentException("Attribute type can not be null.");
             if (amount == 0) throw new IllegalArgumentException("Attribute amount can not be 0.");
-            if (operation == null) throw new IllegalArgumentException("Operation can not be null.");
+            if (operation == null) operation = Operation.ADDITION;
             this.type = type;
             this.merge = merge;
             this.amount = amount;

@@ -3,15 +3,15 @@
   "scores": [
     {
       "operation": "ADDITION",
-      "score": 1000
+      "score": 700
     },
     {
       "operation": "MULTIPLY_BASE",
-      "score": 9000
+      "score": 280000
     },
     {
       "operation": "MULTIPLY_TOTAL",
-      "score": 10000
+      "score": 300000
     }
   ]
 }
