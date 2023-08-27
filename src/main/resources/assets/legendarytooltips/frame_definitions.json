@@ -1,0 +1,26 @@
+{
+  "definitions": [
+    {
+      "image": "legendarytooltips:textures/gui/es_borders.png",
+      "index": 0,
+      "startColor": "20_#FF996922_#FF996922_#FF996922_#FF996922_#FF996922_#FF996922_#FF996922_#FF996922_#FF996922_#FF996922_#FF996922_#FF996922_#FF996922+v64-s32_#FF996922",
+      "endColor": "20_#FF5A3A1D_#FF5A3A1D_#FF5A3A1D_#FF5A3A1D_#FF5A3A1D_#FF5A3A1D_#FF5A3A1D_#FF5A3A1D_#FF5A3A1D_#FF5A3A1D_#FF5A3A1D_#FF5A3A1D_#FF5A3A1D_#FF996922+v64-s32",
+      "bgStartColor": "#D0996922-v155",
+      "bgEndColor": "#F45A3A1D-v55",
+      "selectors": [
+        "&Rarity=Legendary"
+      ]
+    },
+    {
+      "image": "legendarytooltips:textures/gui/es_borders.png",
+      "index": 1,
+      "startColor": "30_#FF912307_orangered-s45-v25_#FF912307+v50_#FF912307+r25+s50-v55",
+      "endColor": "30_#FF853824-v15_#FF853824+r5+g5+v45_#FF853824-v45_#FF853824+r25+g25",
+      "bgStartColor": "30_#FF912307-v105-a36_#F0120A00",
+      "bgEndColor": "#F8853824-v100",
+      "selectors": [
+        "&Rarity=Unique"
+      ]
+    }
+  ]
+}

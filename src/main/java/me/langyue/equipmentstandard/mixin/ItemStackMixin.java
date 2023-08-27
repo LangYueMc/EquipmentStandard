@@ -1,9 +1,11 @@
 package me.langyue.equipmentstandard.mixin;
 
 import me.langyue.equipmentstandard.api.EquipmentComponentsAccessor;
+import me.langyue.equipmentstandard.api.ItemRarityManager;
 import me.langyue.equipmentstandard.api.ModifierUtils;
 import me.langyue.equipmentstandard.api.ProficiencyAccessor;
 import me.langyue.equipmentstandard.api.data.EquipmentComponents;
+import me.langyue.equipmentstandard.data.ItemRarity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
@@ -58,8 +60,16 @@ public abstract class ItemStackMixin implements EquipmentComponentsAccessor {
         if (components == null) {
             components = new EquipmentComponents();
         }
-        components.setScore((int) Math.max(ModifierUtils.getScore(_this), 0));
+        int score = ModifierUtils.getScore(_this);
+        components.setScore(score);
+        components.setRarity(ItemRarityManager.get(_this, score));
         components.save(_this);
         _updateScore = true;
+    }
+
+    @Override
+    public ItemRarity.Rarity getItemRarity() {
+        EquipmentComponents components = this.getComponents();
+        return components == null ? null : components.getRarity();
     }
 }

@@ -4,7 +4,6 @@ import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
 import me.langyue.equipmentstandard.EquipmentStandard;
 import me.langyue.equipmentstandard.api.CustomEntityAttributes;
-import me.langyue.equipmentstandard.api.ItemRarityManager;
 import me.langyue.equipmentstandard.api.ModifierUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -49,6 +48,8 @@ public abstract class ItemStackClientMixin {
 
     private final Map<UUID, Double> mergeText = new HashMap<>();
 
+    private final ItemStack _this = (ItemStack) (Object) this;
+
     /**
      * 是否显示详情
      */
@@ -56,14 +57,18 @@ public abstract class ItemStackClientMixin {
         return EquipmentStandard.CONFIG.mergeModifiers && !Screen.hasShiftDown();
     }
 
-    @Inject(method = "getName", at = @At("RETURN"))
+    @Inject(method = "getName", at = @At("RETURN"), cancellable = true)
     private void getNameMixin(CallbackInfoReturnable<Text> cir) {
-        var itemStack = (ItemStack) (Object) this;
-        var rarity = ItemRarityManager.get(itemStack);
+        var rarity = _this.getItemRarity();
         if (rarity != null) {
             MutableText name = (MutableText) cir.getReturnValue();
-            name.getSiblings().add(0, rarity.getPrefix());
-            name.formatted(rarity.getFormattings());
+            if (rarity.getPrefix() != null) {
+                name = rarity.getPrefix().append(name);
+            }
+            if (rarity.getFormattings() != null && rarity.getFormattings().length > 0) {
+                name.formatted(rarity.getFormattings());
+            }
+            cir.setReturnValue(name);
         }
     }
 
@@ -179,10 +184,10 @@ public abstract class ItemStackClientMixin {
     @Inject(method = "getTooltip", at = @At(value = "TAIL"))
     private void getTooltipMixin(@Nullable PlayerEntity player, TooltipContext context, CallbackInfoReturnable<List<Text>> cir) {
         List<Text> list = cir.getReturnValue();
-        var itemStack = (ItemStack) (Object) this;
-        if (itemStack.getMaker() != null)
-            list.add(Text.translatable("item.maker", itemStack.getMaker()));
-        Integer score = itemStack.getScore();
+        String maker = _this.getMaker();
+        if (maker != null)
+            list.add(Text.translatable("item.maker", maker));
+        Integer score = _this.getScore();
         if (context.isAdvanced() && score != null) {
             list.add(Text.translatable("item.score", score));
         }

@@ -1,6 +1,7 @@
 package me.langyue.equipmentstandard.api;
 
 import me.langyue.equipmentstandard.api.data.EquipmentComponents;
+import me.langyue.equipmentstandard.data.ItemRarity;
 import net.minecraft.entity.player.PlayerEntity;
 
 public interface EquipmentComponentsAccessor {
@@ -29,5 +30,12 @@ public interface EquipmentComponentsAccessor {
      * 请仅在服务端计算
      */
     default void updateScore() {
+    }
+
+    /**
+     * 获取装备评分
+     */
+    default ItemRarity.Rarity getItemRarity() {
+        return null;
     }
 }

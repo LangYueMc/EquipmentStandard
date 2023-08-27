@@ -29,5 +29,8 @@
   "item.maker": "Maker: %s",
   "item.score": "Score: %d",
 
+  "item.es.rarity.legendary": "Legendary ",
+  "item.es.rarity.unique": "Unique ",
+
   "stat.equipment_standard.proficiency": "Craft Proficiency"
 }

@@ -1,9 +1,14 @@
 package me.langyue.equipmentstandard.api.data;
 
+import me.langyue.equipmentstandard.data.ItemRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public final class EquipmentComponents {
@@ -11,6 +16,7 @@ public final class EquipmentComponents {
     private final String maker;
     private final int proficiency;
     private Integer score;
+    private ItemRarity.Rarity rarity;
 
     public EquipmentComponents() {
         this(null, 0);
@@ -36,6 +42,15 @@ public final class EquipmentComponents {
         if (score != null) {
             nbt.putInt("Score", score);
         }
+        if (rarity != null) {
+            nbt.putString("Rarity", rarity.getName());
+            if (rarity.getPrefix() != null) {
+                nbt.putString("NamePrefix", Text.Serializer.toJson(rarity.getPrefix()));
+            }
+            if (rarity.getFormattings() != null && rarity.getFormattings().length > 0) {
+                nbt.putString("NameFormatting", String.join(" ", Arrays.stream(rarity.getFormattings()).map(Formatting::getName).toList()));
+            }
+        }
         return nbt;
     }
 
@@ -52,6 +67,19 @@ public final class EquipmentComponents {
             if (nbt.contains("Score", NbtElement.INT_TYPE)) {
                 components.setScore(nbt.getInt("Score"));
             }
+            String rarity = null;
+            if (nbt.contains("Rarity", NbtElement.STRING_TYPE)) {
+                rarity = nbt.getString("Rarity");
+            }
+            MutableText namePrefix = null;
+            if (nbt.contains("NamePrefix", NbtElement.STRING_TYPE)) {
+                namePrefix = Text.Serializer.fromLenientJson(nbt.getString("NamePrefix"));
+            }
+            Formatting[] nameFormatting = null;
+            if (nbt.contains("NameFormatting", NbtElement.STRING_TYPE)) {
+                nameFormatting = Arrays.stream(nbt.getString("NameFormatting").split(" ")).map(Formatting::byName).toArray(Formatting[]::new);
+            }
+            components.setRarity(new ItemRarity.Rarity(rarity, 0, namePrefix, nameFormatting));
             return components;
         } catch (Throwable e) {
             return null;
@@ -66,6 +94,10 @@ public final class EquipmentComponents {
         this.score = score;
     }
 
+    public void setRarity(ItemRarity.Rarity rarity) {
+        this.rarity = rarity;
+    }
+
     public String getMaker() {
         return maker;
     }
@@ -76,6 +108,10 @@ public final class EquipmentComponents {
 
     public Integer getScore() {
         return score;
+    }
+
+    public ItemRarity.Rarity getRarity() {
+        return rarity;
     }
 
     @Override
@@ -100,5 +136,4 @@ public final class EquipmentComponents {
                 "proficiency=" + proficiency + ", " +
                 "score=" + score + ']';
     }
-
 }

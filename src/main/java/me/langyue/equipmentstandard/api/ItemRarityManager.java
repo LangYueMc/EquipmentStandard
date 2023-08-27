@@ -12,12 +12,12 @@ public class ItemRarityManager {
 
     private static final Map<Identifier, ItemRarity> ITEM_RARITY_MAP = new HashMap<>();
     private static final Set<ItemRarity.Rarity> DEFAULT_RARITY = new LinkedHashSet<>(){{
-        add(new ItemRarity.Rarity(0, Text.empty(), Formatting.WHITE));
-        add(new ItemRarity.Rarity(50, Text.empty(), Formatting.GREEN));
-        add(new ItemRarity.Rarity(350, Text.empty(), Formatting.BLUE));
-        add(new ItemRarity.Rarity(800, Text.empty(), Formatting.LIGHT_PURPLE));
-        add(new ItemRarity.Rarity(1000, Text.empty(), Formatting.RED));
-        add(new ItemRarity.Rarity(1500, Text.empty(), Formatting.GOLD));
+        add(new ItemRarity.Rarity("Common", 0, Text.empty(), Formatting.WHITE));
+        add(new ItemRarity.Rarity("Uncommon", 50, Text.empty(), Formatting.GREEN));
+        add(new ItemRarity.Rarity("Rare", 350, Text.empty(), Formatting.BLUE));
+        add(new ItemRarity.Rarity("Epic", 600, Text.empty(), Formatting.LIGHT_PURPLE));
+        add(new ItemRarity.Rarity("Legendary", 1000, Text.translatable("item.es.rarity.legendary"), Formatting.GOLD));
+        add(new ItemRarity.Rarity("Unique", 1500, Text.translatable("item.es.rarity.unique"), Formatting.RED));
     }};
 
     public static void clear() {
@@ -33,10 +33,14 @@ public class ItemRarityManager {
     }
 
     public static ItemRarity.Rarity get(ItemStack itemStack) {
+        return get(itemStack, itemStack.getScore());
+    }
+
+    public static ItemRarity.Rarity get(ItemStack itemStack, Integer score) {
         return ITEM_RARITY_MAP.values().stream()
                 .filter(it -> it.isValid(itemStack))
                 .findFirst()
                 .orElse(new ItemRarity(null, null, DEFAULT_RARITY.stream().toList()))
-                .getRarity(itemStack.getScore());
+                .getRarity(score);
     }
 }

@@ -35,14 +35,20 @@ public class ItemRarity {
     }
 
     public static class Rarity {
-        private final double score;
+        private final String name;
+        private final Integer score;
         private MutableText prefix;
         private final Formatting[] formattings;
 
-        public Rarity(double score, MutableText prefix, Formatting... formattings) {
+        public Rarity(String name, Integer score, MutableText prefix, Formatting... formattings) {
+            this.name = name;
             this.score = score;
             this.prefix = prefix;
             this.formattings = formattings;
+        }
+
+        public String getName() {
+            return name;
         }
 
         public double getScore() {

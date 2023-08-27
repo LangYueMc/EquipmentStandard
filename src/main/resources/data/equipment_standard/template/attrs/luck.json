@@ -16,7 +16,7 @@
       "id": "minecraft:fishing_rod"
     }
   ],
-  "slots": ["DEFAULT", "MAINHAND"],
+  "slots": ["DEFAULT"],
   "attributes": [
     {
       "type": "generic.luck",

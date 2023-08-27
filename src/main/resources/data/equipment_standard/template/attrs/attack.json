@@ -17,7 +17,7 @@
           "max": 0,
           "bonus": {
             "lucky": -1,
-            "proficiency": -0.07
+            "proficiency": -0.01
           }
         },
         {
@@ -26,7 +26,7 @@
           "amount": 0,
           "bonus": {
             "lucky": -0.1,
-            "proficiency": -0.02
+            "proficiency": -0.002
           }
         },
         {
@@ -36,7 +36,7 @@
           "max": 20,
           "bonus": {
             "lucky": 0.05,
-            "proficiency": 0.02
+            "proficiency": 0.002
           }
         },
         {
@@ -46,7 +46,7 @@
           "max": 50,
           "bonus": {
             "lucky": 0.1,
-            "proficiency": 0.05
+            "proficiency": 0.01
           }
         }
       ]
@@ -62,7 +62,7 @@
           "max": 0,
           "bonus": {
             "lucky": -1,
-            "proficiency": -0.07
+            "proficiency": -0.01
           }
         },
         {
@@ -71,7 +71,7 @@
           "amount": 0,
           "bonus": {
             "lucky": -0.1,
-            "proficiency": -0.02
+            "proficiency": -0.002
           }
         },
         {
@@ -80,8 +80,8 @@
           "min": 0,
           "max": 0.2,
           "bonus": {
-            "lucky": 0.1,
-            "proficiency": 0.02
+            "lucky": 0.05,
+            "proficiency": 0.002
           }
         },
         {
@@ -91,7 +91,7 @@
           "max": 0.5,
           "bonus": {
             "lucky": 0.1,
-            "proficiency": 0.05
+            "proficiency": 0.01
           }
         }
       ]
@@ -118,7 +118,7 @@
           "max": 0,
           "bonus": {
             "lucky": -1,
-            "proficiency": -0.07
+            "proficiency": -0.01
           }
         },
         {
@@ -126,7 +126,7 @@
           "amount": 0,
           "bonus": {
             "lucky": -0.1,
-            "proficiency": -0.02
+            "proficiency": -0.002
           }
         },
         {
@@ -135,7 +135,7 @@
           "max": 0.2,
           "bonus": {
             "lucky": 0.05,
-            "proficiency": 0.02
+            "proficiency": 0.002
           }
         },
         {
@@ -144,7 +144,7 @@
           "max": 0.5,
           "bonus": {
             "lucky": 0.1,
-            "proficiency": 0.05
+            "proficiency": 0.01
           }
         }
       ]
@@ -160,7 +160,7 @@
           "max": 0,
           "bonus": {
             "lucky": -1,
-            "proficiency": -0.07
+            "proficiency": -0.01
           }
         },
         {
@@ -168,7 +168,7 @@
           "amount": 0,
           "bonus": {
             "lucky": -0.1,
-            "proficiency": -0.02
+            "proficiency": -0.002
           }
         },
         {
@@ -176,8 +176,8 @@
           "min": 0,
           "max": 0.5,
           "bonus": {
-            "lucky": 0.1,
-            "proficiency": 0.02
+            "lucky": 0.05,
+            "proficiency": 0.002
           }
         },
         {
@@ -186,7 +186,7 @@
           "max": 3,
           "bonus": {
             "lucky": 0.1,
-            "proficiency": 0.05
+            "proficiency": 0.01
           }
         }
       ]

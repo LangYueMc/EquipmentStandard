@@ -218,7 +218,7 @@ public class ModifierUtils {
      * @param stack 物品
      * @return 装备分
      */
-    public static double getScore(ItemStack stack) {
+    public static int getScore(ItemStack stack) {
         if (stack == null) return 0;
         NbtCompound nbt = stack.getSubNbt(NBT_KEY);
         if (nbt == null) return 0;
@@ -227,6 +227,6 @@ public class ModifierUtils {
                 .map(key -> Attribute.Final.fromNbt(nbt.getCompound(key)))
                 .filter(Objects::nonNull)
                 .forEach(attribute -> atomic.addAndGet(attribute.amount() * AttributeScoreManager.get(attribute.type(), attribute.operation())));
-        return atomic.get();
+        return (int) atomic.get();
     }
 }

@@ -29,5 +29,8 @@
   "item.maker": "制作者：%s",
   "item.score": "装备分：%d",
 
+  "item.es.rarity.legendary": "传奇 · ",
+  "item.es.rarity.unique": "无双 · ",
+
   "stat.equipment_standard.proficiency": "制作熟练度"
 }
