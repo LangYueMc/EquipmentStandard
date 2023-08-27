@@ -5,11 +5,14 @@
   "compatibilityLevel": "JAVA_17",
   "plugin": "me.langyue.equipmentstandard.mixin.Plugin",
   "mixins": [
+    "ArmorStandEntityMixin",
+    "ItemFrameEntityMixin",
     "ItemMixin",
     "ItemStackMixin",
     "LivingEntityMixin",
     "LootTableMixin",
     "MerchantScreenHandlerMixin",
+    "MobEntityMixin",
     "PlayerEntityMixin",
     "TradeOutputSlotMixin"
   ],

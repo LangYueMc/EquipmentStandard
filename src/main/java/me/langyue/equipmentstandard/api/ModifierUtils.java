@@ -79,7 +79,7 @@ public class ModifierUtils {
     }
 
     public static boolean setItemStackAttribute(ItemStack stack, int proficiency, double luck) {
-        if (stack.getCount() > 1) return false; // 堆叠的物品不添加
+        if (stack.isEmpty() || stack.getCount() > 1) return false; // 堆叠的物品不添加
         if (stack.getSubNbt(NBT_KEY) != null) return false;
         var templates = EquipmentTemplateManager.get(stack);
         if (templates == null || templates.isEmpty()) {
@@ -127,6 +127,7 @@ public class ModifierUtils {
                 nbt.put(key, attribute.toNbt());
             }
         }
+        stack.updateScore();    // 计算评分
         return true;
     }
 
@@ -218,15 +219,29 @@ public class ModifierUtils {
      * @param stack 物品
      * @return 装备分
      */
-    public static int getScore(ItemStack stack) {
-        if (stack == null) return 0;
+    public static Integer getScore(ItemStack stack) {
+        if (stack == null || stack.isEmpty()) return null;
         NbtCompound nbt = stack.getSubNbt(NBT_KEY);
-        if (nbt == null) return 0;
+        if (nbt == null) return null;
         AtomicDouble atomic = new AtomicDouble(0);
         nbt.getKeys().stream()
                 .map(key -> Attribute.Final.fromNbt(nbt.getCompound(key)))
                 .filter(Objects::nonNull)
                 .forEach(attribute -> atomic.addAndGet(attribute.amount() * AttributeScoreManager.get(attribute.type(), attribute.operation())));
         return (int) atomic.get();
+    }
+
+    public static boolean isEs(ItemStack stack) {
+        return stack != null && !stack.isEmpty() && stack.hasNbt() && stack.getSubNbt(NBT_KEY) != null;
+    }
+
+    /**
+     * 打个标记，防止刷属性
+     */
+    public static void mark(ItemStack stack) {
+        if (stack == null || stack.isEmpty()) return;
+        var templates = EquipmentTemplateManager.get(stack);
+        if (templates == null || templates.isEmpty()) return;
+        stack.getOrCreateSubNbt(NBT_KEY);
     }
 }

@@ -184,12 +184,12 @@ public abstract class ItemStackClientMixin {
     @Inject(method = "getTooltip", at = @At(value = "TAIL"))
     private void getTooltipMixin(@Nullable PlayerEntity player, TooltipContext context, CallbackInfoReturnable<List<Text>> cir) {
         List<Text> list = cir.getReturnValue();
-        String maker = _this.getMaker();
-        if (maker != null)
-            list.add(Text.translatable("item.maker", maker));
-        Integer score = _this.getScore();
-        if (score != null) {
-            list.add(Text.translatable("item.score", score));
+        if (ModifierUtils.isEs(_this)) {
+            String maker = _this.getMaker();
+            if (maker != null)
+                list.add(Text.translatable("item.maker", maker));
+            Integer score = _this.getScore();
+            list.add(Text.translatable("item.score", score == null ? 0 : score));
         }
     }
 }

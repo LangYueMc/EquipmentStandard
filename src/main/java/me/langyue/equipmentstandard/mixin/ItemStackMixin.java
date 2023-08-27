@@ -56,15 +56,18 @@ public abstract class ItemStackMixin implements EquipmentComponentsAccessor {
 
     @Override
     public void updateScore() {
+        Integer score = ModifierUtils.getScore(_this);
+        if (score == null) {
+            return;
+        }
+        _updateScore = true;
         EquipmentComponents components = getComponents();
         if (components == null) {
             components = new EquipmentComponents();
         }
-        int score = ModifierUtils.getScore(_this);
         components.setScore(score);
         components.setRarity(ItemRarityManager.get(_this, score));
         components.save(_this);
-        _updateScore = true;
     }
 
     @Override
