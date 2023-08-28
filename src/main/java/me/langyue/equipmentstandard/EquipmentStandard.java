@@ -34,4 +34,10 @@ public class EquipmentStandard implements ModInitializer {
     public static Identifier createIdentifier(String id) {
         return new Identifier(MOD_ID, id);
     }
+
+    public static int nextBetween(Integer min, Integer max) {
+        if (min == null) min = 0;
+        if (max == null || max <= 0 || max == Integer.MAX_VALUE) max = Integer.MAX_VALUE - Math.abs(min);
+        return RANDOM.nextBetween(0, max - min) + min;
+    }
 }

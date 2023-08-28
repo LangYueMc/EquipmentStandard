@@ -59,11 +59,13 @@ public final class EquipmentComponents {
     }
 
     public static EquipmentComponents fromNbt(NbtCompound nbt) {
+        if (nbt == null) return null;
         try {
-            if (!nbt.contains("Maker", NbtElement.STRING_TYPE)) {
-                return null;
+            String maker = null;
+            if (nbt.contains("Maker", NbtElement.STRING_TYPE)) {
+                maker = nbt.getString("Maker");
             }
-            EquipmentComponents components = new EquipmentComponents(nbt.getString("Maker"), nbt.getInt("Proficiency"));
+            EquipmentComponents components = new EquipmentComponents(maker, nbt.getInt("Proficiency"));
             if (nbt.contains("Score", NbtElement.INT_TYPE)) {
                 components.setScore(nbt.getInt("Score"));
             }
@@ -87,6 +89,7 @@ public final class EquipmentComponents {
     }
 
     public static EquipmentComponents fromItem(ItemStack itemStack) {
+        if (itemStack == null || itemStack.isEmpty()) return null;
         return fromNbt(itemStack.getSubNbt(NBT_KEY));
     }
 

@@ -127,6 +127,7 @@ public class ModifierUtils {
                 nbt.put(key, attribute.toNbt());
             }
         }
+        stack.setSubNbt(NBT_KEY, nbt);
         stack.updateScore();    // 计算评分
         return true;
     }

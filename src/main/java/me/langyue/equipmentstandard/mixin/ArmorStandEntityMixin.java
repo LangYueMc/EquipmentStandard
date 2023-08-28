@@ -1,5 +1,6 @@
 package me.langyue.equipmentstandard.mixin;
 
+import me.langyue.equipmentstandard.EquipmentStandard;
 import me.langyue.equipmentstandard.api.ModifierUtils;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.decoration.ArmorStandEntity;
@@ -26,6 +27,6 @@ public abstract class ArmorStandEntityMixin {
     @Inject(method = "equipStack", at = @At("HEAD"))
     private void equipStackMixin(EquipmentSlot slot, ItemStack stack, CallbackInfo info) {
         if (_this.getWorld().isClient) return;
-        ModifierUtils.setItemStackAttribute(stack);
+        ModifierUtils.setItemStackAttribute(stack, EquipmentStandard.nextBetween(-9999, 2000), 0);
     }
 }

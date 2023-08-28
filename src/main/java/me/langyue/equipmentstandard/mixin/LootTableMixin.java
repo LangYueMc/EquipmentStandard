@@ -2,6 +2,7 @@ package me.langyue.equipmentstandard.mixin;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectListIterator;
+import me.langyue.equipmentstandard.EquipmentStandard;
 import me.langyue.equipmentstandard.api.ModifierUtils;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
@@ -22,16 +23,28 @@ import java.util.function.Consumer;
 @Mixin(LootTable.class)
 public class LootTableMixin {
 
+    private static float luck = 0;
+
+    @Inject(method = "generateUnprocessedLoot(Lnet/minecraft/loot/context/LootContext;Ljava/util/function/Consumer;)V", at = @At(value = "HEAD"))
+    private void generateUnprocessedLootHeadMixin(LootContext context, Consumer<ItemStack> lootConsumer, CallbackInfo ci) {
+        luck = context.getLuck();
+    }
+
+    @Inject(method = "generateUnprocessedLoot(Lnet/minecraft/loot/context/LootContext;Ljava/util/function/Consumer;)V", at = @At(value = "RETURN"))
+    private void generateUnprocessedLootReturnMixin(LootContext context, Consumer<ItemStack> lootConsumer, CallbackInfo ci) {
+        luck = 0;
+    }
+
     @Inject(method = "method_331", at = @At(value = "INVOKE", target = "Ljava/util/function/Consumer;accept(Ljava/lang/Object;)V", ordinal = 0))
     private static void processStacksMixin(ServerWorld world, Consumer<ItemStack> lootConsumer, ItemStack itemStack, CallbackInfo info) {
         if (world.isClient) return;
-        ModifierUtils.setItemStackAttribute(itemStack);
+        ModifierUtils.setItemStackAttribute(itemStack, EquipmentStandard.nextBetween(-9999, 2000), luck);
     }
 
     @Inject(method = "method_331", at = @At(value = "INVOKE", target = "Ljava/util/function/Consumer;accept(Ljava/lang/Object;)V", ordinal = 1), locals = LocalCapture.CAPTURE_FAILSOFT)
     private static void processStacksMixin(ServerWorld world, Consumer<ItemStack> lootConsumer, ItemStack itemStack, CallbackInfo info, int i, ItemStack itemStack2) {
         if (world.isClient) return;
-        ModifierUtils.setItemStackAttribute(itemStack);
+        ModifierUtils.setItemStackAttribute(itemStack2, EquipmentStandard.nextBetween(-9999, 2000), luck);
     }
 
     @Inject(method = "supplyInventory", at = @At(value = "INVOKE", target = "Lnet/minecraft/inventory/Inventory;setStack(ILnet/minecraft/item/ItemStack;)V", ordinal = 1), locals = LocalCapture.CAPTURE_FAILSOFT)

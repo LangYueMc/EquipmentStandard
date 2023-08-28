@@ -1,5 +1,6 @@
 package me.langyue.equipmentstandard.mixin;
 
+import me.langyue.equipmentstandard.EquipmentStandard;
 import me.langyue.equipmentstandard.api.ModifierUtils;
 import net.minecraft.entity.decoration.ItemFrameEntity;
 import net.minecraft.item.ItemStack;
@@ -25,6 +26,6 @@ public class ItemFrameEntityMixin {
     @Inject(method = "setHeldItemStack(Lnet/minecraft/item/ItemStack;Z)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/decoration/ItemFrameEntity;setAsStackHolder(Lnet/minecraft/item/ItemStack;)V"))
     private void setHeldItemStackMixin(ItemStack value, boolean update, CallbackInfo info) {
         if (_this.getWorld().isClient) return;
-        ModifierUtils.setItemStackAttribute(value);
+        ModifierUtils.setItemStackAttribute(value, EquipmentStandard.nextBetween(-9999, 2000), 0);
     }
 }

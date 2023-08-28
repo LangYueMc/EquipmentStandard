@@ -1,6 +1,7 @@
 package me.langyue.equipmentstandard.mixin;
 
 import blue.endless.jankson.annotation.Nullable;
+import me.langyue.equipmentstandard.EquipmentStandard;
 import me.langyue.equipmentstandard.api.ModifierUtils;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EquipmentSlot;
@@ -30,7 +31,7 @@ public abstract class MobEntityMixin {
         for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
             ItemStack itemStack = this.getEquippedStack(equipmentSlot);
             if (!itemStack.isEmpty()) {
-                ModifierUtils.setItemStackAttribute(itemStack);
+                ModifierUtils.setItemStackAttribute(itemStack, EquipmentStandard.nextBetween(-9999, 2000), 0);
             }
         }
     }

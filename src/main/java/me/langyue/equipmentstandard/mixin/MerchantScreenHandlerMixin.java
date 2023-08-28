@@ -28,7 +28,7 @@ public abstract class MerchantScreenHandlerMixin {
         if (merchant instanceof LivingEntity livingEntity) {
             ProficiencyAccessor proficiencyAccessor = (ProficiencyAccessor) livingEntity;
             // 批量产品难免瑕疵, 说不定还是进的货，熟练度设置成 0 吧（很合理）
-            if (ModifierUtils.setItemStackAttribute(original, 0, 0)
+            if (ModifierUtils.setItemStackAttribute(original)
                     && EquipmentStandard.RANDOM.nextDouble() < 0.34)
                 // 批量购买的熟练度也不加那么多了, 大概三分之一
                 proficiencyAccessor.incrementProficiency();
