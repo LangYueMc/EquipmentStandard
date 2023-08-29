@@ -52,7 +52,7 @@
         {
           "weights": 1,
           "operation": "ADDITION",
-          "min": 2.1,
+          "min": 2,
           "max": 5,
           "bonus": {
             "proficiency": 0.005

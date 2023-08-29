@@ -51,7 +51,7 @@
         {
           "weights": 1,
           "operation": "ADDITION",
-          "min": 3,
+          "min": 2,
           "max": 5,
           "bonus": {
             "lucky": 0.1,
