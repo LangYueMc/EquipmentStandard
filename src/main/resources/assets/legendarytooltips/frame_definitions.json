@@ -8,7 +8,7 @@
       "bgStartColor": "#D0380F54-v155",
       "bgEndColor": "#F4380F54-v55",
       "selectors": [
-        "&Rarity=Scrap"
+        "&Rarity=Defective"
       ]
     },
     {

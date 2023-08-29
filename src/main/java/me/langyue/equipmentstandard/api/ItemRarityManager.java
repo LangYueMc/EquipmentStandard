@@ -12,7 +12,7 @@ public class ItemRarityManager {
 
     private static final Map<Identifier, ItemRarity> ITEM_RARITY_MAP = new HashMap<>();
     private static final Set<ItemRarity.Rarity> DEFAULT_RARITY = new LinkedHashSet<>(){{
-        add(new ItemRarity.Rarity("Scrap", -9999, Text.translatable("item.es.rarity.scrap"), Formatting.GRAY));
+        add(new ItemRarity.Rarity("Defective", Integer.MIN_VALUE, Text.translatable("item.es.rarity.defective"), Formatting.GRAY));
         add(new ItemRarity.Rarity("Common", -20, Text.empty(), Formatting.WHITE));
         add(new ItemRarity.Rarity("Uncommon", 50, Text.empty(), Formatting.GREEN));
         add(new ItemRarity.Rarity("Rare", 350, Text.empty(), Formatting.BLUE));

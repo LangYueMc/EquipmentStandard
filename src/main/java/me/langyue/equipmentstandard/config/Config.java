@@ -18,6 +18,13 @@ public class Config implements ConfigData {
     public boolean showDurability = true;
 
     /**
+     * 显示品质分
+     */
+    @Comment("显示耐久\nWhether to show equipment score")
+    @ConfigEntry.Gui.Tooltip(count = 0)
+    public boolean showScore = false;
+
+    /**
      * 在工具提示里合并同类属性修改器
      */
     @Comment("合并同类属性修改器\nMerge attribute modifiers of the same type in tooltips")

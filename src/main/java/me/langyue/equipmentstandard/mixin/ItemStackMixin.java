@@ -8,6 +8,8 @@ import me.langyue.equipmentstandard.api.data.EquipmentComponents;
 import me.langyue.equipmentstandard.data.ItemRarity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -19,6 +21,25 @@ public abstract class ItemStackMixin implements EquipmentComponentsAccessor {
     private final ItemStack _this = (ItemStack) (Object) this;
 
     private boolean _updateScore = false;
+
+    @Inject(method = "getName", at = @At("RETURN"), cancellable = true)
+    private void getNameMixin(CallbackInfoReturnable<Text> cir) {
+        var rarity = _this.getItemRarity();
+        if (rarity != null) {
+            MutableText name = (MutableText) cir.getReturnValue();
+            if (rarity.getFormattings() != null && rarity.getFormattings().length > 0) {
+                name.formatted(rarity.getFormattings());
+            }
+            MutableText prefix = rarity.getPrefix();
+            if (prefix != null) {
+                if (rarity.getFormattings() != null && rarity.getFormattings().length > 0) {
+                    prefix.formatted(rarity.getFormattings());
+                }
+                name = prefix.append(name);
+            }
+            cir.setReturnValue(name);
+        }
+    }
 
     @Inject(method = "getMaxDamage", at = @At("TAIL"), cancellable = true)
     private void getMaxDamageMixin(CallbackInfoReturnable<Integer> info) {

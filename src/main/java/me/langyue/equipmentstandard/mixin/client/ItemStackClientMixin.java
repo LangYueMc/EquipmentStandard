@@ -57,21 +57,6 @@ public abstract class ItemStackClientMixin {
         return EquipmentStandard.CONFIG.mergeModifiers && !Screen.hasShiftDown();
     }
 
-    @Inject(method = "getName", at = @At("RETURN"), cancellable = true)
-    private void getNameMixin(CallbackInfoReturnable<Text> cir) {
-        var rarity = _this.getItemRarity();
-        if (rarity != null) {
-            MutableText name = (MutableText) cir.getReturnValue();
-            if (rarity.getPrefix() != null) {
-                name = rarity.getPrefix().append(name);
-            }
-            if (rarity.getFormattings() != null && rarity.getFormattings().length > 0) {
-                name.formatted(rarity.getFormattings());
-            }
-            cir.setReturnValue(name);
-        }
-    }
-
     @Inject(method = "getTooltip", at = @At("HEAD"))
     private void head(@Nullable PlayerEntity player, TooltipContext context, CallbackInfoReturnable<List<Text>> cir) {
         modifiers.clear();

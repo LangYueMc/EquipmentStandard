@@ -29,7 +29,7 @@
   "item.maker": "制作者：%s",
   "item.score": "品质分：%d",
 
-  "item.es.rarity.scrap": "废品 · ",
+  "item.es.rarity.defective": "废品 · ",
   "item.es.rarity.legendary": "传奇 · ",
   "item.es.rarity.unique": "无双 · ",
 
