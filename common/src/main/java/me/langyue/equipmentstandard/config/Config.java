@@ -46,6 +46,13 @@ public class Config implements ConfigData {
     public double baseCritChance = 0.01;
 
     /**
+     * 基础暴击率
+     */
+    @Comment("跳击暴击率\nBase crit chance")
+    @ConfigEntry.Gui.NoTooltip
+    public double jumpAttackCritChance = 0.1;
+
+    /**
      * 基础暴击伤害倍率
      */
     @Comment("基础暴击伤害倍率\nBase crit damage multiplier")

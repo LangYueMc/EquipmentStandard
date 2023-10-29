@@ -1,5 +1,6 @@
 package me.langyue.equipmentstandard.mixin;
 
+import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
 import me.langyue.equipmentstandard.api.EquipmentComponentsAccessor;
 import me.langyue.equipmentstandard.api.ItemRarityManager;
@@ -29,10 +30,11 @@ public abstract class ItemStackMixin implements EquipmentComponentsAccessor {
 //    @Unique
 //    private boolean es$updateScore = false;
 
-    @Inject(method = "getAttributeModifiers", at = @At("RETURN"))
+    @Inject(method = "getAttributeModifiers", at = @At("RETURN"), cancellable = true)
     private void hookGetAttributeModifiers(EquipmentSlot equipmentSlot, CallbackInfoReturnable<Multimap<Attribute, AttributeModifier>> cir) {
-        Multimap<Attribute, AttributeModifier> modifierMultimap = cir.getReturnValue();
+        Multimap<Attribute, AttributeModifier> modifierMultimap = LinkedListMultimap.create(cir.getReturnValue());
         ModifierUtils.modify(es$this, equipmentSlot, modifierMultimap);
+        cir.setReturnValue(modifierMultimap);
     }
 
     @Inject(method = "getHoverName", at = @At("RETURN"), cancellable = true)

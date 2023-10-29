@@ -20,19 +20,18 @@ public abstract class ItemMixin {
 
     @Inject(method = "onCraftedBy", at = @At("TAIL"))
     private void onCraftedByMixin(ItemStack itemStack, Level level, Player player, CallbackInfo ci) {
-        if (!level.isClientSide() && !itemStack.isEmpty()) {
-            if (ModifierUtils.setItemStackAttribute(itemStack, player)) {
-                ProficiencyAccessor proficiencyAccessor = (ProficiencyAccessor) player;
-                ((EquipmentComponentsAccessor) (Object) itemStack).es$setMaker(player);
-                // 熟练度
-                String name = BuiltInRegistries.ITEM.getKey(itemStack.getItem()).getPath();
-                // 部分不加熟练度的
-                if (Stream.of("wooden", "stone", "leather", "chainmail", "turtle").noneMatch(name::contains)) {
-                    proficiencyAccessor.incrementProficiency();
-                }
+        if (level.isClientSide() || itemStack.isEmpty()) return;
+        if (ModifierUtils.setItemStackAttribute(itemStack, player)) {
+            ProficiencyAccessor proficiencyAccessor = (ProficiencyAccessor) player;
+            ((EquipmentComponentsAccessor) (Object) itemStack).es$setMaker(player);
+            // 熟练度
+            String name = BuiltInRegistries.ITEM.getKey(itemStack.getItem()).getPath();
+            // 部分不加熟练度的
+            if (Stream.of("wooden", "stone", "leather", "chainmail", "turtle").noneMatch(name::contains)) {
+                proficiencyAccessor.incrementProficiency();
             }
-            ((EquipmentComponentsAccessor) (Object) itemStack).es$updateScore();    // 计算评分
         }
+        ((EquipmentComponentsAccessor) (Object) itemStack).es$updateScore();    // 计算评分
     }
 
 }
