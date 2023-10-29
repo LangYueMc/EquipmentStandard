@@ -7,6 +7,7 @@
   "text.autoconfig.equipment_standard.option.showMultiplyOperationAdditional": "显示百分比属性的补充说明",
   "text.autoconfig.equipment_standard.option.showMultiplyOperationAdditional.@Tooltip": "显示 MULTIPLY_BASE 和 MULTIPLY_TOTAL 的补充说明",
   "text.autoconfig.equipment_standard.option.baseCritChance": "基础暴击率",
+  "text.autoconfig.equipment_standard.option.jumpAttackCritChance": "跳击暴击率",
   "text.autoconfig.equipment_standard.option.baseCritDamageMultiplier": "基础暴击伤害倍率",
   "text.autoconfig.equipment_standard.option.debug": "Debug 模式",
 
@@ -32,6 +33,9 @@
   "item.score": "品质分：%d",
 
   "item.es.rarity.defective": "废品 · ",
+  "item.es.rarity.uncommon": "精品 · ",
+  "item.es.rarity.rare": "稀有 · ",
+  "item.es.rarity.epic": "史诗 · ",
   "item.es.rarity.legendary": "传奇 · ",
   "item.es.rarity.unique": "无双 · ",
 

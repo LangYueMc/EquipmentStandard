@@ -19,7 +19,7 @@ public abstract class CraftingMenuMixin extends AbstractContainerMenu {
     }
 
     @ModifyVariable(method = "quickMoveStack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;copy()Lnet/minecraft/world/item/ItemStack;", shift = At.Shift.AFTER), ordinal = 1)
-    private ItemStack quickMoveStack1Mixin(ItemStack itemStack) {
+    private ItemStack quickMoveStackMixin(ItemStack itemStack) {
         Slot slot;
         for (int i = 10; i < 46; i++) {
             slot = this.slots.get(i);

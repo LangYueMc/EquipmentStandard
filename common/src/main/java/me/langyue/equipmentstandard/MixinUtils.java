@@ -37,19 +37,19 @@ public class MixinUtils {
     /**
      * 暴击
      */
-    public static float critAttackMixin(Player player, Entity target, float f) {
-        if (player.isLocalPlayer()) return f;
+    public static float critAttackMixin(LivingEntity entity, Entity target, float f) {
+        if (entity.level().isClientSide()) return f;
         // 暴击几率
-        double chance = player.fallDistance > 0.0F
-                && !player.onGround()
-                && !player.onClimbable()
-                && !player.isInWater()
-                && !player.hasEffect(MobEffects.BLINDNESS)
-                && !player.isPassenger()
+        double chance = entity.fallDistance > 0.0F
+                && !entity.onGround()
+                && !entity.onClimbable()
+                && !entity.isInWater()
+                && !entity.hasEffect(MobEffects.BLINDNESS)
+                && !entity.isPassenger()
                 && target instanceof LivingEntity
                 ? EquipmentStandard.CONFIG.jumpAttackCritChance : EquipmentStandard.CONFIG.baseCritChance;
         if (chance < 1) {
-            var chanceInstance = player.getAttribute(CustomAttributes.CRIT_CHANCE);
+            var chanceInstance = entity.getAttribute(CustomAttributes.CRIT_CHANCE);
             if (chanceInstance != null) {
                 for (AttributeModifier modifier : chanceInstance.getModifiers()) {
                     chance += modifier.getAmount();
@@ -69,15 +69,17 @@ public class MixinUtils {
 
         double damageMultiplier = EquipmentStandard.CONFIG.baseCritDamageMultiplier;
         // 暴击伤害倍率
-        var damageInstance = player.getAttribute(CustomAttributes.CRIT_DAMAGE);
+        var damageInstance = entity.getAttribute(CustomAttributes.CRIT_DAMAGE);
         if (damageInstance != null) {
             for (AttributeModifier modifier : damageInstance.getModifiers()) {
                 damageMultiplier += modifier.getAmount();
             }
         }
         damageMultiplier = Math.max(damageMultiplier, 1.1);
-        player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_ATTACK_CRIT, player.getSoundSource(), 1.0F, 1.0F);
-        player.crit(target);
+        entity.level().playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.PLAYER_ATTACK_CRIT, entity.getSoundSource(), 1.0F, 1.0F);
+        if (entity instanceof Player player) {
+            player.crit(target);
+        }
         return (float) (f * damageMultiplier);
     }
 }

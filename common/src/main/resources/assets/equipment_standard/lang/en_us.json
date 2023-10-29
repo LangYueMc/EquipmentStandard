@@ -7,6 +7,7 @@
   "text.autoconfig.equipment_standard.option.showMultiplyOperationAdditional": "Show additional notes for multiply operation",
   "text.autoconfig.equipment_standard.option.showMultiplyOperationAdditional.@Tooltip": "Show additional notes for MULTIPLY_BASE and MULTIPLY_TOTAL",
   "text.autoconfig.equipment_standard.option.baseCritChance": "Base Crit Chance",
+  "text.autoconfig.equipment_standard.option.jumpAttackCritChance": "Jump Attack Crit Chance",
   "text.autoconfig.equipment_standard.option.baseCritDamageMultiplier": "Base crit damage multiplier",
   "text.autoconfig.equipment_standard.option.debug": "Debug",
 
@@ -32,6 +33,9 @@
   "item.score": "Score: %d",
 
   "item.es.rarity.defective": "Defective ",
+  "item.es.rarity.uncommon": "Uncommon ",
+  "item.es.rarity.rare": "Rare ",
+  "item.es.rarity.epic": "Epic ",
   "item.es.rarity.legendary": "Legendary ",
   "item.es.rarity.unique": "Unique ",
 

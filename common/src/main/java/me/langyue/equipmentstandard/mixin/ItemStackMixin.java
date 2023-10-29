@@ -27,9 +27,6 @@ public abstract class ItemStackMixin implements EquipmentComponentsAccessor {
     @Unique
     private final ItemStack es$this = (ItemStack) (Object) this;
 
-//    @Unique
-//    private boolean es$updateScore = false;
-
     @Inject(method = "getAttributeModifiers", at = @At("RETURN"), cancellable = true)
     private void hookGetAttributeModifiers(EquipmentSlot equipmentSlot, CallbackInfoReturnable<Multimap<Attribute, AttributeModifier>> cir) {
         Multimap<Attribute, AttributeModifier> modifierMultimap = LinkedListMultimap.create(cir.getReturnValue());
@@ -85,7 +82,6 @@ public abstract class ItemStackMixin implements EquipmentComponentsAccessor {
 
     @Override
     public Integer es$getScore() {
-//        if (!es$updateScore) es$updateScore();
         EquipmentComponents components = this.es$getComponents();
         return components == null ? null : components.getScore();
     }
@@ -96,7 +92,6 @@ public abstract class ItemStackMixin implements EquipmentComponentsAccessor {
         if (score == null) {
             return;
         }
-//        es$updateScore = true;
         EquipmentComponents components = es$getComponents();
         if (components == null) {
             components = new EquipmentComponents();
