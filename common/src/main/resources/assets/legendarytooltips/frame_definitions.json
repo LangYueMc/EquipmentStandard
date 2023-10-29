@@ -1,0 +1,81 @@
+{
+  "definitions": [
+    {
+      "image": "legendarytooltips:textures/gui/es_borders.png",
+      "index": 9,
+      "startColor": "#9A9A9A",
+      "endColor": "#BABABA",
+      "bgStartColor": "#D0380F54-v155",
+      "bgEndColor": "#F4380F54-v55",
+      "selectors": [
+        "&Rarity=Defective"
+      ]
+    },
+    {
+      "image": "legendarytooltips:textures/gui/es_borders.png",
+      "index": 9,
+      "startColor": "#FAFAFA",
+      "endColor": "#BABABA",
+      "bgStartColor": "#D0380F54-v155",
+      "bgEndColor": "#F4380F54-v55",
+      "selectors": [
+        "&Rarity=Common"
+      ]
+    },
+    {
+      "image": "legendarytooltips:textures/gui/es_borders.png",
+      "index": 9,
+      "startColor": "#3FC43A",
+      "endColor": "#00EE76",
+      "bgStartColor": "#D0380F54-v155",
+      "bgEndColor": "#F4380F54-v55",
+      "selectors": [
+        "&Rarity=Uncommon"
+      ]
+    },
+    {
+      "image": "legendarytooltips:textures/gui/es_borders.png",
+      "index": 9,
+      "startColor": "#5454FC",
+      "endColor": "#7B68EE",
+      "bgStartColor": "#D0163F54-v155",
+      "bgEndColor": "#F4163F54-v55",
+      "selectors": [
+        "&Rarity=Rare"
+      ]
+    },
+    {
+      "image": "legendarytooltips:textures/gui/es_borders.png",
+      "index": 9,
+      "startColor": "#FC54FC",
+      "endColor": "#A020F0",
+      "bgStartColor": "#D0380F54-v155",
+      "bgEndColor": "#F4380F54-v55",
+      "selectors": [
+        "&Rarity=Epic"
+      ]
+    },
+    {
+      "image": "legendarytooltips:textures/gui/es_borders.png",
+      "index": 0,
+      "startColor": "20_#FF996922_#FF996922_#FF996922_#FF996922_#FF996922_#FF996922_#FF996922_#FF996922_#FF996922_#FF996922_#FF996922_#FF996922_#FF996922+v64-s32_#FF996922",
+      "endColor": "20_#FF5A3A1D_#FF5A3A1D_#FF5A3A1D_#FF5A3A1D_#FF5A3A1D_#FF5A3A1D_#FF5A3A1D_#FF5A3A1D_#FF5A3A1D_#FF5A3A1D_#FF5A3A1D_#FF5A3A1D_#FF5A3A1D_#FF996922+v64-s32",
+      "bgStartColor": "#D0996922-v155",
+      "bgEndColor": "#F45A3A1D-v55",
+      "selectors": [
+        "&Rarity=Legendary"
+      ]
+    },
+    {
+      "image": "legendarytooltips:textures/gui/es_borders.png",
+      "index": 1,
+      "startColor": "5_red_orange_purple",
+      "endColor": "5_orange_purple_red+r25+g25",
+      "bgStartColor": "30_#FF912307-v105-a36_#F0120A00",
+      "bgEndColor": "#F8853824-v100",
+      "selectors": [
+        "&Rarity=Unique"
+      ]
+    }
+  ]
+}

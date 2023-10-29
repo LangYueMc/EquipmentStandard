@@ -1,0 +1,39 @@
+{
+  "text.autoconfig.equipment_standard.title": "装备标准",
+  "text.autoconfig.equipment_standard.option.showDurability": "显示装备耐久",
+  "text.autoconfig.equipment_standard.option.showScore": "显示装备分",
+  "text.autoconfig.equipment_standard.option.mergeModifiers": "合并同类属性修改器",
+  "text.autoconfig.equipment_standard.option.mergeModifiers.@Tooltip": "同类属性修改器将合并后显示，如 +4 护甲 和 +1 护甲 合并后显示 +5 护甲",
+  "text.autoconfig.equipment_standard.option.showMultiplyOperationAdditional": "显示百分比属性的补充说明",
+  "text.autoconfig.equipment_standard.option.showMultiplyOperationAdditional.@Tooltip": "显示 MULTIPLY_BASE 和 MULTIPLY_TOTAL 的补充说明",
+  "text.autoconfig.equipment_standard.option.baseCritChance": "基础暴击率",
+  "text.autoconfig.equipment_standard.option.baseCritDamageMultiplier": "基础暴击伤害倍率",
+  "text.autoconfig.equipment_standard.option.debug": "Debug 模式",
+
+  "tag.item.c.helmets": "头盔",
+  "tag.item.c.chestplates": "胸甲",
+  "tag.item.c.leggings": "护腿",
+  "tag.item.c.boots": "靴子",
+  "tag.item.c.tridents": "三叉戟",
+  "tag.item.c.elytra": "鞘翅",
+  "tag.item.c.horse_armors": "马铠",
+
+  "attribute.name.generic.dig_speed": "挖掘速度",
+  "attribute.name.generic.crit_chance": "暴击几率",
+  "attribute.name.generic.crit_damage": "暴击伤害",
+  "attribute.name.generic.real_damage": "真实伤害",
+
+  "attribute.modifier.additional.0": "",
+  "attribute.modifier.additional.1": "(基础)",
+  "attribute.modifier.additional.2": "(最终)",
+
+  "item.modifiers.show_details": "按住 §bShift§r 查看属性详情",
+  "item.maker": "制作者：%s",
+  "item.score": "品质分：%d",
+
+  "item.es.rarity.defective": "废品 · ",
+  "item.es.rarity.legendary": "传奇 · ",
+  "item.es.rarity.unique": "无双 · ",
+
+  "stat.equipment_standard.proficiency": "制作熟练度"
+}

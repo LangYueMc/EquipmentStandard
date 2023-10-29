@@ -1,0 +1,24 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "me.langyue.equipmentstandard.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "ArmorStandMixin",
+    "ItemFrameMixin",
+    "ItemMixin",
+    "ItemStackMixin",
+    "LivingEntityMixin",
+    "LootTableMixin",
+    "MerchantMenuMixin",
+    "MerchantResultSlotMixin",
+    "MobMixin",
+    "PlayerMixin"
+  ],
+  "client": [
+    "client.ItemStackClientMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

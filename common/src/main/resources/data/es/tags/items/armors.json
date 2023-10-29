@@ -1,0 +1,33 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#c:helmets",
+      "required": false
+    },
+    {
+      "id": "#c:chestplates",
+      "required": false
+    },
+    {
+      "id": "#c:leggings",
+      "required": false
+    },
+    {
+      "id": "#c:boots",
+      "required": false
+    },
+    {
+      "id": "#minecraft:trimmable_armor",
+      "required": false
+    },
+    {
+      "id": "#mythicmetals:armor",
+      "required": false
+    },
+    {
+      "id": "#c:armor",
+      "required": false
+    }
+  ]
+}

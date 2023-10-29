@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "equipment_standard",
+  "version": "${version}",
+
+  "name": "EquipmentStandard",
+  "description": "",
+  "authors": [
+    "墨涤千尘"
+  ],
+  "contact": {
+    "sources": "https://github.com/LangYueMc/EquipmentStandard",
+    "issues": "https://github.com/LangYueMc/EquipmentStandard/issues/new"
+  },
+
+  "license": "GNU AGPL 3.0",
+  "icon": "icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "me.langyue.equipmentstandard.fabric.EquipmentStandardFabricClient"
+    ],
+    "main": [
+      "me.langyue.equipmentstandard.fabric.EquipmentStandardFabric"
+    ],
+    "modmenu": [
+      "me.langyue.equipmentstandard.fabric.config.ModMenuIntegration"
+    ]
+  },
+  "mixins": [
+    "equipment_standard.mixins.json",
+    "equipment_standard-common.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.21",
+    "minecraft": ">=1.20",
+    "architectury": ">=9-",
+    "cloth-config2": ">=11-"
+  }
+}

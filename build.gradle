@@ -1,0 +1,83 @@
+plugins {
+    id "architectury-plugin" version "3.4-SNAPSHOT"
+    id "dev.architectury.loom" version "1.1-SNAPSHOT" apply false
+    id "com.matthewprenger.cursegradle" version "1.4.0" apply false
+    id "com.modrinth.minotaur" version "2.+" apply false
+}
+
+architectury {
+    minecraft = rootProject.minecraft_version
+}
+
+ext {
+    v_changelog = "[V${rootProject.mod_version} 更新日志](https://github.com/LangYueMc/AutoTranslation/blob/master/CHANGELOG.md#V${rootProject.mod_version})\n" +
+            "\n[V${rootProject.mod_version} CHANGELOG](https://github.com/LangYueMc/AutoTranslation/blob/master/CHANGELOG_en.md#V${rootProject.mod_version})"
+}
+
+subprojects {
+    apply plugin: "dev.architectury.loom"
+
+    loom {
+        silentMojangMappingsLicense()
+    }
+
+    dependencies {
+        minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
+        // The following line declares the mojmap mappings, you may use other mappings as well
+        mappings loom.officialMojangMappings()
+        // The following line declares the yarn mappings you may select this one as well.
+        // mappings "net.fabricmc:yarn:@YARN_MAPPINGS@:v2"
+    }
+}
+
+allprojects {
+    apply plugin: "java"
+    apply plugin: "architectury-plugin"
+    apply plugin: "maven-publish"
+
+    archivesBaseName = rootProject.archives_base_name
+    group = rootProject.maven_group
+
+
+    repositories {
+        // Add repositories to retrieve artifacts from in here.
+        // You should only use this when depending on other mods because
+        // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
+        // See https://docs.gradle.org/current/userguide/declaring_repositories.html
+        // for more information about repositories.
+        mavenLocal()
+        maven { url "https://maven.aliyun.com/nexus/content/groups/public" }
+        maven { url "https://maven.terraformersmc.com/" }
+        maven { url "https://maven.fabricmc.net/" }
+        maven { url "https://maven.minecraftforge.net/" }
+        maven { url "https://maven.quiltmc.org/repository/release" }
+        maven { url "https://maven.isxander.dev/releases" }
+        maven { url "https://jitpack.io" }
+        maven { url "https://maven.quiltmc.org/repository/release" }
+        maven { url 'https://maven.blamejared.com' }
+        maven { url "https://maven.architectury.dev/" }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+        maven { url 'https://api.modrinth.com/maven' }
+        maven { url "https://www.cursemaven.com" }
+
+        mavenCentral()
+    }
+
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+        options.release = 17
+    }
+
+    java {
+        withSourcesJar()
+    }
+}
+
+task curseforge
+
+task modrinth
+
+task publishToModSites {
+    publishToModSites.dependsOn modrinth
+    publishToModSites.dependsOn curseforge
+}

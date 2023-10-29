@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#c:horse_armors",
+      "required": false
+    },
+    {
+      "id": "amethyst_imbuement:glowing_horse_armor",
+      "required": false
+    },
+    {
+      "id": "amethyst_imbuement:garnet_horse_armor",
+      "required": false
+    }
+  ]
+}

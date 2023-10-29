@@ -1,0 +1,21 @@
+{
+  "type": "generic.luck",
+  "scores": [
+    {
+      "operation": "ADDITION",
+      "score": 200
+    },
+    {
+      "operation": "ADDITION_PERCENTAGE",
+      "score": 200
+    },
+    {
+      "operation": "MULTIPLY_BASE",
+      "score": 1000
+    },
+    {
+      "operation": "MULTIPLY_TOTAL",
+      "score": 1200
+    }
+  ]
+}

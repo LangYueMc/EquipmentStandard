@@ -1,0 +1,39 @@
+{
+  "text.autoconfig.equipment_standard.title": "Equipment Standard",
+  "text.autoconfig.equipment_standard.option.showDurability": "Show equipment durability",
+  "text.autoconfig.equipment_standard.option.showScore": "Show equipment score",
+  "text.autoconfig.equipment_standard.option.mergeModifiers": "Merge attribute modifiers",
+  "text.autoconfig.equipment_standard.option.mergeModifiers.@Tooltip": "Merge attribute modifiers of the same type in tooltips",
+  "text.autoconfig.equipment_standard.option.showMultiplyOperationAdditional": "Show additional notes for multiply operation",
+  "text.autoconfig.equipment_standard.option.showMultiplyOperationAdditional.@Tooltip": "Show additional notes for MULTIPLY_BASE and MULTIPLY_TOTAL",
+  "text.autoconfig.equipment_standard.option.baseCritChance": "Base Crit Chance",
+  "text.autoconfig.equipment_standard.option.baseCritDamageMultiplier": "Base crit damage multiplier",
+  "text.autoconfig.equipment_standard.option.debug": "Debug",
+
+  "tag.item.c.helmets": "Helmets",
+  "tag.item.c.chestplates": "Chest Plates",
+  "tag.item.c.leggings": "Leggings",
+  "tag.item.c.boots": "Boots",
+  "tag.item.c.tridents": "Tridents",
+  "tag.item.c.elytra": "Elytra",
+  "tag.item.c.horse_armors": "Horse Armors",
+
+  "attribute.name.generic.dig_speed": "Dig Speed",
+  "attribute.name.generic.crit_chance": "Crit Chance",
+  "attribute.name.generic.crit_damage": "Crit Damage",
+  "attribute.name.generic.real_damage": "Real Damage",
+
+  "attribute.modifier.additional.0": "",
+  "attribute.modifier.additional.1": " (Base)",
+  "attribute.modifier.additional.2": " (Final)",
+
+  "item.modifiers.show_details": "Hold§c shift§r to view attributes details.",
+  "item.maker": "Maker: %s",
+  "item.score": "Score: %d",
+
+  "item.es.rarity.defective": "Defective ",
+  "item.es.rarity.legendary": "Legendary ",
+  "item.es.rarity.unique": "Unique ",
+
+  "stat.equipment_standard.proficiency": "Craft Proficiency"
+}
