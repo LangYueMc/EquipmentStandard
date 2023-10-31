@@ -114,7 +114,7 @@ if (CURSEFORGE_TOKEN) {
             changelog = rootProject.ext.v_changelog
             addGameVersion "Fabric"
             addGameVersion "Java 17"
-            gameVersionStrings.addAll(rootProject.ext.gameVersions)
+            gameVersionStrings.addAll(rootProject.ext.gameVersionsList)
             mainArtifact remapJar
             relations {
                 for (final def required in rootProject.ext.requiredProjectFabric) {

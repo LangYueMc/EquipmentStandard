@@ -100,7 +100,7 @@ if (CURSEFORGE_TOKEN) {
             changelog = rootProject.ext.v_changelog
             addGameVersion "Forge"
             addGameVersion "Java 17"
-            gameVersionStrings.addAll(rootProject.ext.gameVersions)
+            gameVersionStrings.addAll(rootProject.ext.gameVersionsList)
             mainArtifact remapJar
             relations {
                 for (final def required in rootProject.ext.requiredProjectForge) {
@@ -122,7 +122,7 @@ if (MODRINTH_TOKEN) {
         versionType = rootProject.version_type
         versionName = "${rootProject.archives_base_name} ${rootProject.mod_version} Forge"
         uploadFile = remapJar
-        gameVersions.addAll(rootProject.ext.gameVersions)
+        gameVersions.addAll(rootProject.ext.gameVersionsList)
         loaders = ['forge']
         changelog = rootProject.ext.v_changelog
         dependencies {
