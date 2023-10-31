@@ -44,7 +44,7 @@ dependencies {
     modImplementation("maven.modrinth:better-combat:${project.bettercombat_version}-fabric")
 }
 
-version = "${rootProject.mod_version}+mc${rootProject.minecraft_version}-fabric"
+version = "${rootProject.mod_version}+mc${rootProject.ext.gameVersions[0]}-fabric"
 
 processResources {
     inputs.property "version", project.version
@@ -108,20 +108,19 @@ if (CURSEFORGE_TOKEN) {
     curseforge {
         apiKey = CURSEFORGE_TOKEN
         project {
-            id = ${rootProject.curseforge_id}
+            id = rootProject.curseforge_id
             releaseType = rootProject.version_type
             changelogType = 'markdown'
             changelog = rootProject.ext.v_changelog
-//            gameVersionStrings = ["Fabric", "Java 17", '1.20', '1.20.1', '1.20.2']
             addGameVersion "Fabric"
-            addGameVersion "1.20"
-            addGameVersion "1.20.1"
-            addGameVersion "1.20.2"
             addGameVersion "Java 17"
+            gameVersionStrings.addAll(rootProject.ext.gameVersions)
             mainArtifact remapJar
             relations {
-                requiredDependency 'architectury-api'
-                requiredDependency 'cloth-config'
+                for (final def required in rootProject.ext.requiredProjectFabric) {
+                    if (required.toString().trim().length() > 0)
+                        requiredDependency required
+                }
             }
         }
     }
@@ -132,17 +131,19 @@ def MODRINTH_TOKEN = System.getenv("MODRINTH_TOKEN")
 if (MODRINTH_TOKEN) {
     modrinth {
         token = MODRINTH_TOKEN
-        projectId = ${rootProject.modrinth_id}
+        projectId = rootProject.modrinth_id
         versionNumber = rootProject.mod_version
         versionType = rootProject.version_type
         versionName = "${rootProject.archives_base_name} ${rootProject.mod_version} Fabric"
         uploadFile = remapJar
-        gameVersions = ['1.20', '1.20.1', '1.20.2']
+        getGameVersions().addAll(rootProject.ext.gameVersionsList)
         loaders = ['fabric']
         changelog = rootProject.ext.v_changelog
         dependencies {
-            required.project "architectury-api"
-            required.project "cloth-config"
+            for (final def required_project in rootProject.ext.requiredProjectFabric) {
+                if (required_project.toString().trim().length() > 0)
+                    required.project required_project
+            }
         }
     }
     rootProject.tasks.getByName("modrinth").dependsOn tasks.getByName("modrinth")

@@ -1,10 +1,7 @@
 {
   "verifiers": [
     {
-      "tag": "equipment_standard:boots"
-    },
-    {
-      "tag": "equipment_standard:leggings"
+      "tag": "equipment_standard:armor"
     },
     {
       "tag": "equipment_standard:elytra"
@@ -12,7 +9,7 @@
   ],
   "attributes": [
     {
-      "type": "generic.movement_speed",
+      "type": "forge:swim_speed",
       "chance": 1,
       "modifiers": [
         {

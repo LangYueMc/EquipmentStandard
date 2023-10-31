@@ -11,11 +11,11 @@
     "ItemStackMixin",
     "LivingEntityMixin",
     "LootTableMixin",
-    "MappedRegistryMixin",
     "MerchantMenuMixin",
     "MerchantResultSlotMixin",
     "MobMixin",
-    "PlayerMixin"
+    "PlayerMixin",
+    "ReloadableServerResourcesMixin"
   ],
   "client": [
     "client.ItemStackClientMixin"

@@ -28,7 +28,7 @@ dependencies {
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
 }
 
-version = "${rootProject.mod_version}+mc${rootProject.minecraft_version}-forge"
+version = "${rootProject.mod_version}+mc${rootProject.ext.gameVersions[0]}-forge"
 
 processResources {
     inputs.property "version", project.version
@@ -99,14 +99,14 @@ if (CURSEFORGE_TOKEN) {
             changelogType = 'markdown'
             changelog = rootProject.ext.v_changelog
             addGameVersion "Forge"
-            addGameVersion "1.20"
-            addGameVersion "1.20.1"
-            addGameVersion "1.20.2"
             addGameVersion "Java 17"
+            gameVersionStrings.addAll(rootProject.ext.gameVersions)
             mainArtifact remapJar
             relations {
-                requiredDependency 'architectury-api'
-                requiredDependency 'cloth-config'
+                for (final def required in rootProject.ext.requiredProjectForge) {
+                    if (required.toString().trim().length() > 0)
+                        requiredDependency required
+                }
             }
         }
     }
@@ -122,12 +122,14 @@ if (MODRINTH_TOKEN) {
         versionType = rootProject.version_type
         versionName = "${rootProject.archives_base_name} ${rootProject.mod_version} Forge"
         uploadFile = remapJar
-        gameVersions = ['1.20', '1.20.1', '1.20.2']
+        gameVersions.addAll(rootProject.ext.gameVersions)
         loaders = ['forge']
         changelog = rootProject.ext.v_changelog
         dependencies {
-            required.project "architectury-api"
-            required.project "cloth-config"
+            for (final def required_project in rootProject.ext.requiredProjectForge) {
+                if (required_project.toString().trim().length() > 0)
+                    required.project required_project
+            }
         }
     }
     rootProject.tasks.getByName("modrinth").dependsOn tasks.getByName("modrinth")
