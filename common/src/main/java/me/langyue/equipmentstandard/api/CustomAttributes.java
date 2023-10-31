@@ -12,7 +12,7 @@ public class CustomAttributes {
     public static final Attribute DIG_SPEED = register("generic.dig_speed");
     public static final Attribute CRIT_CHANCE = register("generic.crit_chance", 0.01, 0D, 1D);
     public static final Attribute CRIT_DAMAGE = register("generic.crit_damage", 1.5, 1D, 2048D);
-//    public static final Attribute REAL_DAMAGE = register("generic.real_damage");  //尚未实现
+    public static final Attribute REAL_DAMAGE = register("generic.real_damage");
 
     private static Attribute register(String id) {
         return register(id, 0D, 0D, 2048D);

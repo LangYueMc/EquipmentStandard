@@ -73,7 +73,8 @@ public abstract class LivingEntityMixin extends Entity implements ProficiencyAcc
         cir.getReturnValue()
                 .add(CustomAttributes.DIG_SPEED)
                 .add(CustomAttributes.CRIT_CHANCE)
-                .add(CustomAttributes.CRIT_DAMAGE);
+                .add(CustomAttributes.CRIT_DAMAGE)
+                .add(CustomAttributes.REAL_DAMAGE);
     }
 
     /**

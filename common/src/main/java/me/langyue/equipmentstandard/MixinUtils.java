@@ -82,4 +82,15 @@ public class MixinUtils {
         }
         return (float) (f * damageMultiplier);
     }
+
+    /**
+     * 真伤
+     */
+    public static float realDamageMixin(LivingEntity entity, Entity target, float f) {
+        if (entity.level().isClientSide()) return f;
+        if (target instanceof LivingEntity) {
+            f += (float) entity.getAttributeValue(CustomAttributes.REAL_DAMAGE);
+        }
+        return f;
+    }
 }
