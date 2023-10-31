@@ -1,15 +1,7 @@
 {
   "verifiers": [
     {
-      "tag": "es:tools"
-    }
-  ],
-  "exclude": [
-    {
-      "tag": "es:swords"
-    },
-    {
-      "tag": "es:tridents"
+      "tag": "equipment_standard:diggers"
     }
   ],
   "attributes": [

@@ -1,7 +1,10 @@
 {
   "verifiers": [
     {
-      "tag": "es:boots"
+      "tag": "c:boots"
+    },
+    {
+      "tag": "es:elytra"
     }
   ],
   "attributes": [

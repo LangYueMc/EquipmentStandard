@@ -1,19 +1,19 @@
 {
   "verifiers": [
     {
-      "tag": "es:armors"
+      "tag": "equipment_standard:weapons"
     },
     {
-      "tag": "es:tools"
+      "tag": "equipment_standard:diggers"
     },
     {
-      "tag": "es:bows"
+      "tag": "equipment_standard:armor"
     },
     {
-      "tag": "es:elytra"
+      "tag": "equipment_standard:elytra"
     },
     {
-      "id": "minecraft:fishing_rod"
+      "tag": "equipment_standard:fishing_rods"
     }
   ],
   "slots": ["DEFAULT"],

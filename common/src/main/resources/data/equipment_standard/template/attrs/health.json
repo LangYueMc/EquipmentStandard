@@ -1,16 +1,16 @@
 {
   "verifiers": [
     {
-      "tag": "es:armors"
+      "tag": "equipment_standard:armor"
     },
     {
-      "tag": "es:shields"
+      "tag": "equipment_standard:elytra"
     },
     {
-      "tag": "es:elytra"
+      "tag": "equipment_standard:shields"
     },
     {
-      "tag": "es:horse_armors"
+      "tag": "equipment_standard:horse_armors"
     }
   ],
   "attributes": [
