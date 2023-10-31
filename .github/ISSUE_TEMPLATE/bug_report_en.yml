@@ -1,0 +1,55 @@
+name: 'Bug Report'
+labels:
+  - bug
+description: 'BUG, incompatibility, crash, etc.'
+body:
+  - type: dropdown
+    id: modloader
+    attributes:
+      label: 'Mod loader'
+      options:
+        - Forge
+        - Fabric
+        - Quilt
+    validations:
+      required: true
+  - type: input
+    id: modloader-version
+    attributes:
+      label: 'Modloader version'
+      placeholder: eg. 0.14.22 + 0.89.3+1.20.2
+    validations:
+      required: true
+  - type: input
+    id: mc-version
+    attributes:
+      label: 'Minecraft version'
+      placeholder: eg. 1.20.1
+    validations:
+      required: true
+  - type: input
+    id: mod-version
+    attributes:
+      label: 'Mod version'
+      placeholder: eg. 1.0.0
+    validations:
+      required: true
+  - type: input
+    id: modpack
+    attributes:
+      label: 'Modpack'
+      description: |
+        'If playing a modpack, please fill in the modpack info!'
+  - type: input
+    attributes:
+      label: 'latest.log'
+      description: |
+        'Use a paste site for the logs. If you copy paste the log in here you will be ignored!'
+        'Here are example links for those sites:'
+        'https://gist.github.com/'
+        'https://paste.gg/'
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 'Issue description'
