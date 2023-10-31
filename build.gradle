@@ -1,3 +1,5 @@
+import org.codehaus.groovy.runtime.GStringImpl
+
 plugins {
     id "architectury-plugin" version "3.4-SNAPSHOT"
     id "dev.architectury.loom" version "1.1-SNAPSHOT" apply false
@@ -10,8 +12,12 @@ architectury {
 }
 
 ext {
-    v_changelog = "[V${rootProject.mod_version} 更新日志](https://github.com/LangYueMc/AutoTranslation/blob/master/CHANGELOG.md#V${rootProject.mod_version})\n" +
-            "\n[V${rootProject.mod_version} CHANGELOG](https://github.com/LangYueMc/AutoTranslation/blob/master/CHANGELOG_en.md#V${rootProject.mod_version})"
+    v_changelog = """V${rootProject.mod_version}
+
+[更新日志](https://github.com/LangYueMc/AutoTranslation/blob/master/CHANGELOG.md#V${rootProject.mod_version})
+
+[CHANGELOG](https://github.com/LangYueMc/AutoTranslation/blob/master/CHANGELOG_en.md#V${rootProject.mod_version})
+""" as GStringImpl
 }
 
 subprojects {
