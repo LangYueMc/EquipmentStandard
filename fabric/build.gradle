@@ -44,7 +44,7 @@ dependencies {
     modImplementation("maven.modrinth:better-combat:${project.bettercombat_version}-fabric")
 }
 
-version = "${rootProject.mod_version}+mc${rootProject.ext.gameVersions[0]}-fabric"
+version = "${rootProject.mod_version}+mc${rootProject.ext.gameVersionsList[0]}-fabric"
 
 processResources {
     inputs.property "version", project.version

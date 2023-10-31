@@ -28,7 +28,7 @@ dependencies {
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
 }
 
-version = "${rootProject.mod_version}+mc${rootProject.ext.gameVersions[0]}-forge"
+version = "${rootProject.mod_version}+mc${rootProject.ext.gameVersionsList[0]}-forge"
 
 processResources {
     inputs.property "version", project.version
