@@ -1,6 +1,5 @@
 package me.langyue.equipmentstandard.api.data;
 
-import net.minecraft.ResourceLocationException;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
@@ -9,44 +8,43 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import org.apache.commons.lang3.StringUtils;
 
-public class ItemVerifier {
-    private final int order;
+import java.security.InvalidParameterException;
 
-    private final ResourceLocation id;
+public class ItemVerifier {
+
+    private final String id;
+    private final String namespace;
     private final TagKey<Item> tag;
 
-    public ItemVerifier(String id, String tag) {
-        if (StringUtils.isEmpty(id)) {
+    public ItemVerifier(String verifier) {
+        if (StringUtils.isEmpty(verifier)) {
+            throw new InvalidParameterException("verifier: " + verifier);
+        }
+        if (verifier.startsWith("#")) {
+            this.tag = TagKey.create(Registries.ITEM, new ResourceLocation(verifier.substring(1)));
             this.id = null;
-            this.tag = TagKey.create(Registries.ITEM, new ResourceLocation(tag));
-            this.order = 1;
-        } else {
-            this.id = ResourceLocation.tryParse(id);
+            this.namespace = null;
+        } else if (verifier.startsWith("@")) {
+            this.namespace = verifier.substring(1);
+            this.id = null;
             this.tag = null;
-            this.order = 0;
+        } else {
+            this.id = verifier;
+            this.namespace = null;
+            this.tag = null;
         }
-        if (this.id == null && this.tag == null) {
-            throw new ResourceLocationException("id: " + id + ", tag: " + tag);
-        }
-    }
-
-    public int getOrder() {
-        return order;
     }
 
     public boolean isValid(ItemStack itemStack) {
         if (itemStack == null) {
             return false;
         } else if (id != null) {
-            return BuiltInRegistries.ITEM.getKey(itemStack.getItem()).equals(id);
+            return BuiltInRegistries.ITEM.getKey(itemStack.getItem()).toString().equals(id);
+        } else if (namespace != null) {
+            return BuiltInRegistries.ITEM.getKey(itemStack.getItem()).getNamespace().equals(namespace);
         } else if (tag != null) {
             return itemStack.is(tag);
         }
         return false;
-    }
-
-    @Override
-    public int hashCode() {
-        return id == null ? 0 : id.hashCode() * 17 + (tag == null ? 0 : tag.hashCode());
     }
 }

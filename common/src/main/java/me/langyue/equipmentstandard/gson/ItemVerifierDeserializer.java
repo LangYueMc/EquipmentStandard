@@ -10,11 +10,19 @@ import java.lang.reflect.Type;
 public class ItemVerifierDeserializer extends BaseDeserializer<ItemVerifier> {
     @Override
     public ItemVerifier deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-        JsonElement id = getJsonElement(jsonElement, "id", "Item Verifier requires an id or an tag", "tag");
-        JsonElement tag = getJsonElement(jsonElement, "tag", "Item Verifier requires an id or an tag", "id");
-        return new ItemVerifier(
-                id == null ? "" : id.getAsString(),
-                tag == null ? "" : tag.getAsString()
-        );
+        if (jsonElement.isJsonObject()) {
+            // 兼容其他
+            JsonElement id = getJsonElement(jsonElement, "id", "Item Verifier requires an id or an tag", "tag");
+            if (id != null) {
+                return new ItemVerifier(id.getAsString());
+            }
+            JsonElement tag = getJsonElement(jsonElement, "tag", "Item Verifier requires an id or an tag", "id");
+            if (tag != null) {
+                return new ItemVerifier("#" + tag.getAsString());
+            }
+        } else {
+            return new ItemVerifier(jsonElement.getAsString());
+        }
+        throw new JsonParseException("Invalid value: " + jsonElement.getAsString());
     }
 }
