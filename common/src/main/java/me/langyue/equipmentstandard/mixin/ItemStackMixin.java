@@ -8,6 +8,7 @@ import me.langyue.equipmentstandard.api.ModifierUtils;
 import me.langyue.equipmentstandard.api.ProficiencyAccessor;
 import me.langyue.equipmentstandard.api.data.EquipmentComponents;
 import me.langyue.equipmentstandard.api.data.ItemRarity;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -26,6 +27,11 @@ public abstract class ItemStackMixin implements EquipmentComponentsAccessor {
 
     @Unique
     private final ItemStack es$this = (ItemStack) (Object) this;
+
+    @Inject(method = "of", at = @At("RETURN"))
+    private static void initWithNbt(CompoundTag compoundTag, CallbackInfoReturnable<ItemStack> cir) {
+        ((EquipmentComponentsAccessor) (Object) cir.getReturnValue()).es$updateScore();
+    }
 
     @Inject(method = "getAttributeModifiers", at = @At("RETURN"), cancellable = true)
     private void hookGetAttributeModifiers(EquipmentSlot equipmentSlot, CallbackInfoReturnable<Multimap<Attribute, AttributeModifier>> cir) {
