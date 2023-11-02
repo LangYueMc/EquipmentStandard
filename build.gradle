@@ -16,10 +16,12 @@ ext {
     requiredProjectFabric = rootProject.required_fabric.toString().split(',') + rootProject.required.toString().split(',') as Object[]
     requiredProjectForge = rootProject.required_forge.toString().split(',') + rootProject.required.toString().split(',') as Object[]
     v_changelog = """V${rootProject.mod_version}
-
 [更新日志](https://github.com/LangYueMc/AutoTranslation/blob/master/CHANGELOG.md#V${rootProject.mod_version})
-
 [CHANGELOG](https://github.com/LangYueMc/AutoTranslation/blob/master/CHANGELOG_en.md#V${rootProject.mod_version})
+
+升级前建议备份存档！
+
+It is recommended to back up the archive before upgrading!
 """ as GStringImpl
 }
 
