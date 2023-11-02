@@ -1,32 +1,20 @@
 {
   "verifiers": [
     {
-      "tag": "equipment_standard:weapons"
-    },
-    {
-      "tag": "equipment_standard:diggers"
-    },
-    {
       "tag": "equipment_standard:armor"
     },
     {
       "tag": "equipment_standard:elytra"
-    },
-    {
-      "tag": "equipment_standard:shields"
-    },
-    {
-      "tag": "equipment_standard:fishing_rods"
     }
   ],
   "attributes": [
     {
-      "type": "durable",
+      "type": "additionalentityattributes:water_speed",
       "chance": 1,
       "modifiers": [
         {
-          "weights": 35,
-          "operation": "MULTIPLY_ADDITION",
+          "weights": 20,
+          "operation": "MULTIPLY_TOTAL",
           "min": -0.2,
           "max": 0,
           "bonus": {
@@ -35,20 +23,29 @@
           }
         },
         {
-          "weights": 50,
-          "operation": "MULTIPLY_ADDITION",
-          "min": 0,
-          "max": 0.15,
+          "weights": 40,
+          "operation": "ADDITION",
+          "amount": 0,
           "bonus": {
-            "lucky": 0.1,
+            "lucky": -0.1,
+            "proficiency": -0.002
+          }
+        },
+        {
+          "weights": 50,
+          "operation": "MULTIPLY_TOTAL",
+          "min": 0,
+          "max": 0.2,
+          "bonus": {
+            "lucky": 0.05,
             "proficiency": 0.002
           }
         },
         {
           "weights": 1,
-          "operation": "MULTIPLY_ADDITION",
-          "min": 0.15,
-          "max": 0.30,
+          "operation": "MULTIPLY_TOTAL",
+          "min": 0.2,
+          "max": 0.5,
           "bonus": {
             "lucky": 0.1,
             "proficiency": 0.01

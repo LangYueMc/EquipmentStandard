@@ -38,10 +38,14 @@ dependencies {
     // EMI
     modLocalRuntime("dev.emi:emi-fabric:${project.emi_version}")
 
+    // 台阶高度
+    modImplementation "com.github.emilyploszaj:step-height-entity-attribute:v${project.step_height_version}"
+    include "com.github.emilyploszaj:step-height-entity-attribute:v${project.step_height_version}"
+
     // PlayerAnimator
     modLocalRuntime("maven.modrinth:playeranimator:${project.player_anim_version}-fabric")
     // Better Combat
-    modImplementation("maven.modrinth:better-combat:${project.bettercombat_version}-fabric")
+    modLocalRuntime("maven.modrinth:better-combat:${project.bettercombat_version}-fabric")
 }
 
 version = "${rootProject.mod_version}+mc${rootProject.ext.gameVersionsList[0]}-fabric"

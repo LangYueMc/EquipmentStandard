@@ -2,13 +2,9 @@ package me.langyue.equipmentstandard.mixin;
 
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
-import me.langyue.equipmentstandard.api.EquipmentComponentsAccessor;
-import me.langyue.equipmentstandard.api.ItemRarityManager;
-import me.langyue.equipmentstandard.api.ModifierUtils;
-import me.langyue.equipmentstandard.api.ProficiencyAccessor;
+import me.langyue.equipmentstandard.api.*;
 import me.langyue.equipmentstandard.api.data.EquipmentComponents;
 import me.langyue.equipmentstandard.api.data.ItemRarity;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -23,18 +19,25 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ItemStack.class)
-public abstract class ItemStackMixin implements EquipmentComponentsAccessor {
+public abstract class ItemStackMixin implements EquipmentComponentsAccessor, ItemStackAccessor {
 
     @Unique
     private final ItemStack es$this = (ItemStack) (Object) this;
 
-    @Inject(method = "of", at = @At("RETURN"))
-    private static void initWithNbt(CompoundTag compoundTag, CallbackInfoReturnable<ItemStack> cir) {
-        ((EquipmentComponentsAccessor) (Object) cir.getReturnValue()).es$updateScore();
+    @Unique
+    private boolean es$shouldHookGetAttributeModifiers = true;
+
+    @Override
+    public Multimap<Attribute, AttributeModifier> es$getOriginalAttributeModifiers(EquipmentSlot equipmentSlot) {
+        this.es$shouldHookGetAttributeModifiers = false;
+        var attributeModifiers = es$this.getAttributeModifiers(equipmentSlot);
+        this.es$shouldHookGetAttributeModifiers = true;
+        return attributeModifiers;
     }
 
-    @Inject(method = "getAttributeModifiers", at = @At("RETURN"), cancellable = true)
+    @Inject(method = "getAttributeModifiers", at = @At("TAIL"), cancellable = true)
     private void hookGetAttributeModifiers(EquipmentSlot equipmentSlot, CallbackInfoReturnable<Multimap<Attribute, AttributeModifier>> cir) {
+        if (!es$shouldHookGetAttributeModifiers) return;
         Multimap<Attribute, AttributeModifier> modifierMultimap = LinkedListMultimap.create(cir.getReturnValue());
         ModifierUtils.modify(es$this, equipmentSlot, modifierMultimap);
         cir.setReturnValue(modifierMultimap);
@@ -94,16 +97,16 @@ public abstract class ItemStackMixin implements EquipmentComponentsAccessor {
 
     @Override
     public void es$updateScore() {
-        Integer score = ModifierUtils.getScore(es$this);
-        if (score == null) {
+        ItemRarity.Rarity rarity = ItemRarityManager.get(es$this);
+        if (rarity == null) {
             return;
         }
         EquipmentComponents components = es$getComponents();
         if (components == null) {
             components = new EquipmentComponents();
         }
-        components.setScore(score);
-        components.setRarity(ItemRarityManager.get(es$this, score));
+        components.setScore(rarity.getScore());
+        components.setRarity(rarity);
         components.save(es$this);
     }
 

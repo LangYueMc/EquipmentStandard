@@ -1,17 +1,17 @@
 {
-  "type": "generic.max_health",
+  "type": "equipment_standard:generic.real_damage",
   "scores": [
     {
       "operation": "ADDITION",
-      "score": 200
+      "score": 150
     },
     {
       "operation": "MULTIPLY_BASE",
-      "score": 1000
+      "score": 1200
     },
     {
       "operation": "MULTIPLY_TOTAL",
-      "score": 1200
+      "score": 1500
     }
   ]
 }

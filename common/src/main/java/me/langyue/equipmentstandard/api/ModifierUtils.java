@@ -157,12 +157,12 @@ public class ModifierUtils {
                         if (attribute.slots().contains(Attribute.Slot.ANY) || slots.contains(slot)) {
                             var operation = attribute.operation().convert();
                             AtomicReference<Double> amount = new AtomicReference<>(attribute.amount());
-                            if (attribute.operation() == Attribute.Operation.ADDITION_PERCENTAGE) {
+                            if (attribute.operation() == Attribute.Operation.MULTIPLY_ADDITION) {
                                 // 增加百分比
                                 multimap.get(entityAttribute).stream()
                                         .filter(modifier -> modifier.getOperation() == operation)
                                         .findFirst()
-                                        .ifPresentOrElse(modifier -> amount.set(modifier.getAmount() * amount.get() / 100), () -> amount.set(0d));
+                                        .ifPresentOrElse(modifier -> amount.set(modifier.getAmount() * amount.get()), () -> amount.set(0d));
                             }
                             UUID uuid = attribute.merge() ? UUID.randomUUID() : getModifierId(attribute, slot);
                             String name = attribute.merge() ? "es:merge" : MODIFIER_NAME;
@@ -206,29 +206,11 @@ public class ModifierUtils {
                 .sorted(Comparator.comparing(Attribute.Final::operation))
                 .forEach(attribute -> modified.addAndGet(switch (attribute.operation()) {
                     case ADDITION -> (int) attribute.amount();
-                    case ADDITION_PERCENTAGE -> (int) (stack.getItem().getMaxDamage() * attribute.amount() / 100);
-                    case MULTIPLY_BASE -> (int) (stack.getItem().getMaxDamage() * attribute.amount());
+                    case MULTIPLY_ADDITION, MULTIPLY_BASE ->
+                            (int) (stack.getItem().getMaxDamage() * attribute.amount());
                     case MULTIPLY_TOTAL -> (int) (original * attribute.amount());
                 }));
         return modified.get();
-    }
-
-    /**
-     * 计算装备分数
-     *
-     * @param stack 物品
-     * @return 装备分
-     */
-    public static Integer getScore(ItemStack stack) {
-        if (stack == null || stack.isEmpty()) return null;
-        CompoundTag nbt = stack.getTagElement(NBT_KEY);
-        if (nbt == null) return null;
-        AtomicDouble atomic = new AtomicDouble(0);
-        nbt.getAllKeys().stream()
-                .map(key -> Attribute.Final.fromNbt(nbt.getCompound(key)))
-                .filter(Objects::nonNull)
-                .forEach(attribute -> atomic.addAndGet(attribute.amount() * AttributeScoreManager.get(attribute.type(), attribute.operation())));
-        return (int) atomic.get();
     }
 
     public static boolean isEs(ItemStack stack) {

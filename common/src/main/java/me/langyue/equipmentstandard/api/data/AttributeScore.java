@@ -3,7 +3,9 @@ package me.langyue.equipmentstandard.api.data;
 import me.langyue.equipmentstandard.api.AttributeScoreManager;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 
+import java.util.List;
 import java.util.Set;
 
 public class AttributeScore {
@@ -18,10 +20,16 @@ public class AttributeScore {
     }
 
     public void register() {
+        if (List.of("*", "default").contains(type)) {
+            for (var operation : Attribute.Operation.values()) {
+                AttributeScoreManager.setDefault(getScore(operation.convert()));
+            }
+            return;
+        }
         var attribute = BuiltInRegistries.ATTRIBUTE.get(new ResourceLocation(type));
         if (attribute == null) return;
         for (var operation : Attribute.Operation.values()) {
-            AttributeScoreManager.put(attribute, getScore(operation), overWrite);
+            AttributeScoreManager.put(attribute, getScore(operation.convert()), overWrite);
         }
     }
 
@@ -29,7 +37,7 @@ public class AttributeScore {
         return type;
     }
 
-    public Score getScore(Attribute.Operation operation) {
+    public Score getScore(AttributeModifier.Operation operation) {
         if (scores == null || operation == null) return null;
         return scores.stream()
                 .filter(it -> it.operation == operation)
@@ -37,15 +45,15 @@ public class AttributeScore {
     }
 
     public static class Score {
-        private final Attribute.Operation operation;
+        private final AttributeModifier.Operation operation;
         private final double score;
 
-        public Score(Attribute.Operation operation, float score) {
+        public Score(AttributeModifier.Operation operation, float score) {
             this.operation = operation;
             this.score = score;
         }
 
-        public Attribute.Operation getOperation() {
+        public AttributeModifier.Operation getOperation() {
             return operation;
         }
 

@@ -26,8 +26,7 @@ public class ItemRarity {
         return verifiers.stream().anyMatch(it -> it.isValid(itemStack));
     }
 
-    public Rarity getRarity(Integer score) {
-        if (score == null || score == 0d) return null;
+    public Rarity getRarity(double score) {
         return rarities.stream()
                 .sorted(Comparator.comparing(Rarity::getScore).reversed())
                 .filter(rarity -> rarity.score <= score)
@@ -36,11 +35,15 @@ public class ItemRarity {
 
     public static class Rarity {
         private final String name;
-        private final Integer score;
+        /**
+         * 百分制
+         * 此装备分 / 此装备的最大评分 * 100
+         */
+        private final int score;
         private MutableComponent prefix;
         private final ChatFormatting[] formatting;
 
-        public Rarity(String name, Integer score, MutableComponent prefix, ChatFormatting... formatting) {
+        public Rarity(String name, int score, MutableComponent prefix, ChatFormatting... formatting) {
             this.name = name;
             this.score = score;
             this.prefix = prefix;
@@ -51,7 +54,7 @@ public class ItemRarity {
             return name;
         }
 
-        public double getScore() {
+        public int getScore() {
             return score;
         }
 
@@ -67,6 +70,10 @@ public class ItemRarity {
 
         public ChatFormatting[] getFormatting() {
             return formatting;
+        }
+
+        public Rarity create(int score) {
+            return new Rarity(this.name, score, this.prefix, this.formatting);
         }
     }
 }

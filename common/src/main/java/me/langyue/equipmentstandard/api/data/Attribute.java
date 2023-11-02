@@ -82,6 +82,10 @@ public class Attribute {
         return CustomAttributes.DURABLE.equals(type) ? null : slots;
     }
 
+    public List<AttributeModifier> getModifiers() {
+        return modifiers;
+    }
+
     public AttributeModifier getNextModifier(int proficiency, double luck) {
         if (modifiers.size() == 1) {
             return modifiers.get(0);
@@ -199,7 +203,6 @@ public class Attribute {
         public Final(String type, boolean merge, double amount, Operation operation, Set<Slot> slots) {
             if (StringUtils.isBlank(type)) throw new IllegalArgumentException("Attribute type can not be null.");
             if (amount == 0) throw new IllegalArgumentException("Attribute amount can not be 0.");
-            if (operation == null) operation = Operation.ADDITION;
             this.type = type;
             this.merge = merge;
             this.amount = amount;
@@ -348,7 +351,12 @@ public class Attribute {
             return amount.doubleValue();
         }
 
+        public double getMaxAmount() {
+            return (amount == null ? max : amount).doubleValue();
+        }
+
         public Operation getOperation() {
+            if (operation == null) return Operation.ADDITION;
             return this.operation;
         }
     }
@@ -358,7 +366,7 @@ public class Attribute {
         ADDITION(0),
         MULTIPLY_BASE(1),
         MULTIPLY_TOTAL(2),
-        ADDITION_PERCENTAGE(3);
+        MULTIPLY_ADDITION(3);
         private final int id;
 
         Operation(int id) {
@@ -378,7 +386,7 @@ public class Attribute {
         }
 
         public net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation convert() {
-            if (this == ADDITION_PERCENTAGE) {
+            if (this == MULTIPLY_ADDITION) {
                 return net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADDITION;
             }
             return net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.fromValue(id);

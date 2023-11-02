@@ -1,0 +1,9 @@
+{
+  "type": "spell_power:spell",
+  "scores": [
+    {
+      "operation": "ADDITION",
+      "score": 2
+    }
+  ]
+}

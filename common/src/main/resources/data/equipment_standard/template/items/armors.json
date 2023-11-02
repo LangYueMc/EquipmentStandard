@@ -4,16 +4,20 @@
       "tag": "equipment_standard:armor"
     }
   ],
+  "exclude": [
+    {
+      "tag": "equipment_standard:magic"
+    }
+  ],
   "attributes": [
     {
       "type": "generic.armor",
       "chance": 1,
-      "step": 0.5,
       "modifiers": [
         {
           "weights": 30,
-          "operation": "ADDITION_PERCENTAGE",
-          "min": -2,
+          "operation": "MULTIPLY_ADDITION",
+          "min": -0.2,
           "max": 0,
           "bonus": {
             "lucky": -1,
@@ -22,7 +26,7 @@
         },
         {
           "weights": 40,
-          "operation": "ADDITION_PERCENTAGE",
+          "operation": "ADDITION",
           "amount": 0,
           "bonus": {
             "lucky": -0.1,
@@ -31,21 +35,20 @@
         },
         {
           "weights": 50,
-          "operation": "ADDITION_PERCENTAGE",
+          "operation": "MULTIPLY_ADDITION",
           "min": 0,
-          "max": 2.5,
-          "step": 0.5,
+          "max": 0.3,
           "bonus": {
             "lucky": 0.05,
             "proficiency": 0.002
           }
         },
         {
-          "weights": 50,
+          "weights": 5,
           "operation": "ADDITION",
-          "step": 0.5,
           "min": 0,
           "max": 2,
+          "step": 0.5,
           "bonus": {
             "lucky": 0.05,
             "proficiency": 0.002
@@ -53,20 +56,9 @@
         },
         {
           "weights": 1,
-          "operation": "ADDITION_PERCENTAGE",
-          "min": 50,
-          "max": 100,
-          "bonus": {
-            "lucky": 0.1,
-            "proficiency": 0.01
-          }
-        },
-        {
-          "weights": 1,
-          "operation": "ADDITION",
-          "step": 0.5,
-          "min": 2.5,
-          "max": 5,
+          "operation": "MULTIPLY_ADDITION",
+          "min": 0.3,
+          "max": 0.8,
           "bonus": {
             "lucky": 0.1,
             "proficiency": 0.01
@@ -77,12 +69,11 @@
     {
       "type": "generic.armor_toughness",
       "chance": 1,
-      "step": 5,
       "modifiers": [
         {
           "weights": 30,
-          "operation": "ADDITION_PERCENTAGE",
-          "min": -20,
+          "operation": "MULTIPLY_ADDITION",
+          "min": -0.2,
           "max": 0,
           "bonus": {
             "lucky": -1,
@@ -91,7 +82,7 @@
         },
         {
           "weights": 40,
-          "operation": "ADDITION_PERCENTAGE",
+          "operation": "ADDITION",
           "amount": 0,
           "bonus": {
             "lucky": -0.1,
@@ -100,20 +91,20 @@
         },
         {
           "weights": 50,
-          "operation": "ADDITION_PERCENTAGE",
+          "operation": "MULTIPLY_ADDITION",
           "min": 0,
-          "max": 20,
+          "max": 0.5,
           "bonus": {
             "lucky": 0.05,
             "proficiency": 0.002
           }
         },
         {
-          "weights": 50,
+          "weights": 20,
           "operation": "ADDITION",
-          "step": 0.5,
           "min": 0,
-          "max": 1.5,
+          "max": 2,
+          "step": 0.5,
           "bonus": {
             "lucky": 0.05,
             "proficiency": 0.002
@@ -121,20 +112,9 @@
         },
         {
           "weights": 1,
-          "operation": "ADDITION_PERCENTAGE",
-          "min": 20,
-          "max": 50,
-          "bonus": {
-            "lucky": 0.1,
-            "proficiency": 0.01
-          }
-        },
-        {
-          "weights": 1,
-          "operation": "ADDITION",
-          "step": 0.5,
-          "min": 2,
-          "max": 3,
+          "operation": "MULTIPLY_ADDITION",
+          "min": 0.5,
+          "max": 1,
           "bonus": {
             "lucky": 0.1,
             "proficiency": 0.01
