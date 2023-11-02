@@ -1,3 +1,11 @@
+# V1.1.1
+
+2023-11-2
+
+## 修复
+
+1. Fixed the bug of synthesizing items caused by code errors.
+
 # V1.1.0
 
 2023-11-2
