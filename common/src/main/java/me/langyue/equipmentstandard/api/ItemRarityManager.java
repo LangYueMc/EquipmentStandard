@@ -72,6 +72,7 @@ public class ItemRarityManager {
 //            return null;
 //        }
         Integer score = getScore(stack);
+        if (score == null) return null;
         return ITEM_RARITY_MAP.values().stream()
                 .filter(it -> it.isValid(stack))
                 .findFirst()
