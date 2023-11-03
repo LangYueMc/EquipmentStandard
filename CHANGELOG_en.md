@@ -1,8 +1,16 @@
+# V1.1.3
+
+2023-11-2
+
+## Changed
+
+1. Adjust some formatting.
+
 # V1.1.2
 
 2023-11-2
 
-## 修复
+## Fixed
 
 1. Fixed the issue that magic item tags did not take effect.
 
@@ -10,7 +18,7 @@
 
 2023-11-2
 
-## 修复
+## Fixed
 
 1. Fixed the bug of synthesizing items caused by code errors.
 
