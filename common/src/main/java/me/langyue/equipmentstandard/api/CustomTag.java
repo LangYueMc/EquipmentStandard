@@ -57,7 +57,7 @@ public class CustomTag {
         this.predicate = predicate;
     }
 
-    private static CustomTag create(String id, Predicate<Item> predicate) {
+    public static CustomTag create(String id, Predicate<Item> predicate) {
         CustomTag customTag = new CustomTag(TagKey.create(Registries.ITEM, EquipmentStandard.createResourceLocation(id)), predicate);
         ALL.add(customTag);
         return customTag;

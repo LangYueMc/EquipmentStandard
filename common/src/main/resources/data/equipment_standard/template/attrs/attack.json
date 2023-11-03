@@ -9,7 +9,7 @@
   ],
   "exclude": [
     {
-      "tag": "equipment_standard:magic"
+      "tag": "equipmentstandard:magic"
     }
   ],
   "attributes": [

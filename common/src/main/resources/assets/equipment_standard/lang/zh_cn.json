@@ -11,14 +11,6 @@
   "text.autoconfig.equipment_standard.option.baseCritDamageMultiplier": "基础暴击伤害倍率",
   "text.autoconfig.equipment_standard.option.debug": "Debug 模式",
 
-  "tag.item.c.helmets": "头盔",
-  "tag.item.c.chestplates": "胸甲",
-  "tag.item.c.leggings": "护腿",
-  "tag.item.c.boots": "靴子",
-  "tag.item.c.tridents": "三叉戟",
-  "tag.item.c.elytra": "鞘翅",
-  "tag.item.c.horse_armors": "马铠",
-
   "attribute.name.generic.dig_speed": "挖掘速度",
   "attribute.name.generic.crit_chance": "暴击几率",
   "attribute.name.generic.crit_damage": "暴击伤害",

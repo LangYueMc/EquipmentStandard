@@ -1,7 +1,7 @@
 {
   "verifiers": [
     {
-      "tag": "c:horse_armors"
+      "tag": "equipment_standard:horse_armor"
     }
   ],
   "attributes": [

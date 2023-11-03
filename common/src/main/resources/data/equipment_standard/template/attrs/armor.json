@@ -2,10 +2,10 @@
   "desc": "护甲在 items/armors 里，因为护甲自带属性，鞘翅和马铠没属性",
   "verifiers": [
     "#equipment_standard:elytra",
-    "#equipment_standard:horse_armors"
+    "#equipment_standard:horse_armor"
   ],
   "exclude": [
-    "#equipment_standard:magic"
+    "#equipmentstandard:magic"
   ],
   "attributes": [
     {
