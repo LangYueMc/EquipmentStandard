@@ -1,3 +1,11 @@
+# V1.1.2
+
+2023-11-2
+
+## 修复
+
+1. Fixed the issue that magic item tags did not take effect.
+
 # V1.1.1
 
 2023-11-2
