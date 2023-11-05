@@ -1,3 +1,12 @@
+# V1.1.4
+
+2023-11-5
+
+## Fixed
+
+1. Fixed the problem of real_damage being affected by armor. Now the real_damage attribute will have no CD and will not be reduced by armor.
+2. Fixed incorrect minecraft version range in forge config file causing 1.20.1 launch crash.
+
 # V1.1.3
 
 2023-11-2
