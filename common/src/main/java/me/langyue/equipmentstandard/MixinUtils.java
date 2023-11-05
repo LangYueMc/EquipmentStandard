@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import me.langyue.equipmentstandard.api.CustomAttributes;
 import me.langyue.equipmentstandard.api.CustomTag;
+import me.langyue.equipmentstandard.api.DamageSourcesAccessor;
 import net.minecraft.core.Holder;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.TagKey;
@@ -98,12 +99,11 @@ public class MixinUtils {
     /**
      * 真伤
      */
-    public static float realDamageMixin(LivingEntity entity, Entity target, float f) {
-        if (entity.level().isClientSide()) return f;
+    public static void realDamageMixin(LivingEntity entity, Entity target) {
+        if (entity.level().isClientSide()) return;
         if (target instanceof LivingEntity) {
-            f += (float) entity.getAttributeValue(CustomAttributes.REAL_DAMAGE);
+            target.hurt(((DamageSourcesAccessor) target.damageSources()).realDamage(entity), (float) entity.getAttributeValue(CustomAttributes.REAL_DAMAGE));
         }
-        return f;
     }
 
     public static <T> Map<TagKey<T>, List<Holder<T>>> bindTagsMixin(Map<TagKey<T>, List<Holder<T>>> map, Stream<Holder.Reference<T>> holders) {

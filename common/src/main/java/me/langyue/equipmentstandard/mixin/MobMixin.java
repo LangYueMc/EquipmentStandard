@@ -44,13 +44,19 @@ public abstract class MobMixin {
     }
 
     @ModifyArg(method = "doHurtTarget", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z"))
-    private float finalizeSpawnMixin(float f) {
+    private float critAttackMixin(float f) {
         try {
-            // 暴击后 + 真伤
-            return MixinUtils.critAttackMixin((Mob) (Object) this, es$target, f) + MixinUtils.realDamageMixin((Mob) (Object) this, es$target, f);
+            // 暴击后
+            return MixinUtils.critAttackMixin((Mob) (Object) this, es$target, f);
         } catch (Throwable e) {
             return f;
         }
+    }
+
+    @Inject(method = "doHurtTarget", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z", shift = At.Shift.AFTER))
+    private void realDamageMixin(Entity entity, CallbackInfoReturnable<Boolean> cir) {
+        // 真伤
+        MixinUtils.realDamageMixin((Mob) (Object) this, entity);
     }
 
 }
