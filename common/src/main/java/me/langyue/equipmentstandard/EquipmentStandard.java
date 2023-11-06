@@ -37,15 +37,6 @@ public class EquipmentStandard {
         ReloadListenerRegistry.register(PackType.SERVER_DATA, new TemplateDataLoader());
         ReloadListenerRegistry.register(PackType.SERVER_DATA, new AttributeScoreLoader());
         ReloadListenerRegistry.register(PackType.SERVER_DATA, new ItemRarityLoader());
-        ClientPlayerEvent.CLIENT_PLAYER_JOIN.register(player -> {
-            NetworkManager.sendToServer(EquipmentStandard.NET_READY, new FriendlyByteBuf(Unpooled.buffer()));
-            new Timer().schedule(new TimerTask() {
-                // 容错，但也不能绝对容错，等我找到客户端登陆时同步血量的地方再改吧
-                public void run() {
-                    NetworkManager.sendToServer(EquipmentStandard.NET_READY, new FriendlyByteBuf(Unpooled.buffer()));
-                }
-            }, 1000);
-        });
         // 服务端收到通知开始同步血量
         NetworkManager.registerReceiver(NetworkManager.Side.C2S, NET_READY, (buf, context) -> {
             if (context.getPlayer() instanceof ServerPlayer serverPlayer) {
