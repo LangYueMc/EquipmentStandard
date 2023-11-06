@@ -1,3 +1,15 @@
+# V1.1.5
+
+2023-11-6
+
+## Changed
+
+1. Fine-tuned the probability of real_damage attribute.
+
+## Fixed
+
+1. Fixed the problem of startup failure on the server side due to registration of client events.
+
 # V1.1.4
 
 2023-11-5
