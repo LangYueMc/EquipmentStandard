@@ -1,4 +1,5 @@
 # Equipment Standard
+Machine translation, welcome to correct grammatical errors.
 
 [中文](README.md)
 
@@ -6,7 +7,7 @@ Inspired by [Tiered](https://github.com/Draylar/tiered), equipment attributes ca
 
 ## Data Format
 
-### Property Template
+### Equipment Template
 It needs to be located under `datapack name(.zip)?/data/equipment_standard/template`, you can use the folder.
 
 example.json
@@ -17,7 +18,7 @@ example.json
   // Items verified through this list will apply this template
   // required
   // minecraft:elytra This format represents the item ID
-  // #equipment_standard:elytra #The beginning represents the item label
+  // #equipment_standard:elytra #The beginning represents the item tag
   // @equipment_standard represents the namespace to which the item belongs (each Mod definition)
   "verifiers": [
     "#equipment_standard:elytra",
@@ -26,7 +27,7 @@ example.json
   // Items verified through this list will not apply this template
   // optional
   // minecraft:elytra This format represents the item ID
-  // #equipment_standard:elytra #The beginning represents the item label
+  // #equipment_standard:elytra #The beginning represents the item tag
   // @equipment_standard represents the namespace to which the item belongs (each Mod definition)
   // #equipment_standard:magic is a custom tag. Different magic items of fabric and forge can set this tag to prevent physical attack attributes.
   "excludes": [
@@ -192,7 +193,7 @@ example.json
   // Items verified through this list will have this rarity list applied to them
   // required
   // minecraft:elytra This format represents the item ID
-  // #equipment_standard:elytra #The beginning represents the item label
+  // #equipment_standard:elytra #The beginning represents the item tag
   // @equipment_standard represents the namespace to which the item belongs (each Mod definition)
   "verifiers": [
     "#equipment_standard:horse_armor"
@@ -200,7 +201,7 @@ example.json
   // Items verified through this list will not have this rarity list applied to them
   // optional
   // minecraft:elytra This format represents the item ID
-  // #equipment_standard:elytra #The beginning represents the item label
+  // #equipment_standard:elytra #The beginning represents the item tag
   // @equipment_standard represents the namespace to which the item belongs (each Mod definition)
   "excludes": [
     "#equipment_standard:magic"
