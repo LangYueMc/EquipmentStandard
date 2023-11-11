@@ -83,10 +83,6 @@
     {
       "id": "paladins:ruby_holy_staff",
       "required": false
-    },
-    {
-      "id": "minecraft:wooden_sword",
-      "required": false
     }
   ]
 }

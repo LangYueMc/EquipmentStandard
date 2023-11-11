@@ -6,6 +6,7 @@
   ],
   "exclude": [
     "#equipmentstandard:magic"
+    "#equipment_standard:magic"
   ],
   "attributes": [
     {

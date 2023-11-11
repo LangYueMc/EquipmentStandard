@@ -1,5 +1,5 @@
 {
-  "type": "spell_power:spell",
+  "type": "spell_power:haste",
   "scores": [
     {
       "operation": "ADDITION",
