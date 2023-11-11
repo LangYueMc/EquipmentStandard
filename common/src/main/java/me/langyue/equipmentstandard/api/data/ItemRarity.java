@@ -36,8 +36,7 @@ public class ItemRarity {
     public static class Rarity {
         private final String name;
         /**
-         * 百分制
-         * 此装备分 / 此装备的最大评分 * 100
+         * 最低分
          */
         private final int score;
         private MutableComponent prefix;

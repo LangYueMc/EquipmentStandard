@@ -7,13 +7,13 @@ import java.util.Set;
 
 public class EquipmentTemplate {
     private final List<ItemVerifier> verifiers;
-    private final List<ItemVerifier> exclude;
+    private final List<ItemVerifier> excludes;
     private final List<Attribute> attributes;
     private final Set<Attribute.Slot> slots;
 
-    public EquipmentTemplate(List<ItemVerifier> verifiers, List<ItemVerifier> exclude, List<Attribute> attributes, Set<Attribute.Slot> slots) {
+    public EquipmentTemplate(List<ItemVerifier> verifiers, List<ItemVerifier> excludes, List<Attribute> attributes, Set<Attribute.Slot> slots) {
         this.verifiers = verifiers;
-        this.exclude = exclude;
+        this.excludes = excludes;
         this.attributes = attributes;
         this.slots = slots;
     }
@@ -23,7 +23,7 @@ public class EquipmentTemplate {
     }
 
     public boolean isValid(ItemStack itemStack) {
-        if (exclude != null && exclude.stream().anyMatch(it -> it.isValid(itemStack))) {
+        if (excludes != null && excludes.stream().anyMatch(it -> it.isValid(itemStack))) {
             return false;
         }
         return verifiers.stream().anyMatch(it -> it.isValid(itemStack));

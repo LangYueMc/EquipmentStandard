@@ -2,7 +2,6 @@ package me.langyue.equipmentstandard.data;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
 import me.langyue.equipmentstandard.EquipmentStandard;
 import me.langyue.equipmentstandard.api.EquipmentTemplateManager;
 import me.langyue.equipmentstandard.api.data.EquipmentTemplate;
@@ -10,12 +9,11 @@ import me.langyue.equipmentstandard.api.data.ItemVerifier;
 import me.langyue.equipmentstandard.gson.ItemVerifierDeserializer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 
 import java.util.Map;
 
-public class TemplateDataLoader extends SimpleJsonResourceReloadListener {
+public class TemplateDataLoader extends BaseDataLoader<EquipmentTemplate> {
     private static final Gson GSON = new GsonBuilder()
             .setPrettyPrinting()
             .disableHtmlEscaping()
@@ -27,12 +25,9 @@ public class TemplateDataLoader extends SimpleJsonResourceReloadListener {
     }
 
     @Override
-    protected void apply(Map<ResourceLocation, JsonElement> prepared, ResourceManager manager, ProfilerFiller filler) {
+    protected void apply(Map<ResourceLocation, EquipmentTemplate> prepared, ResourceManager resourceManager, ProfilerFiller profilerFiller) {
         EquipmentTemplateManager.clear();
-        for (Map.Entry<ResourceLocation, JsonElement> entry : prepared.entrySet()) {
-            EquipmentTemplate template = GSON.fromJson(entry.getValue(), EquipmentTemplate.class);
-            EquipmentTemplateManager.put(entry.getKey(), template);
-        }
+        prepared.forEach(EquipmentTemplateManager::put);
         EquipmentStandard.LOGGER.info("Loaded {} equipment templates", EquipmentTemplateManager.size());
     }
 }

@@ -35,6 +35,10 @@ public class ItemRarityManager {
         ITEM_RARITY_MAP.put(id, itemRarity);
     }
 
+    public static void put(Map<ResourceLocation, ItemRarity> map) {
+        ITEM_RARITY_MAP.putAll(map);
+    }
+
     public static int size() {
         return ITEM_RARITY_MAP.size();
     }

@@ -7,7 +7,7 @@
       "tag": "equipment_standard:diggers"
     }
   ],
-  "exclude": [
+  "excludes": [
     {
       "tag": "equipment_standard:magic"
     }

@@ -4,7 +4,7 @@
       "tag": "equipment_standard:armor"
     }
   ],
-  "exclude": [
+  "excludes": [
     {
       "tag": "equipment_standard:magic"
     }
