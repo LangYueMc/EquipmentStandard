@@ -1,3 +1,13 @@
+# V1.1.6
+
+2023-11-11
+
+## 变更
+
+1. 重构 `equipmentstandard` 的 tag 到 `equipment_standard`；
+2. 重构数据包读取，现在只会读取 `equipment_standard` 下的数据了；
+3. 添加 README。
+
 # V1.1.5
 
 2023-11-6
