@@ -3,9 +3,47 @@ Machine translation, welcome to correct grammatical errors.
 
 [中文](README.md)
 
-Inspired by [Tiered](https://github.com/Draylar/tiered), equipment attributes can be customized through datapack, but this module can use random mode or fixed value mode similar to Tiered.
+Inspired by [Tiered](https://github.com/Draylar/tiered), equipment attributes can be customized through datapack, but this mod can use random mode or fixed value mode similar to Tiered.
 
 ## Data Format
+
+### Item Tags
+
+#### Damageable
+* `#equipment_standard:damageable`       -- create("damageable", item -> item.getMaxDamage() > 0);
+#### Weapons
+* `#equipment_standard:weapons`          -- create("weapons", item -> item instanceof SwordItem || item instanceof TridentItem || item instanceof ProjectileWeaponItem);
+* `#equipment_standard:melee_weapons`    -- create("melee_weapons", item -> item instanceof SwordItem || item instanceof TridentItem);
+* `#equipment_standard:ranged_weapons`   -- create("ranged_weapons", item -> item instanceof ProjectileWeaponItem || item instanceof TridentItem);
+* `#equipment_standard:swords`           -- create("swords", item -> item instanceof SwordItem);
+* `#equipment_standard:tridents`         -- create("tridents", item -> item instanceof TridentItem);
+* `#equipment_standard:projectiles`      -- create("projectiles", item -> item instanceof ProjectileWeaponItem);
+* `#equipment_standard:bows`             -- create("bows", item -> item instanceof BowItem);
+* `#equipment_standard:crossbows`        -- create("crossbows", item -> item instanceof CrossbowItem);
+#### Tools
+* `#equipment_standard:diggers`          -- create("diggers", item -> item instanceof DiggerItem);
+* `#equipment_standard:axes`             -- create("axes", item -> item instanceof AxeItem);
+* `#equipment_standard:hoes`             -- create("hoes", item -> item instanceof HoeItem);
+* `#equipment_standard:pickaxes`         -- create("pickaxes", item -> item instanceof PickaxeItem);
+* `#equipment_standard:shovels`          -- create("shovels", item -> item instanceof ShovelItem);
+* `#equipment_standard:fishing_rods`     -- create("fishing_rods", item -> item instanceof FishingRodItem);
+#### Armor
+* `#equipment_standard:armor`            -- create("armor", item -> item instanceof ArmorItem || item instanceof ElytraItem);
+* `#equipment_standard:helmets`          -- create("helmets", item -> item instanceof ArmorItem armor && armor.getEquipmentSlot() == EquipmentSlot.HEAD);
+* `#equipment_standard:chestplates`      -- create("chestplates", item -> item instanceof ArmorItem armor && armor.getEquipmentSlot() == EquipmentSlot.CHEST);
+* `#equipment_standard:leggings`         -- create("leggings", item -> item instanceof ArmorItem armor && armor.getEquipmentSlot() == EquipmentSlot.LEGS);
+* `#equipment_standard:boots`            -- create("boots", item -> item instanceof ArmorItem armor && armor.getEquipmentSlot() == EquipmentSlot.FEET);
+#### Elytra
+* `#equipment_standard:elytra`           -- create("elytra", item -> item instanceof ElytraItem);
+#### Shields
+* `#equipment_standard:shields`          -- create("shields", item -> item instanceof ShieldItem);
+#### Horse Armor
+* `#equipment_standard:horse_armor`      -- create("horse_armor", item -> item instanceof HorseArmorItem);
+#### Magic items (you can define them yourself, currently only some items from the spell engine are built-in)
+* `#equipment_standard:magic`            -- The default is the sum of `#equipment_standard:magic/armor` and `#equipment_standard:magic/weapons`, you don’t need to change this.
+* `#equipment_standard:magic/armor`      -- Add the mod's armor to this tag based on the actual installed magic mod.
+* `#equipment_standard:magic/weapons`    -- Add the mod's weapons to this tag based on the actually installed magic mod.
+
 
 ### Equipment Template
 It needs to be located under `datapack name(.zip)?/data/equipment_standard/template`, you can use the folder.

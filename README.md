@@ -6,6 +6,43 @@
 
 ## 数据格式
 
+### 物品标签 (Tags)
+
+#### 有耐久的
+* `#equipment_standard:damageable`       -- create("damageable", item -> item.getMaxDamage() > 0);
+#### 武器
+* `#equipment_standard:weapons`          -- create("weapons", item -> item instanceof SwordItem || item instanceof TridentItem || item instanceof ProjectileWeaponItem);
+* `#equipment_standard:melee_weapons`    -- create("melee_weapons", item -> item instanceof SwordItem || item instanceof TridentItem);
+* `#equipment_standard:ranged_weapons`   -- create("ranged_weapons", item -> item instanceof ProjectileWeaponItem || item instanceof TridentItem);
+* `#equipment_standard:swords`           -- create("swords", item -> item instanceof SwordItem);
+* `#equipment_standard:tridents`         -- create("tridents", item -> item instanceof TridentItem);
+* `#equipment_standard:projectiles`      -- create("projectiles", item -> item instanceof ProjectileWeaponItem);
+* `#equipment_standard:bows`             -- create("bows", item -> item instanceof BowItem);
+* `#equipment_standard:crossbows`        -- create("crossbows", item -> item instanceof CrossbowItem);
+#### 工具
+* `#equipment_standard:diggers`          -- create("diggers", item -> item instanceof DiggerItem);
+* `#equipment_standard:axes`             -- create("axes", item -> item instanceof AxeItem);
+* `#equipment_standard:hoes`             -- create("hoes", item -> item instanceof HoeItem);
+* `#equipment_standard:pickaxes`         -- create("pickaxes", item -> item instanceof PickaxeItem);
+* `#equipment_standard:shovels`          -- create("shovels", item -> item instanceof ShovelItem);
+* `#equipment_standard:fishing_rods`     -- create("fishing_rods", item -> item instanceof FishingRodItem);
+#### 护甲
+* `#equipment_standard:armor`            -- create("armor", item -> item instanceof ArmorItem || item instanceof ElytraItem);
+* `#equipment_standard:helmets`          -- create("helmets", item -> item instanceof ArmorItem armor && armor.getEquipmentSlot() == EquipmentSlot.HEAD);
+* `#equipment_standard:chestplates`      -- create("chestplates", item -> item instanceof ArmorItem armor && armor.getEquipmentSlot() == EquipmentSlot.CHEST);
+* `#equipment_standard:leggings`         -- create("leggings", item -> item instanceof ArmorItem armor && armor.getEquipmentSlot() == EquipmentSlot.LEGS);
+* `#equipment_standard:boots`            -- create("boots", item -> item instanceof ArmorItem armor && armor.getEquipmentSlot() == EquipmentSlot.FEET);
+#### 鞘翅
+* `#equipment_standard:elytra`           -- create("elytra", item -> item instanceof ElytraItem);
+#### 盾牌
+* `#equipment_standard:shields`          -- create("shields", item -> item instanceof ShieldItem);
+#### 马铠
+* `#equipment_standard:horse_armor`      -- create("horse_armor", item -> item instanceof HorseArmorItem);
+#### 魔法物品(可以自行定义，目前仅内置了 spell engine 的一些物品)
+* `#equipment_standard:magic`            -- 默认是 `#equipment_standard:magic/armor` 和 `#equipment_standard:magic/weapons` 的总和，可以不用改这个
+* `#equipment_standard:magic/armor`      -- 根据实际安装的魔法类模组添加模组的护甲到这个标签下
+* `#equipment_standard:magic/weapons`    -- 根据实际安装的魔法类模组添加模组的武器到这个标签下
+
 ### 属性模板
 需位于 `数据包名(.zip)?/data/equipment_standard/template` 下，可以使用文件夹
 
