@@ -28,11 +28,6 @@ public abstract class PlayerMixin {
         return crit.get();
     }
 
-    @ModifyConstant(method = "attack", constant = @Constant(floatValue = 1.5F))
-    private float getCritDamageMultiplier(float constant) {
-        return MixinUtils.getCritDamageMultiplier((Player) (Object) this, constant);
-    }
-
     /**
      * 真伤
      */

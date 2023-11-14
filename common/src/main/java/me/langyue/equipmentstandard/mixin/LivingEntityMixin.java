@@ -67,11 +67,7 @@ public abstract class LivingEntityMixin extends Entity implements ProficiencyAcc
 
     @Inject(method = "createLivingAttributes", at = @At("RETURN"))
     private static void createLivingAttributesMixin(CallbackInfoReturnable<AttributeSupplier.Builder> cir) {
-        cir.getReturnValue()
-                .add(CustomAttributes.DIG_SPEED)
-                .add(CustomAttributes.CRIT_CHANCE)
-                .add(CustomAttributes.CRIT_DAMAGE)
-                .add(CustomAttributes.REAL_DAMAGE);
+        CustomAttributes.createLivingAttributes(cir.getReturnValue());
     }
 
     /**

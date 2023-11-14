@@ -13,7 +13,7 @@
 
   "attribute.name.generic.dig_speed": "挖掘速度",
   "attribute.name.generic.crit_chance": "暴击几率",
-  "attribute.name.generic.crit_damage": "暴击伤害",
+  "attribute.name.generic.crit_damage": "暴击伤害倍率",
   "attribute.name.generic.real_damage": "真实伤害",
 
   "attribute.modifier.additional.0": "",

@@ -206,8 +206,7 @@ public class Attribute {
             this.type = type;
             this.merge = merge;
             this.amount = amount;
-            if (type.equalsIgnoreCase(EquipmentStandard.MOD_ID + ":generic.crit_chance")
-                    || type.equalsIgnoreCase(EquipmentStandard.MOD_ID + ":generic.crit_damage"))
+            if (type.equalsIgnoreCase(EquipmentStandard.MOD_ID + ":generic.crit_chance"))
                 // 暴击和暴击伤害都是累加的，而且都是百分比，为了显示正常，这里固定为 MULTIPLY_BASE
                 this.operation = Operation.MULTIPLY_BASE;
             else if (type.equalsIgnoreCase(EquipmentStandard.MOD_ID + ":generic.real_damage"))

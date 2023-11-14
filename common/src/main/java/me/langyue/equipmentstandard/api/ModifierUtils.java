@@ -7,9 +7,7 @@ import me.langyue.equipmentstandard.EquipmentStandard;
 import me.langyue.equipmentstandard.api.data.Attribute;
 import me.langyue.equipmentstandard.api.data.Bonus;
 import me.langyue.equipmentstandard.api.data.EquipmentTemplate;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -143,11 +141,11 @@ public class ModifierUtils {
                 .filter(af -> af != null && !CustomAttributes.DURABLE.equals(af.type()))
                 .sorted(Comparator.comparing(Attribute.Final::operation))
                 .forEach(attribute -> {
-                    ResourceLocation identifier = new ResourceLocation(attribute.type());
-                    net.minecraft.world.entity.ai.attributes.Attribute entityAttribute = BuiltInRegistries.ATTRIBUTE.get(identifier);
+                    var type = attribute.type();
+                    net.minecraft.world.entity.ai.attributes.Attribute entityAttribute = CustomAttributes.getAttribute(type);
                     if (entityAttribute == null) {
-                        if (INVALID_ATTRIBUTE.add(attribute.type()))
-                            EquipmentStandard.LOGGER.warn("{} was referenced as an attribute type, but it does not exist!", attribute.type());
+                        if (INVALID_ATTRIBUTE.add(type))
+                            EquipmentStandard.LOGGER.warn("{} was referenced as an attribute type, but it does not exist!", type);
                     } else {
                         Set<EquipmentSlot> slots = new HashSet<>(attribute.getEquipmentSlots());
                         if (attribute.slots().isEmpty() || attribute.slots().contains(Attribute.Slot.DEFAULT)) {
@@ -155,8 +153,8 @@ public class ModifierUtils {
                             slots.addAll(EquipmentSlotUtils.getDefaultEquipmentSlot(stack));
                         }
                         if (attribute.slots().contains(Attribute.Slot.ANY) || slots.contains(slot)) {
-                            var operation = attribute.operation().convert();
                             AtomicReference<Double> amount = new AtomicReference<>(attribute.amount());
+                            var operation = attribute.operation().convert();
                             if (attribute.operation() == Attribute.Operation.MULTIPLY_ADDITION) {
                                 // 增加百分比
                                 multimap.get(entityAttribute).stream()

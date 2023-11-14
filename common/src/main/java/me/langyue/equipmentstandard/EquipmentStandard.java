@@ -27,7 +27,7 @@ public class EquipmentStandard {
 
     public static void init() {
         Config.init();
-        CustomAttributes.ATTRIBUTE.register();
+        CustomAttributes.register();
         registerReloadListener();
         registerC2SReceiver();
     }

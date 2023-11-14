@@ -138,9 +138,7 @@ public abstract class ItemStackClientMixin {
                 }
             }
         }
-        if (EquipmentStandard.CONFIG.showMultiplyOperationAdditional
-                && !entry.getKey().equals(CustomAttributes.CRIT_CHANCE)
-                && !entry.getKey().equals(CustomAttributes.CRIT_DAMAGE)) {
+        if (EquipmentStandard.CONFIG.showMultiplyOperationAdditional && !entry.getKey().equals(CustomAttributes.CRIT_CHANCE)) {
             component.getSiblings().add(Component.translatable("attribute.modifier.additional." + entry.getValue().getOperation().toValue()).withStyle(ChatFormatting.DARK_GRAY));
         }
         return component.withStyle(formatting);
