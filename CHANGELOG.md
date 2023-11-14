@@ -1,3 +1,15 @@
+# V1.2.0
+
+2023-11-15
+
+## 变更
+
+1. 使用 mixinextras 重构 mixin，理论兼容更多其他 mod； 
+2. 微调暴击爆伤数值和概率。 
+3. 兼容 AdditionalEntityAttributes
+
+    当 AdditionalEntityAttributes 加载时暴击伤害和挖掘速度将使用 AdditionalEntityAttributes 的；
+
 # V1.1.6
 
 2023-11-11

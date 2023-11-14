@@ -1,3 +1,15 @@
+# V1.2.0
+
+2023-11-15
+
+## Changed
+
+1. Use `mixinextras` to reconstruct mixin, which is theoretically compatible with more other mods;
+2. Fine-tune the critical damage value and probability.
+3. Compatible `AdditionalEntityAttributes`
+
+   Critical damage and mining speed will use `AdditionalEntityAttributes` when `AdditionalEntityAttributes` is loaded;
+
 # V1.1.6
 
 2023-11-11
