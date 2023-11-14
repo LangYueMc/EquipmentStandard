@@ -1,5 +1,6 @@
 package me.langyue.equipmentstandard.mixin;
 
+import com.llamalad7.mixinextras.sugar.Local;
 import me.langyue.equipmentstandard.EquipmentStandard;
 import me.langyue.equipmentstandard.MixinUtils;
 import me.langyue.equipmentstandard.api.ModifierUtils;
@@ -10,10 +11,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ServerLevelAccessor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Mob.class)
@@ -21,9 +21,6 @@ public abstract class MobMixin {
 
     @Shadow
     public abstract ItemStack getItemBySlot(EquipmentSlot arg);
-
-    @Unique
-    private Entity es$target;
 
     @Inject(method = "finalizeSpawn", at = @At("TAIL"))
     private void finalizeSpawnMixin(
@@ -38,19 +35,17 @@ public abstract class MobMixin {
         }
     }
 
-    @Inject(method = "doHurtTarget", at = @At("HEAD"))
-    private void finalizeSpawnMixin(Entity entity, CallbackInfoReturnable<Boolean> cir) {
-        this.es$target = entity;
-    }
-
-    @ModifyArg(method = "doHurtTarget", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z"))
-    private float critAttackMixin(float f) {
+    @ModifyVariable(method = "doHurtTarget", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z"), index = 2)
+    private float critAttackMixin(float f, @Local(ordinal = 0) Entity target) {
+        var critDamageMultiplier = 1.0f;
         try {
             // 暴击后
-            return MixinUtils.critAttackMixin((Mob) (Object) this, es$target, f);
-        } catch (Throwable e) {
-            return f;
+            if (MixinUtils.isCrit((Mob) (Object) this)) {
+                critDamageMultiplier = MixinUtils.getCritDamageMultiplier((Mob) (Object) this, 1.5f);
+            }
+        } catch (Throwable ignored) {
         }
+        return f * critDamageMultiplier;
     }
 
     @Inject(method = "doHurtTarget", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z", shift = At.Shift.AFTER))

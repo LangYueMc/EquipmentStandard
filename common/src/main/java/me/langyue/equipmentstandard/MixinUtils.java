@@ -50,6 +50,55 @@ public class MixinUtils {
     /**
      * 暴击
      */
+    public static boolean isCrit(LivingEntity entity) {
+        if (entity.level().isClientSide()) return false;
+        // 暴击几率
+        double chance = entity.fallDistance > 0.0F
+                && !entity.onGround()
+                && !entity.onClimbable()
+                && !entity.isInWater()
+                && !entity.hasEffect(MobEffects.BLINDNESS)
+                && !entity.isPassenger()
+                && !entity.isSprinting()
+                ? EquipmentStandard.CONFIG.jumpAttackCritChance : EquipmentStandard.CONFIG.baseCritChance;
+        if (chance < 1) {
+            var chanceInstance = entity.getAttribute(CustomAttributes.CRIT_CHANCE);
+            if (chanceInstance != null) {
+                for (AttributeModifier modifier : chanceInstance.getModifiers()) {
+                    chance += modifier.getAmount();
+                }
+            }
+            chance = Math.max(EquipmentStandard.CONFIG.baseCritChance, chance);
+        } else {
+            return true;
+        }
+        try {
+            return EquipmentStandard.RANDOM.nextDouble() < chance;
+        } catch (Throwable e) {
+            EquipmentStandard.debug(e.getMessage());
+        }
+        return false;
+    }
+
+    /**
+     * 暴伤
+     */
+    public static float getCritDamageMultiplier(LivingEntity entity, float f) {
+        if (entity.level().isClientSide()) return f;
+        double damageMultiplier = EquipmentStandard.CONFIG.baseCritDamageMultiplier;
+        // 暴击伤害倍率
+        var damageInstance = entity.getAttribute(CustomAttributes.CRIT_DAMAGE);
+        if (damageInstance != null) {
+            for (AttributeModifier modifier : damageInstance.getModifiers()) {
+                damageMultiplier += modifier.getAmount();
+            }
+        }
+        return (float) Math.max(damageMultiplier, 1.1);
+    }
+
+    /**
+     * 暴击
+     */
     public static float critAttackMixin(LivingEntity entity, Entity target, float f) {
         if (entity.level().isClientSide()) return f;
         // 暴击几率

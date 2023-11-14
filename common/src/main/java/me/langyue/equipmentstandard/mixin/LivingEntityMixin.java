@@ -30,9 +30,6 @@ import java.util.Map;
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity implements ProficiencyAccessor {
 
-    @Unique
-    private final LivingEntity es$entity = (LivingEntity) (Object) this;
-
     @Shadow
     public abstract void setHealth(float health);
 
@@ -100,7 +97,7 @@ public abstract class LivingEntityMixin extends Entity implements ProficiencyAcc
             float health = this.getHealth() + es$overfullHealth;   // 将溢出的血量添加上之后设置实体血量
             this.setHealth(health);
             es$overfullHealth = Math.max(0, health - this.getHealth());
-            if (es$entity instanceof ServerPlayer serverPlayer) {
+            if (((LivingEntity) (Object) this) instanceof ServerPlayer serverPlayer) {
                 serverPlayer.resetSentInfo();
             }
         }
@@ -108,7 +105,7 @@ public abstract class LivingEntityMixin extends Entity implements ProficiencyAcc
 
     @Inject(method = "addAdditionalSaveData", at = @At(value = "TAIL"))
     private void addAdditionalSaveDataMixin(CompoundTag nbt, CallbackInfo ci) {
-        if (es$entity instanceof Merchant || es$entity instanceof Player) {
+        if (this instanceof Merchant || ((LivingEntity) (Object) this) instanceof Player) {
             nbt.putInt(NBT_KEY, es$proficiency);
         }
     }

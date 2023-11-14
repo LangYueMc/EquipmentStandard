@@ -2,6 +2,10 @@ package me.langyue.equipmentstandard.mixin.client;
 
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
+import com.llamalad7.mixinextras.sugar.Local;
+import com.llamalad7.mixinextras.sugar.Share;
+import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
+import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import me.langyue.equipmentstandard.EquipmentStandard;
 import me.langyue.equipmentstandard.api.CustomAttributes;
 import me.langyue.equipmentstandard.api.EquipmentComponentsAccessor;
@@ -40,21 +44,6 @@ public abstract class ItemStackClientMixin {
     @Shadow
     public abstract int getDamageValue();
 
-    @Unique
-    private boolean es$merged;
-
-    @Unique
-    private final Multimap<Attribute, AttributeModifier> es$modifiers = LinkedListMultimap.create();
-
-    @Unique
-    private Map.Entry<Attribute, AttributeModifier> es$entry;
-
-    @Unique
-    private final Map<UUID, Double> es$mergeText = new HashMap<>();
-
-    @Unique
-    private final ItemStack es$this = (ItemStack) (Object) this;
-
     /**
      * 是否显示详情
      */
@@ -63,18 +52,16 @@ public abstract class ItemStackClientMixin {
         return EquipmentStandard.CONFIG.mergeModifiers && !Screen.hasShiftDown();
     }
 
-    @Inject(method = "getTooltipLines", at = @At("HEAD"))
-    private void head(Player player, TooltipFlag tooltipFlag, CallbackInfoReturnable<List<Component>> cir) {
-        es$modifiers.clear();
-        es$entry = null;
-        es$merged = false;
-    }
-
     @ModifyVariable(method = "getTooltipLines", at = @At(value = "INVOKE", target = "Lcom/google/common/collect/Multimap;isEmpty()Z"))
-    private Multimap<Attribute, AttributeModifier> mergeModifier(Multimap<Attribute, AttributeModifier> modifiers) {
-        this.es$modifiers.clear();
+    private Multimap<Attribute, AttributeModifier> mergeModifier(
+            Multimap<Attribute, AttributeModifier> modifiers,
+            @Share("merged") LocalBooleanRef merged,
+            @Share("modifiers") LocalRef<Map<UUID, Double>> mergedModifiersRef
+    ) {
         if (modifiers.isEmpty() || !es$hideModifierDetails()) return modifiers;
+        Multimap<Attribute, AttributeModifier> tempMap = LinkedListMultimap.create();
         Multimap<Attribute, AttributeModifier> processed = LinkedListMultimap.create();
+        Map<UUID, Double> mergedModifiers = new HashMap<>();
         for (var entry : modifiers.entries()) {
             var attribute = entry.getKey();
             var modifier = entry.getValue();
@@ -97,11 +84,11 @@ public abstract class ItemStackClientMixin {
                 processed.put(attribute, temp);
             }
             modifier = new AttributeModifier(modifier.getId(), modifier.getName(), count, modifier.getOperation());
-            if (!this.es$modifiers.containsEntry(attribute, modifier))
-                this.es$modifiers.put(attribute, modifier);
+            if (!tempMap.containsEntry(attribute, modifier))
+                tempMap.put(attribute, modifier);
         }
         processed.clear();
-        for (var entry : this.es$modifiers.entries()) {
+        for (var entry : tempMap.entries()) {
             // 将攻击和攻速的 MULTIPLY_BASE 抽出与 ADDITION 合并显示
             var attribute = entry.getKey();
             var modifier = entry.getValue();
@@ -113,21 +100,16 @@ public abstract class ItemStackClientMixin {
             Collection<AttributeModifier> collection = modifiers.get(attribute);
             for (AttributeModifier temp : collection) {
                 if (AttributeModifier.Operation.MULTIPLY_BASE.equals(temp.getOperation())) {
-                    es$mergeText.put(modifier.getId(), temp.getAmount());
+                    mergedModifiers.put(modifier.getId(), temp.getAmount());
                     processed.put(attribute, temp);
                 }
             }
         }
-        processed.forEach(this.es$modifiers::remove);
+        processed.forEach(tempMap::remove);
         // 标记是否显示额外提示
-        es$merged |= this.es$modifiers.size() != modifiers.size();
-        return this.es$modifiers;
-    }
-
-    @ModifyVariable(method = "getTooltipLines", at = @At(value = "INVOKE", target = "Ljava/util/Map$Entry;getValue()Ljava/lang/Object;"))
-    private Map.Entry<Attribute, AttributeModifier> getEntry(Map.Entry<Attribute, AttributeModifier> entry) {
-        this.es$entry = entry;
-        return entry;
+        merged.set(merged.get() || tempMap.size() != modifiers.size());
+        mergedModifiersRef.set(mergedModifiers);
+        return tempMap;
     }
 
     @Redirect(
@@ -138,29 +120,38 @@ public abstract class ItemStackClientMixin {
             ),
             at = @At(value = "INVOKE", target = "Lnet/minecraft/network/chat/MutableComponent;withStyle(Lnet/minecraft/ChatFormatting;)Lnet/minecraft/network/chat/MutableComponent;")
     )
-    private MutableComponent modifyTooltip(MutableComponent component, ChatFormatting formatting) {
-        if (es$hideModifierDetails() && es$mergeText.containsKey(es$entry.getValue().getId())) {
-            Double amount = es$mergeText.get(es$entry.getValue().getId());
+    private MutableComponent modifyTooltip(
+            MutableComponent component, ChatFormatting formatting,
+            @Local Map.Entry<Attribute, AttributeModifier> entry,
+            @Share("merged") LocalBooleanRef merged,
+            @Share("modifiers") LocalRef<Map<UUID, Double>> mergedModifiersRef
+    ) {
+        var mergedModifiers = mergedModifiersRef.get();
+        if (es$hideModifierDetails() && mergedModifiers.containsKey(entry.getValue().getId())) {
+            Double amount = mergedModifiers.get(entry.getValue().getId());
             for (var sibling : component.getSiblings()) {
                 // 仅固定值的是这种结构，这里也只修改固定值的，比如武器的攻击和攻速
                 if (sibling.getContents() instanceof TranslatableContents content && content.getKey().startsWith("attribute.modifier.")) {
                     content.getArgs()[0] += String.format(" §7(%s%s%%§7)§r", amount < 0 ? "§c" : "§9+", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(amount * 100));
-                    es$merged = true;
+                    merged.set(true);
                     break;
                 }
             }
         }
         if (EquipmentStandard.CONFIG.showMultiplyOperationAdditional
-                && !es$entry.getKey().equals(CustomAttributes.CRIT_CHANCE)
-                && !es$entry.getKey().equals(CustomAttributes.CRIT_DAMAGE)) {
-            component.getSiblings().add(Component.translatable("attribute.modifier.additional." + es$entry.getValue().getOperation().toValue()).withStyle(ChatFormatting.DARK_GRAY));
+                && !entry.getKey().equals(CustomAttributes.CRIT_CHANCE)
+                && !entry.getKey().equals(CustomAttributes.CRIT_DAMAGE)) {
+            component.getSiblings().add(Component.translatable("attribute.modifier.additional." + entry.getValue().getOperation().toValue()).withStyle(ChatFormatting.DARK_GRAY));
         }
         return component.withStyle(formatting);
     }
 
     @Inject(method = "getTooltipLines", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;hasTag()Z", ordinal = 1), locals = LocalCapture.CAPTURE_FAILHARD)
-    private void showDetails(Player player, TooltipFlag tooltipFlag, CallbackInfoReturnable<List<Component>> cir, List<Component> list) {
-        if (list != null && es$merged && es$hideModifierDetails()) {
+    private void showDetails(
+            Player player, TooltipFlag tooltipFlag, CallbackInfoReturnable<List<Component>> cir, List<Component> list,
+            @Share("merged") LocalBooleanRef merged
+    ) {
+        if (list != null && merged.get() && es$hideModifierDetails()) {
             list.add(Component.empty());
             list.add(Component.translatable("item.modifiers.show_details").withStyle(ChatFormatting.GRAY));
         }
@@ -176,8 +167,8 @@ public abstract class ItemStackClientMixin {
     @Inject(method = "getTooltipLines", at = @At(value = "TAIL"))
     private void getTooltipMixin(Player player, TooltipFlag tooltipFlag, CallbackInfoReturnable<List<Component>> cir) {
         List<Component> list = cir.getReturnValue();
-        if (ModifierUtils.isEs(es$this)) {
-            EquipmentComponentsAccessor accessor = (EquipmentComponentsAccessor) (Object) es$this;
+        if (ModifierUtils.isEs((ItemStack) (Object) this)) {
+            EquipmentComponentsAccessor accessor = (EquipmentComponentsAccessor) this;
             String maker = accessor.es$getMaker();
             if (maker != null) {
                 list.add(Component.translatable("item.maker", maker));

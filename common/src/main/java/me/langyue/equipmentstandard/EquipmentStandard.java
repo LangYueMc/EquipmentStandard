@@ -1,24 +1,18 @@
 package me.langyue.equipmentstandard;
 
-import dev.architectury.event.events.client.ClientPlayerEvent;
 import dev.architectury.networking.NetworkManager;
 import dev.architectury.registry.ReloadListenerRegistry;
-import io.netty.buffer.Unpooled;
 import me.langyue.equipmentstandard.api.CustomAttributes;
 import me.langyue.equipmentstandard.config.Config;
 import me.langyue.equipmentstandard.data.AttributeScoreLoader;
 import me.langyue.equipmentstandard.data.ItemRarityLoader;
 import me.langyue.equipmentstandard.data.TemplateDataLoader;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.util.RandomSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class EquipmentStandard {
     public static final Logger LOGGER = LoggerFactory.getLogger("EquipmentStandard");
@@ -34,9 +28,17 @@ public class EquipmentStandard {
     public static void init() {
         Config.init();
         CustomAttributes.ATTRIBUTE.register();
+        registerReloadListener();
+        registerC2SReceiver();
+    }
+
+    private static void registerReloadListener() {
         ReloadListenerRegistry.register(PackType.SERVER_DATA, new TemplateDataLoader());
         ReloadListenerRegistry.register(PackType.SERVER_DATA, new AttributeScoreLoader());
         ReloadListenerRegistry.register(PackType.SERVER_DATA, new ItemRarityLoader());
+    }
+
+    private static void registerC2SReceiver() {
         // 服务端收到通知开始同步血量
         NetworkManager.registerReceiver(NetworkManager.Side.C2S, NET_READY, (buf, context) -> {
             if (context.getPlayer() instanceof ServerPlayer serverPlayer) {

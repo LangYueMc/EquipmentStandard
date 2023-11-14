@@ -22,15 +22,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class ItemStackMixin implements EquipmentComponentsAccessor, ItemStackAccessor {
 
     @Unique
-    private final ItemStack es$this = (ItemStack) (Object) this;
-
-    @Unique
     private boolean es$shouldHookGetAttributeModifiers = true;
 
     @Override
     public Multimap<Attribute, AttributeModifier> es$getOriginalAttributeModifiers(EquipmentSlot equipmentSlot) {
         this.es$shouldHookGetAttributeModifiers = false;
-        var attributeModifiers = es$this.getAttributeModifiers(equipmentSlot);
+        var attributeModifiers = ((ItemStack) (Object) this).getAttributeModifiers(equipmentSlot);
         this.es$shouldHookGetAttributeModifiers = true;
         return attributeModifiers;
     }
@@ -39,7 +36,7 @@ public abstract class ItemStackMixin implements EquipmentComponentsAccessor, Ite
     private void hookGetAttributeModifiers(EquipmentSlot equipmentSlot, CallbackInfoReturnable<Multimap<Attribute, AttributeModifier>> cir) {
         if (!es$shouldHookGetAttributeModifiers) return;
         Multimap<Attribute, AttributeModifier> modifierMultimap = LinkedListMultimap.create(cir.getReturnValue());
-        ModifierUtils.modify(es$this, equipmentSlot, modifierMultimap);
+        ModifierUtils.modify((ItemStack) (Object) this, equipmentSlot, modifierMultimap);
         cir.setReturnValue(modifierMultimap);
     }
 
@@ -64,13 +61,13 @@ public abstract class ItemStackMixin implements EquipmentComponentsAccessor, Ite
 
     @Inject(method = "getMaxDamage", at = @At("TAIL"), cancellable = true)
     private void getMaxDamageMixin(CallbackInfoReturnable<Integer> info) {
-        if (!es$this.isDamageableItem()) return;
-        info.setReturnValue(ModifierUtils.getMaxDamage(es$this, info.getReturnValue()));
+        if (!((ItemStack) (Object) this).isDamageableItem()) return;
+        info.setReturnValue(ModifierUtils.getMaxDamage((ItemStack) (Object) this, info.getReturnValue()));
     }
 
     @Override
     public EquipmentComponents es$getComponents() {
-        return EquipmentComponents.fromItem(es$this);
+        return EquipmentComponents.fromItem((ItemStack) (Object) this);
     }
 
     @Override
@@ -85,7 +82,7 @@ public abstract class ItemStackMixin implements EquipmentComponentsAccessor, Ite
         if (es$getComponents() == null) {
             // 仅能设置一次
             ProficiencyAccessor proficiencyAccessor = (ProficiencyAccessor) player;
-            new EquipmentComponents(player.getDisplayName().getString(), proficiencyAccessor.getProficiency()).save(es$this);
+            new EquipmentComponents(player.getDisplayName().getString(), proficiencyAccessor.getProficiency()).save((ItemStack) (Object) this);
         }
     }
 
@@ -97,7 +94,7 @@ public abstract class ItemStackMixin implements EquipmentComponentsAccessor, Ite
 
     @Override
     public void es$updateScore() {
-        ItemRarity.Rarity rarity = ItemRarityManager.get(es$this);
+        ItemRarity.Rarity rarity = ItemRarityManager.get((ItemStack) (Object) this);
         if (rarity == null) {
             return;
         }
@@ -107,7 +104,7 @@ public abstract class ItemStackMixin implements EquipmentComponentsAccessor, Ite
         }
         components.setScore(rarity.getScore());
         components.setRarity(rarity);
-        components.save(es$this);
+        components.save((ItemStack) (Object) this);
     }
 
     @Override
