@@ -13,6 +13,9 @@
       "tag": "equipment_standard:horse_armor"
     }
   ],
+  "excludes": [
+    "#equipment_standard:boots"
+  ],
   "attributes": [
     {
       "type": "generic.max_health",

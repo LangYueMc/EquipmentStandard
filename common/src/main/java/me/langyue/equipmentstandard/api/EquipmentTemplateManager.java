@@ -20,8 +20,9 @@ public class EquipmentTemplateManager {
     }
 
     public static void put(ResourceLocation id, EquipmentTemplate template) {
-        template.init();
-        TEMPLATES.put(id, template);
+        if (template.init()) {
+            TEMPLATES.put(id, template);
+        }
     }
 
     public static int size() {

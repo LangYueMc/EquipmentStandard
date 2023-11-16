@@ -121,6 +121,39 @@
           }
         }
       ]
+    },
+    {
+      "type": "generic.knockback_resistance",
+      "chance": 1,
+      "modifiers": [
+        {
+          "weights": 50,
+          "operation": "ADDITION",
+          "amount": 0,
+          "bonus": {
+            "lucky": -0.1,
+            "proficiency": -0.002
+          }
+        },
+        {
+          "weights": 30,
+          "operation": "ADDITION",
+          "amount": 0.1,
+          "bonus": {
+            "lucky": 0.05,
+            "proficiency": 0.002
+          }
+        },
+        {
+          "weights": 1,
+          "operation": "MULTIPLY_ADDITION",
+          "amount": 0.2,
+          "bonus": {
+            "lucky": 0.1,
+            "proficiency": 0.01
+          }
+        }
+      ]
     }
   ]
 }

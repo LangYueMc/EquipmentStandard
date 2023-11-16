@@ -2,9 +2,6 @@
   "verifiers": [
     {
       "tag": "equipment_standard:boots"
-    },
-    {
-      "tag": "equipment_standard:elytra"
     }
   ],
   "attributes": [

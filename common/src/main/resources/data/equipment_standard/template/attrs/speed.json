@@ -1,10 +1,7 @@
 {
   "verifiers": [
     {
-      "tag": "equipment_standard:boots"
-    },
-    {
-      "tag": "equipment_standard:leggings"
+      "tag": "equipment_standard:armor"
     },
     {
       "tag": "equipment_standard:elytra"
@@ -17,7 +14,7 @@
       "modifiers": [
         {
           "weights": 20,
-          "operation": "MULTIPLY_TOTAL",
+          "operation": "MULTIPLY_BASE",
           "min": -0.2,
           "max": 0,
           "bonus": {
@@ -36,7 +33,7 @@
         },
         {
           "weights": 50,
-          "operation": "MULTIPLY_TOTAL",
+          "operation": "MULTIPLY_BASE",
           "min": 0,
           "max": 0.2,
           "bonus": {
@@ -46,9 +43,9 @@
         },
         {
           "weights": 1,
-          "operation": "MULTIPLY_TOTAL",
+          "operation": "MULTIPLY_BASE",
           "min": 0.2,
-          "max": 0.5,
+          "max": 0.3,
           "bonus": {
             "lucky": 0.1,
             "proficiency": 0.01

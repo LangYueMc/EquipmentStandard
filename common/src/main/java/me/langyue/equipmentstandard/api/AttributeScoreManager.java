@@ -23,8 +23,8 @@ public class AttributeScoreManager {
     private static final Map<AttributeModifier.Operation, AttributeScore.Score> _DEFAULT_SCORE = new LinkedHashMap<>() {{
         put(AttributeModifier.Operation.ADDITION, new AttributeScore.Score(AttributeModifier.Operation.ADDITION, 100));
 //        put(Attribute.Operation.MULTIPLY_ADDITION, new AttributeScore.Score(Attribute.Operation.MULTIPLY_ADDITION, 3));
-        put(AttributeModifier.Operation.MULTIPLY_BASE, new AttributeScore.Score(AttributeModifier.Operation.MULTIPLY_BASE, 500));
-        put(AttributeModifier.Operation.MULTIPLY_TOTAL, new AttributeScore.Score(AttributeModifier.Operation.MULTIPLY_TOTAL, 550));
+        put(AttributeModifier.Operation.MULTIPLY_BASE, new AttributeScore.Score(AttributeModifier.Operation.MULTIPLY_BASE, 800));
+        put(AttributeModifier.Operation.MULTIPLY_TOTAL, new AttributeScore.Score(AttributeModifier.Operation.MULTIPLY_TOTAL, 1000));
     }};
 
     public static void put(Attribute attribute, AttributeScore.Score score, boolean overWrite) {
