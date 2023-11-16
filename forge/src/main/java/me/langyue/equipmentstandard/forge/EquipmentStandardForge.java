@@ -3,7 +3,7 @@ package me.langyue.equipmentstandard.forge;
 import dev.architectury.platform.Platform;
 import dev.architectury.platform.forge.EventBuses;
 import me.langyue.equipmentstandard.EquipmentStandard;
-import me.langyue.equipmentstandard.EquipmentStandardClient;
+import me.langyue.equipmentstandard.client.EquipmentStandardClient;
 import me.langyue.equipmentstandard.config.Config;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraftforge.client.ConfigScreenHandler;

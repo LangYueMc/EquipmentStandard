@@ -20,6 +20,15 @@
   "attribute.modifier.additional.1": "(基础)",
   "attribute.modifier.additional.2": "(最终)",
 
+  "container.reforge.tooltip": "重铸",
+  "container.reforge.cost.tooltip": "%d 点经验值",
+
+  "item.equipment_standard.reforge_scroll_lv1": "一级重铸卷轴",
+  "item.equipment_standard.reforge_scroll_lv2": "二级重铸卷轴",
+  "item.equipment_standard.reforge_scroll_lv3": "三级重铸卷轴",
+
+  "block.equipment_standard.reforge_table": "重铸台",
+
   "item.modifiers.show_details": "按住 §bShift§r 查看属性详情",
   "item.maker": "制作者：%s",
   "item.score": "品质分：%d",

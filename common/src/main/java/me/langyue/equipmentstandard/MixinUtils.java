@@ -2,7 +2,7 @@ package me.langyue.equipmentstandard;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import me.langyue.equipmentstandard.api.CustomAttributes;
+import me.langyue.equipmentstandard.world.entity.ai.attributes.ESAttributes;
 import me.langyue.equipmentstandard.api.CustomTag;
 import me.langyue.equipmentstandard.api.DamageSourcesAccessor;
 import net.minecraft.core.Holder;
@@ -45,10 +45,10 @@ public class MixinUtils {
      * 挖掘速度
      */
     public static float getDestroySpeedMixin(Player player, float f) {
-        if (CustomAttributes.DIG_SPEED == null) {
+        if (ESAttributes.DIG_SPEED == null) {
             return f;
         }
-        var attribute = player.getAttribute(CustomAttributes.DIG_SPEED);
+        var attribute = player.getAttribute(ESAttributes.DIG_SPEED);
         double speed = getFinalAttr(f, attribute);
 
         return (float) speed;
@@ -69,7 +69,7 @@ public class MixinUtils {
                 && !entity.isSprinting()
                 ? EquipmentStandard.CONFIG.jumpAttackCritChance : EquipmentStandard.CONFIG.baseCritChance;
         if (chance < 1) {
-            var chanceInstance = entity.getAttribute(CustomAttributes.CRIT_CHANCE);
+            var chanceInstance = entity.getAttribute(ESAttributes.CRIT_CHANCE);
             if (chanceInstance != null) {
                 for (AttributeModifier modifier : chanceInstance.getModifiers()) {
                     chance += modifier.getAmount();
@@ -91,9 +91,9 @@ public class MixinUtils {
      * 暴伤
      */
     public static float getCritDamageMultiplier(LivingEntity entity, float f) {
-        if (entity.level().isClientSide() || CustomAttributes.CRIT_DAMAGE == null) return f;
+        if (entity.level().isClientSide() || ESAttributes.CRIT_DAMAGE == null) return f;
         // 暴击伤害倍率
-        var damageInstance = entity.getAttribute(CustomAttributes.CRIT_DAMAGE);
+        var damageInstance = entity.getAttribute(ESAttributes.CRIT_DAMAGE);
         double damageMultiplier = getFinalAttr(EquipmentStandard.CONFIG.baseCritDamageMultiplier - 1, damageInstance);
         return (float) Math.max(damageMultiplier + 1, 1.1);
     }
@@ -104,7 +104,7 @@ public class MixinUtils {
     public static void realDamageMixin(LivingEntity entity, Entity target) {
         if (entity.level().isClientSide()) return;
         if (target instanceof LivingEntity) {
-            target.hurt(((DamageSourcesAccessor) target.damageSources()).realDamage(entity), (float) entity.getAttributeValue(CustomAttributes.REAL_DAMAGE));
+            target.hurt(((DamageSourcesAccessor) target.damageSources()).realDamage(entity), (float) entity.getAttributeValue(ESAttributes.REAL_DAMAGE));
         }
     }
 

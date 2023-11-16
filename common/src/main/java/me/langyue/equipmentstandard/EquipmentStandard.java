@@ -2,11 +2,14 @@ package me.langyue.equipmentstandard;
 
 import dev.architectury.networking.NetworkManager;
 import dev.architectury.registry.ReloadListenerRegistry;
-import me.langyue.equipmentstandard.api.CustomAttributes;
+import me.langyue.equipmentstandard.world.entity.ai.attributes.ESAttributes;
+import me.langyue.equipmentstandard.world.inventory.ESMenu;
 import me.langyue.equipmentstandard.config.Config;
 import me.langyue.equipmentstandard.data.AttributeScoreLoader;
 import me.langyue.equipmentstandard.data.ItemRarityLoader;
 import me.langyue.equipmentstandard.data.TemplateDataLoader;
+import me.langyue.equipmentstandard.world.item.ESItems;
+import me.langyue.equipmentstandard.world.level.block.ESBlocks;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.PackType;
@@ -27,7 +30,10 @@ public class EquipmentStandard {
 
     public static void init() {
         Config.init();
-        CustomAttributes.register();
+        ESAttributes.register();
+        ESBlocks.register();
+        ESItems.register();
+        ESMenu.register();
         registerReloadListener();
         registerC2SReceiver();
     }

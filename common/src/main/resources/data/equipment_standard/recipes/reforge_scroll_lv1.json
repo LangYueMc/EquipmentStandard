@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "equipment_standard:reforge_core/lv1"
+    },
+    "P": {
+      "item": "minecraft:paper"
+    }
+  },
+  "pattern": [
+    "PPP",
+    "P#P",
+    "PPP"
+  ],
+  "result": {
+    "count": 8,
+    "item": "equipment_standard:reforge_scroll_lv1"
+  },
+  "show_notification": true
+}

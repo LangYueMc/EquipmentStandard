@@ -3,6 +3,7 @@ package me.langyue.equipmentstandard.api;
 import com.google.common.util.concurrent.AtomicDouble;
 import me.langyue.equipmentstandard.api.data.Attribute;
 import me.langyue.equipmentstandard.api.data.ItemRarity;
+import me.langyue.equipmentstandard.world.entity.ai.attributes.ESAttributes;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -100,7 +101,7 @@ public class ItemRarityManager {
                 .map(key -> Attribute.Final.fromNbt(nbt.getCompound(key)))
                 .filter(Objects::nonNull)
                 .forEach(attribute -> {
-                    net.minecraft.world.entity.ai.attributes.Attribute attributeO = CustomAttributes.getAttribute(attribute.type());
+                    net.minecraft.world.entity.ai.attributes.Attribute attributeO = ESAttributes.getAttribute(attribute.type());
                     if (attribute.operation() == Attribute.Operation.MULTIPLY_ADDITION) {
                         // 增加百分比是在原来的基础上增加，所以只需要获取到原有的值，计算后就能获取准确数值
                         for (EquipmentSlot slot : EquipmentSlot.values()) {

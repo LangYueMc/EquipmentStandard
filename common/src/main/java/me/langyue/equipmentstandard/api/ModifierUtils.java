@@ -7,6 +7,7 @@ import me.langyue.equipmentstandard.EquipmentStandard;
 import me.langyue.equipmentstandard.api.data.Attribute;
 import me.langyue.equipmentstandard.api.data.Bonus;
 import me.langyue.equipmentstandard.api.data.EquipmentTemplate;
+import me.langyue.equipmentstandard.world.entity.ai.attributes.ESAttributes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -46,6 +47,12 @@ public class ModifierUtils {
         return getModifierId(f.type() + "_" + f.operation().getId() + "_" + slot.getName());
     }
 
+    public static boolean canModifyAttribute(ItemStack stack) {
+        if (stack.isEmpty() || stack.getCount() > 1) return false; // 堆叠的物品不添加
+        var templates = EquipmentTemplateManager.get(stack);
+        return templates != null && !templates.isEmpty();
+    }
+
     public static boolean setItemStackAttribute(ItemStack stack) {
         return setItemStackAttribute(stack, 0, 0);
     }
@@ -76,8 +83,12 @@ public class ModifierUtils {
     }
 
     public static boolean setItemStackAttribute(ItemStack stack, int proficiency, double luck) {
+        return setItemStackAttribute(stack, proficiency, luck, false);
+    }
+
+    public static boolean setItemStackAttribute(ItemStack stack, int proficiency, double luck, boolean reforge) {
         if (stack.isEmpty() || stack.getCount() > 1) return false; // 堆叠的物品不添加
-        if (stack.getTagElement(NBT_KEY) != null) return false;
+        if (!reforge && stack.getTagElement(NBT_KEY) != null) return false;
         var templates = EquipmentTemplateManager.get(stack);
         if (templates == null || templates.isEmpty()) {
             return false;
@@ -86,7 +97,7 @@ public class ModifierUtils {
         for (EquipmentTemplate template : templates) {
             template.getAttributes().stream()
                     .filter(attribute -> {
-                        if (attribute.getType().equalsIgnoreCase(CustomAttributes.DURABLE) && !stack.isDamageableItem()) {
+                        if (attribute.getType().equalsIgnoreCase(ESAttributes.DURABLE) && !stack.isDamageableItem()) {
                             // 如果物品是没有耐久的就不需要存储了
                             return false;
                         }
@@ -109,7 +120,7 @@ public class ModifierUtils {
                         }
                     });
         }
-        CompoundTag nbt = stack.getOrCreateTagElement(NBT_KEY);
+        CompoundTag nbt = new CompoundTag();
         for (var operation : Attribute.Operation.values()) {
             for (Attribute.Final attribute : nbtMultimap.get(operation)) {
                 int i = 0;
@@ -136,13 +147,13 @@ public class ModifierUtils {
         CompoundTag nbt = stack.getTagElement(NBT_KEY);
         if (nbt == null) return;
         nbt.getAllKeys().stream()
-                .filter(key -> !key.startsWith(CustomAttributes.DURABLE))
+                .filter(key -> !key.startsWith(ESAttributes.DURABLE))
                 .map(key -> Attribute.Final.fromNbt(nbt.getCompound(key)))
-                .filter(af -> af != null && !CustomAttributes.DURABLE.equals(af.type()))
+                .filter(af -> af != null && !ESAttributes.DURABLE.equals(af.type()))
                 .sorted(Comparator.comparing(Attribute.Final::operation))
                 .forEach(attribute -> {
                     var type = attribute.type();
-                    net.minecraft.world.entity.ai.attributes.Attribute entityAttribute = CustomAttributes.getAttribute(type);
+                    net.minecraft.world.entity.ai.attributes.Attribute entityAttribute = ESAttributes.getAttribute(type);
                     if (entityAttribute == null) {
                         if (INVALID_ATTRIBUTE.add(type))
                             EquipmentStandard.LOGGER.warn("{} was referenced as an attribute type, but it does not exist!", type);
@@ -198,9 +209,9 @@ public class ModifierUtils {
         if (nbt == null) return original;
         AtomicInteger modified = new AtomicInteger(original);
         nbt.getAllKeys().stream()
-                .filter(key -> key.startsWith(CustomAttributes.DURABLE))
+                .filter(key -> key.startsWith(ESAttributes.DURABLE))
                 .map(key -> Attribute.Final.fromNbt(nbt.getCompound(key)))
-                .filter(af -> af != null && CustomAttributes.DURABLE.equals(af.type()))
+                .filter(af -> af != null && ESAttributes.DURABLE.equals(af.type()))
                 .sorted(Comparator.comparing(Attribute.Final::operation))
                 .forEach(attribute -> modified.addAndGet(switch (attribute.operation()) {
                     case ADDITION -> (int) attribute.amount();

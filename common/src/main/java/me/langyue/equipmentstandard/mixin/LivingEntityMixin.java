@@ -1,6 +1,6 @@
 package me.langyue.equipmentstandard.mixin;
 
-import me.langyue.equipmentstandard.api.CustomAttributes;
+import me.langyue.equipmentstandard.world.entity.ai.attributes.ESAttributes;
 import me.langyue.equipmentstandard.api.ProficiencyAccessor;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -67,7 +67,7 @@ public abstract class LivingEntityMixin extends Entity implements ProficiencyAcc
 
     @Inject(method = "createLivingAttributes", at = @At("RETURN"))
     private static void createLivingAttributesMixin(CallbackInfoReturnable<AttributeSupplier.Builder> cir) {
-        CustomAttributes.createLivingAttributes(cir.getReturnValue());
+        ESAttributes.createLivingAttributes(cir.getReturnValue());
     }
 
     /**

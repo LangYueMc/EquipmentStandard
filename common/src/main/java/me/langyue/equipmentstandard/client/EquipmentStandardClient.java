@@ -1,8 +1,10 @@
-package me.langyue.equipmentstandard;
+package me.langyue.equipmentstandard.client;
 
 import dev.architectury.event.events.client.ClientPlayerEvent;
 import dev.architectury.networking.NetworkManager;
 import io.netty.buffer.Unpooled;
+import me.langyue.equipmentstandard.EquipmentStandard;
+import me.langyue.equipmentstandard.world.inventory.ESMenu;
 import net.minecraft.network.FriendlyByteBuf;
 
 import java.util.Timer;
@@ -20,5 +22,7 @@ public class EquipmentStandardClient {
                 }
             }, 1000);
         });
+
+        ESMenu.registerClient();
     }
 }

@@ -20,6 +20,15 @@
   "attribute.modifier.additional.1": " (Base)",
   "attribute.modifier.additional.2": " (Final)",
 
+  "container.reforge.tooltip": "Reforge",
+  "container.reforge.cost.tooltip": "%d experience points",
+
+  "item.equipment_standard.reforge_scroll_lv1": "Reforge Scroll Lv.1",
+  "item.equipment_standard.reforge_scroll_lv2": "Reforge Scroll Lv.2",
+  "item.equipment_standard.reforge_scroll_lv3": "Reforge Scroll Lv.3",
+
+  "block.equipment_standard.reforge_table": "Reforge Table",
+
   "item.modifiers.show_details": "Hold§c shift§r to view attributes details.",
   "item.maker": "Maker: %s",
   "item.score": "Score: %d",

@@ -2,7 +2,7 @@ package me.langyue.equipmentstandard.api.data;
 
 import com.google.common.util.concurrent.AtomicDouble;
 import me.langyue.equipmentstandard.EquipmentStandard;
-import me.langyue.equipmentstandard.api.CustomAttributes;
+import me.langyue.equipmentstandard.world.entity.ai.attributes.ESAttributes;
 import me.langyue.equipmentstandard.api.ModifierUtils;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -18,7 +18,7 @@ public class Attribute {
      * 类型，可选值
      *
      * @see net.minecraft.world.entity.ai.attributes.Attribute
-     * @see CustomAttributes
+     * @see ESAttributes
      */
     private final String type;
     /**
@@ -51,7 +51,7 @@ public class Attribute {
     }
 
     public void init(EquipmentTemplate template) {
-        if (this.slots == null || this.slots.size() == 0) {
+        if (this.slots == null || this.slots.isEmpty()) {
             this.slots = template.getSlots();
         }
         modifiers.forEach(modifier -> {
@@ -63,7 +63,7 @@ public class Attribute {
 
     public boolean isMerge() {
         // 耐久默认就是修改原版的，所以耐久固定返回false，看不懂逻辑也别问问什么了，就是这样，千万不要改
-        return merge && !type.equalsIgnoreCase(CustomAttributes.DURABLE);
+        return merge && !type.equalsIgnoreCase(ESAttributes.DURABLE);
     }
 
     public double getChance() {
@@ -79,7 +79,7 @@ public class Attribute {
 
     public Set<Slot> getSlots() {
         // 耐久不分格子
-        return CustomAttributes.DURABLE.equals(type) ? null : slots;
+        return ESAttributes.DURABLE.equals(type) ? null : slots;
     }
 
     public List<AttributeModifier> getModifiers() {
@@ -132,7 +132,7 @@ public class Attribute {
         try {
             return new Final(
                     this.getType(),
-                    !this.getType().equalsIgnoreCase(CustomAttributes.DURABLE) && this.isMerge(),
+                    !this.getType().equalsIgnoreCase(ESAttributes.DURABLE) && this.isMerge(),
                     amount,
                     operation,
                     this.getSlots()
@@ -224,13 +224,13 @@ public class Attribute {
         public CompoundTag toNbt() {
             CompoundTag nbtCompound = new CompoundTag();
             nbtCompound.putString("Type", type);
-            if (!type.equalsIgnoreCase(CustomAttributes.DURABLE) && merge) {
+            if (!type.equalsIgnoreCase(ESAttributes.DURABLE) && merge) {
                 // 要合并原版的
                 nbtCompound.putBoolean("Merge", true);
             }
             nbtCompound.putDouble("Amount", amount);
             nbtCompound.putInt("Operation", operation.getId());
-            if (!type.equalsIgnoreCase(CustomAttributes.DURABLE) && slots != null && !slots.isEmpty())
+            if (!type.equalsIgnoreCase(ESAttributes.DURABLE) && slots != null && !slots.isEmpty())
                 nbtCompound.putIntArray("Slots", slots.stream().mapToInt(Slot::getId).toArray());
             return nbtCompound;
         }

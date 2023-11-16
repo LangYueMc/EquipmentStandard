@@ -7,7 +7,7 @@ import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import me.langyue.equipmentstandard.EquipmentStandard;
-import me.langyue.equipmentstandard.api.CustomAttributes;
+import me.langyue.equipmentstandard.world.entity.ai.attributes.ESAttributes;
 import me.langyue.equipmentstandard.api.EquipmentComponentsAccessor;
 import me.langyue.equipmentstandard.api.ModifierUtils;
 import net.fabricmc.api.EnvType;
@@ -138,7 +138,7 @@ public abstract class ItemStackClientMixin {
                 }
             }
         }
-        if (EquipmentStandard.CONFIG.showMultiplyOperationAdditional && !entry.getKey().equals(CustomAttributes.CRIT_CHANCE)) {
+        if (EquipmentStandard.CONFIG.showMultiplyOperationAdditional && !entry.getKey().equals(ESAttributes.CRIT_CHANCE)) {
             component.getSiblings().add(Component.translatable("attribute.modifier.additional." + entry.getValue().getOperation().toValue()).withStyle(ChatFormatting.DARK_GRAY));
         }
         return component.withStyle(formatting);

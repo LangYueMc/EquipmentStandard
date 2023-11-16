@@ -1,4 +1,4 @@
-package me.langyue.equipmentstandard.api;
+package me.langyue.equipmentstandard.world.entity.ai.attributes;
 
 import dev.architectury.platform.Platform;
 import dev.architectury.registry.registries.DeferredRegister;
@@ -12,7 +12,7 @@ import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 
 import java.util.*;
 
-public class CustomAttributes {
+public class ESAttributes {
     private static final DeferredRegister<Attribute> ATTRIBUTE = DeferredRegister.create(EquipmentStandard.MOD_ID, Registries.ATTRIBUTE);
     private static final Set<Attribute> ALL = new HashSet<>();
     private static final Map<String, String> REPEAT = new HashMap<>();
