@@ -1,3 +1,11 @@
+# V1.3.1
+
+2023-11-17
+
+## Fixed
+
+1. Fixed the crash in 1.20.1 caused by calling the new method in 1.20.2
+
 # V1.3.0
 
 2023-11-17
