@@ -139,15 +139,23 @@ public class ReforgeMenu extends AbstractContainerMenu {
                 if (!this.moveItemStackTo(itemStack2, 1, 2, true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!(this.slots.get(0)).hasItem() && (this.slots.get(0)).mayPlace(itemStack2)) {
+            } else if (!this.slots.get(0).hasItem() && this.slots.get(0).mayPlace(itemStack2)) {
                 ItemStack itemStack3 = itemStack2.copyWithCount(1);
                 itemStack2.shrink(1);
-                (this.slots.get(0)).setByPlayer(itemStack3);
+                try {
+                    this.slots.get(0).setByPlayer(itemStack3);
+                } catch (Throwable e) {
+                    this.slots.get(0).set(itemStack3);
+                }
             } else {
                 return ItemStack.EMPTY;
             }
             if (itemStack2.isEmpty()) {
-                slot.setByPlayer(ItemStack.EMPTY);
+                try {
+                    slot.setByPlayer(ItemStack.EMPTY);
+                } catch (Throwable e) {
+                    slot.set(ItemStack.EMPTY);
+                }
             } else {
                 slot.setChanged();
             }
