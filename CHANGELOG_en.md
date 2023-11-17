@@ -1,3 +1,11 @@
+# V1.3.0
+
+2023-11-17
+
+## Changed
+1. Added a reforge table to reforge equipment, which requires reforge scrolls. Please check the recipe for details;
+2. Adjust the attribute scores again. Please ask someone to design a set of attribute values and scores.
+
 # V1.2.0
 
 2023-11-15
