@@ -13,9 +13,6 @@
       "tag": "equipment_standard:horse_armor"
     }
   ],
-  "excludes": [
-    "#equipment_standard:boots"
-  ],
   "attributes": [
     {
       "type": "generic.max_health",
@@ -82,10 +79,10 @@
           "weights": 1,
           "operation": "MULTIPLY_BASE",
           "min": 0.3,
-          "max": 0.8,
+          "max": 0.5,
           "bonus": {
-            "lucky": 0.01,
-            "proficiency": 0.008
+            "lucky": 0.1,
+            "proficiency": 0.01
           }
         }
       ]

@@ -23,9 +23,9 @@ public class ItemRarityManager {
         add(new ItemRarity.Rarity("Common", -20, Component.empty(), ChatFormatting.WHITE));
         add(new ItemRarity.Rarity("Uncommon", 100, Component.translatable("item.es.rarity.uncommon"), ChatFormatting.GREEN));
         add(new ItemRarity.Rarity("Rare", 300, Component.translatable("item.es.rarity.rare"), ChatFormatting.BLUE));
-        add(new ItemRarity.Rarity("Epic", 650, Component.translatable("item.es.rarity.epic"), ChatFormatting.LIGHT_PURPLE));
-        add(new ItemRarity.Rarity("Legendary", 1100, Component.translatable("item.es.rarity.legendary"), ChatFormatting.GOLD));
-        add(new ItemRarity.Rarity("Unique", 1350, Component.translatable("item.es.rarity.unique"), ChatFormatting.RED));
+        add(new ItemRarity.Rarity("Epic", 600, Component.translatable("item.es.rarity.epic"), ChatFormatting.LIGHT_PURPLE));
+        add(new ItemRarity.Rarity("Legendary", 900, Component.translatable("item.es.rarity.legendary"), ChatFormatting.GOLD));
+        add(new ItemRarity.Rarity("Unique", 1200, Component.translatable("item.es.rarity.unique"), ChatFormatting.RED));
     }};
 
     public static void clear() {

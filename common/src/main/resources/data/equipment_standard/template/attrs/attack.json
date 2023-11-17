@@ -2,9 +2,6 @@
   "verifiers": [
     {
       "tag": "equipment_standard:melee_weapons"
-    },
-    {
-      "tag": "equipment_standard:diggers"
     }
   ],
   "excludes": [
