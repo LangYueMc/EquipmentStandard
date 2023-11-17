@@ -1,0 +1,22 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"category": "misc",
+	"key": {
+		"I": {
+			"tag": "minecraft:iron_ingot"
+		},
+		"O": {
+			"item": "minecraft:obsidian"
+		}
+	},
+	"pattern": [
+		"II",
+		"OO",
+		"II"
+	],
+	"result": {
+		"count": 1,
+		"item": "equipment_standard:reforge_table"
+	},
+	"show_notification": true
+}
