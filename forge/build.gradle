@@ -1,5 +1,3 @@
-import org.codehaus.groovy.runtime.GStringImpl
-
 plugins {
     id "com.github.johnrengelman.shadow" version "7.1.2"
     id "com.matthewprenger.cursegradle"
@@ -8,6 +6,20 @@ plugins {
 architectury {
     platformSetupLoomIde()
     forge()
+}
+
+loom {
+    forge {
+        mixinConfigs = [
+                "equipment_standard-common.mixins.json",
+                "equipment_standard.mixins.json"
+        ]
+    }
+    runs {
+        client {
+            property 'mixin.debug', 'true' // Tells forge to have debug on for Mixins
+        }
+    }
 }
 
 configurations {
@@ -27,6 +39,9 @@ dependencies {
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
+
+    // EMI
+    modLocalRuntime("dev.emi:emi-forge:${project.emi_version}")
 }
 
 version = "${rootProject.mod_version}+mc${rootProject.ext.gameVersionsList[0]}-forge"
