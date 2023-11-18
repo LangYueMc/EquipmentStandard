@@ -1,3 +1,11 @@
+# V1.3.3
+
+2023-11-18
+
+## Fixed
+
+1. Fixed forge crash caused by failure to register menu.
+
 # V1.3.2
 
 2023-11-18
