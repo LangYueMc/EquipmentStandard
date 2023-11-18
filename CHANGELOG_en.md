@@ -1,3 +1,17 @@
+# V1.3.2
+
+2023-11-18
+
+## Changed
+
+1. The reforge table can now be mined and dropped using a pickaxe;
+2. Now the experience icon on the reforge table interface will not be highlighted if the player has insufficient experience value.
+
+## Fixed
+
+1. Fixed the issue where the experience value icon on the reforge interface was slightly misaligned;
+2. Repair the synthesis table of the reforge table.
+
 # V1.3.1
 
 2023-11-17
