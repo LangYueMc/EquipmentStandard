@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "equipment_standard:reforge_table"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "equipment_standard:blocks/reforge_table"
+}
