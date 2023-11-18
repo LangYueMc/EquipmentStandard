@@ -49,7 +49,7 @@ public class ReforgeMenu extends AbstractContainerMenu {
     }
 
     private ReforgeMenu(int id, Inventory inventory, ContainerLevelAccess containerLevelAccess) {
-        super(ESMenu.REFORGE_TABLE_MENU.get(), id);
+        super(ESMenu.REFORGE_TABLE_MENU, id);
         this.access = containerLevelAccess;
         // 装备格子
         this.addSlot(new Slot(this.reforgeSlots, 0, 80, 20) {
