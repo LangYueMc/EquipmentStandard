@@ -1,3 +1,11 @@
+# V1.3.4
+
+2023-11-19
+
+## Fixed
+
+1. Fix the problem that Forge does not take effect after loading due to missing `forge.mixinConfigs` configuration.
+
 # V1.3.3
 
 2023-11-18
