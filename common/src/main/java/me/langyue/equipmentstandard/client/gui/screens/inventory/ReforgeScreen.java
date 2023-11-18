@@ -35,10 +35,10 @@ public class ReforgeScreen extends AbstractContainerScreen<ReforgeMenu> {
         }));
         this.reforgeButton.setTooltip(Tooltip.create(Component.translatable("container.reforge.tooltip")));
         this.reforgeButton.active = false;
-        this.costIcon = this.addRenderableOnly(new IconButton(this.leftPos + 133, this.topPos + 50, 18, 18, 0, 166, BG, button -> {
+        this.costIcon = this.addRenderableOnly(new IconButton(this.leftPos + 133, this.topPos + 49, 18, 18, 0, 166, BG, button -> {
         }));
         this.costIcon.active = false;
-        this.cost = this.addRenderableOnly(new StringWidget(this.leftPos + 133, this.topPos + 50, 18, 32, Component.literal("0"), this.minecraft.font));
+        this.cost = this.addRenderableOnly(new StringWidget(this.leftPos + 133, this.topPos + 49, 18, 30, Component.literal("0"), this.minecraft.font));
         this.cost.alignRight();
     }
 
