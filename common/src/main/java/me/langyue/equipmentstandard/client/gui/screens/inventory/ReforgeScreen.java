@@ -46,7 +46,7 @@ public class ReforgeScreen extends AbstractContainerScreen<ReforgeMenu> {
     public void containerTick() {
         super.containerTick();
         this.reforgeButton.active = this.menu.canReforge(this.minecraft.player);
-        this.costIcon.active = this.menu.getCost() > 0;
+        this.costIcon.active = reforgeButton.active;
         this.cost.setMessage(Component.literal(String.valueOf(this.menu.getCost())));
         this.costIcon.setTooltip(Tooltip.create(Component.translatable("container.reforge.cost.tooltip", this.menu.getCost())));
     }
