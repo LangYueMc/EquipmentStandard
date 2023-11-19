@@ -1,3 +1,13 @@
+# V1.3.5
+
+2023-11-19
+
+## Changed
+
+1. Fix the black health problem when the entity is loaded from saved in a more elegant way;
+2. Setting the item attributes when using `Mob.setItemSlot` should be compatible with most mods that set monster equipment;
+3. Try to be compatible with `Sinytra Connector`. The problem is that some attributes may become invalid after compatibility.
+
 # V1.3.4
 
 2023-11-19
