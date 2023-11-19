@@ -35,9 +35,16 @@ public class ESAttributes {
     }
 
     private static Attribute register(String id, String repeatMod, double fallback, double min, double max) {
-        if (repeatMod != null && Platform.isModLoaded(repeatMod.split(":")[0])) {
+        try {
+            if (repeatMod != null && Platform.isModLoaded(repeatMod.split(":")[0])) {
+                REPEAT.put(EquipmentStandard.MOD_ID + ":" + id, repeatMod);
+                return null;
+            }
+        } catch (Throwable e) {
+            // net.minecraftforge.fml.ModList.get() == null 时
+            // 但为什么会为 null 呢？
+            EquipmentStandard.LOGGER.warn("Attribute compatibility setting failed", e);
             REPEAT.put(EquipmentStandard.MOD_ID + ":" + id, repeatMod);
-            return null;
         }
         Attribute attribute = new RangedAttribute("attribute.name." + id, fallback, min, max).setSyncable(true);
         ATTRIBUTE.register(EquipmentStandard.createResourceLocation(id), () -> attribute);
