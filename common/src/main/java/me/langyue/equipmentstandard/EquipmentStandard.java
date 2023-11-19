@@ -1,17 +1,15 @@
 package me.langyue.equipmentstandard;
 
-import dev.architectury.networking.NetworkManager;
 import dev.architectury.registry.ReloadListenerRegistry;
-import me.langyue.equipmentstandard.world.entity.ai.attributes.ESAttributes;
-import me.langyue.equipmentstandard.world.inventory.ESMenu;
 import me.langyue.equipmentstandard.config.Config;
 import me.langyue.equipmentstandard.data.AttributeScoreLoader;
 import me.langyue.equipmentstandard.data.ItemRarityLoader;
 import me.langyue.equipmentstandard.data.TemplateDataLoader;
+import me.langyue.equipmentstandard.world.entity.ai.attributes.ESAttributes;
+import me.langyue.equipmentstandard.world.inventory.ESMenu;
 import me.langyue.equipmentstandard.world.item.ESItems;
 import me.langyue.equipmentstandard.world.level.block.ESBlocks;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.util.RandomSource;
 import org.slf4j.Logger;
@@ -26,8 +24,6 @@ public class EquipmentStandard {
 
     public static Config CONFIG;
 
-    public static final ResourceLocation NET_READY = createResourceLocation("ready");
-
     public static void init() {
         Config.init();
         ESAttributes.register();
@@ -35,23 +31,12 @@ public class EquipmentStandard {
         ESItems.register();
         ESMenu.register();
         registerReloadListener();
-        registerC2SReceiver();
     }
 
     private static void registerReloadListener() {
         ReloadListenerRegistry.register(PackType.SERVER_DATA, new TemplateDataLoader());
         ReloadListenerRegistry.register(PackType.SERVER_DATA, new AttributeScoreLoader());
         ReloadListenerRegistry.register(PackType.SERVER_DATA, new ItemRarityLoader());
-    }
-
-    private static void registerC2SReceiver() {
-        // 服务端收到通知开始同步血量
-        NetworkManager.registerReceiver(NetworkManager.Side.C2S, NET_READY, (buf, context) -> {
-            if (context.getPlayer() instanceof ServerPlayer serverPlayer) {
-                debug("NET_READY");
-                serverPlayer.resetSentInfo();
-            }
-        });
     }
 
     public static void debug(String var1, Object... var2) {
