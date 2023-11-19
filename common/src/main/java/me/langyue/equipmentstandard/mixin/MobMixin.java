@@ -14,6 +14,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Mob.class)
@@ -32,6 +33,13 @@ public abstract class MobMixin {
             if (!itemStack.isEmpty()) {
                 ModifierUtils.setItemStackAttribute(itemStack, EquipmentStandard.nextBetween(-9999, 2000), 0);
             }
+        }
+    }
+
+    @Inject(method = "setItemSlot", at = @At("HEAD"))
+    private void setItemSlotMixin(EquipmentSlot equipmentSlot, ItemStack itemStack, CallbackInfo ci) {
+        if (!itemStack.isEmpty()) {
+            ModifierUtils.setItemStackAttribute(itemStack, EquipmentStandard.nextBetween(0, 2000), 0);
         }
     }
 
