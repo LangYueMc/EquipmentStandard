@@ -18,10 +18,10 @@ public abstract class PlayerMixin {
 
     /**
      * 暴击
-     * `@ModifyVariable STORE` 时每次值更新都会调用一次，所以用 @Share("arg") LocalRef<Boolean> crit 存储状态，如果修改过了就直接返回
+     * `@ModifyVariable STORE` 时每次值更新都会调用一次，所以用 @Share("crit") LocalRef<Boolean> crit 存储状态，如果修改过了就直接返回
      */
     @ModifyVariable(method = "attack", at = @At(value = "STORE"), index = 8)
-    private boolean critAttack(boolean b, @Share("arg") LocalRef<Boolean> crit) {
+    private boolean critAttack(boolean b, @Share("crit") LocalRef<Boolean> crit) {
         if (this.isLocalPlayer()) return b;
         if (crit.get() == null) {
             crit.set(MixinUtils.isCrit((Player) (Object) this));

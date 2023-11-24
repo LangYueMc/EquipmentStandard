@@ -4,6 +4,7 @@
   "package": "me.langyue.equipmentstandard.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "AbstractArrowMixin",
     "ArmorStandMixin",
     "CraftingMenuMixin",
     "DamageSourcesMixin",
@@ -16,7 +17,8 @@
     "MerchantResultSlotMixin",
     "MobMixin",
     "PlayerMixin",
-    "ReloadableServerResourcesMixin"
+    "ReloadableServerResourcesMixin",
+    "ThrownTridentMixin"
   ],
   "client": [
     "client.ItemStackClientMixin"

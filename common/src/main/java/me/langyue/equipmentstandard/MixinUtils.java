@@ -58,6 +58,7 @@ public class MixinUtils {
      * 暴击
      */
     public static boolean isCrit(LivingEntity entity) {
+        if (entity == null) return false;
         if (entity.level().isClientSide()) return false;
         // 暴击几率
         double chance = entity.fallDistance > 0.0F
