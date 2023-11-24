@@ -1,3 +1,11 @@
+# V1.3.6
+
+2023-11-24
+
+## Changed
+
+1. Ranged weapons are also affected by critical strike attributes.
+
 # V1.3.5
 
 2023-11-19
