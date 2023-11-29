@@ -41,8 +41,7 @@ dependencies {
     modLocalRuntime("dev.emi:emi-fabric:${project.emi_version}")
 
     // 台阶高度
-    modImplementation "com.github.emilyploszaj:step-height-entity-attribute:v${project.step_height_version}"
-    include "com.github.emilyploszaj:step-height-entity-attribute:v${project.step_height_version}"
+    modImplementation(include("com.github.emilyploszaj:step-height-entity-attribute:v${project.step_height_version}"))
 
     // PlayerAnimator
     modLocalRuntime("maven.modrinth:playeranimator:${project.player_anim_version}-fabric")
