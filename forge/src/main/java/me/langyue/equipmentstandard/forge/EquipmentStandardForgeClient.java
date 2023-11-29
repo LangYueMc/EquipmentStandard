@@ -8,7 +8,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
 
 @Mod.EventBusSubscriber(modid = EquipmentStandard.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-@Mod(EquipmentStandard.MOD_ID)
 public class EquipmentStandardForgeClient {
     @SubscribeEvent
     public static void onConstructMod(final FMLConstructModEvent evt) {
