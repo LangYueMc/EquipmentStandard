@@ -26,25 +26,25 @@ public class ESAttributes {
         return register(id, 0D, 0D, 2048D);
     }
 
-    private static Attribute register(String id, String repeatMod) {
-        return register(id, repeatMod, 0D, 0D, 2048D);
+    private static Attribute register(String id, String repeat) {
+        return register(id, repeat, 0D, 0D, 2048D);
     }
 
     private static Attribute register(String id, double fallback, double min, double max) {
         return register(id, null, fallback, min, max);
     }
 
-    private static Attribute register(String id, String repeatMod, double fallback, double min, double max) {
+    private static Attribute register(String id, String repeat, double fallback, double min, double max) {
         try {
-            if (repeatMod != null && Platform.isModLoaded(repeatMod.split(":")[0])) {
-                REPEAT.put(EquipmentStandard.MOD_ID + ":" + id, repeatMod);
-                return null;
+            if (repeat != null && Platform.isModLoaded(repeat.split(":")[0])) {
+                REPEAT.put(EquipmentStandard.MOD_ID + ":" + id, repeat);
+//                return null;
             }
         } catch (Throwable e) {
             // net.minecraftforge.fml.ModList.get() == null 时
             // 但为什么会为 null 呢？
             EquipmentStandard.LOGGER.warn("Attribute compatibility setting failed", e);
-            REPEAT.put(EquipmentStandard.MOD_ID + ":" + id, repeatMod);
+            REPEAT.put(EquipmentStandard.MOD_ID + ":" + id, repeat);
         }
         Attribute attribute = new RangedAttribute("attribute.name." + id, fallback, min, max).setSyncable(true);
         ATTRIBUTE.register(EquipmentStandard.createResourceLocation(id), () -> attribute);
@@ -65,6 +65,10 @@ public class ESAttributes {
         if (REPEAT.containsKey(id)) {
             i = REPEAT.get(id);
         }
-        return BuiltInRegistries.ATTRIBUTE.get(new ResourceLocation(i));
+        Attribute attribute = BuiltInRegistries.ATTRIBUTE.get(new ResourceLocation(i));
+        if (attribute == null) {
+            attribute = BuiltInRegistries.ATTRIBUTE.get(new ResourceLocation(id));
+        }
+        return attribute;
     }
 }
