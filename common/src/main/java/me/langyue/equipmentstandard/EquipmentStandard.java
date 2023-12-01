@@ -25,7 +25,8 @@ public class EquipmentStandard {
     public static Config CONFIG;
 
     public static void init() {
-        Config.init();
+        Config.HANDLER.load();
+        CONFIG = Config.HANDLER.instance();
         ESAttributes.register();
         ESBlocks.register();
         ESItems.register();

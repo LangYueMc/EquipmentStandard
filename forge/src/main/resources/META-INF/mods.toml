@@ -73,8 +73,8 @@ ordering = "AFTER"
 side = "BOTH"
 
 [[dependencies.equipment_standard]]
-modId = "cloth_config"
+modId = "yet_another_config_lib_v3"
 mandatory = true
-versionRange = "[11.0,)"
-ordering = "NONE"
+versionRange = "[3.2.2,)"
+ordering = "AFTER"
 side = "BOTH"

@@ -6,10 +6,8 @@ dependencies {
     modApi "dev.architectury:architectury:${rootProject.architectury_version}"
     implementation(annotationProcessor("io.github.llamalad7:mixinextras-common:${rootProject.mixinextras_version}"))
 
-    // Cloth API
-    modApi("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}") {
-        exclude(group: "net.fabricmc.fabric-api")
-    }
+    // YACL
+    modImplementation("dev.isxander.yacl:yet-another-config-lib-fabric:${rootProject.yacl_version}")
 }
 
 architectury {
