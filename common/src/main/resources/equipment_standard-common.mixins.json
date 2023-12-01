@@ -6,6 +6,7 @@
   "mixins": [
     "AbstractArrowMixin",
     "ArmorStandMixin",
+    "BaseSpawnerMixin",
     "CraftingMenuMixin",
     "DamageSourcesMixin",
     "ItemFrameMixin",

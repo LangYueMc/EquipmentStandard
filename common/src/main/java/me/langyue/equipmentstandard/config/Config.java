@@ -79,6 +79,10 @@ public class Config implements ConfigData {
     @ConfigEntry.Gui.Tooltip
     public boolean appliedToWorldGeneration = true;
 
+    @Comment("属性应用于刷怪笼\nAttributes are applied to spawner block")
+    @ConfigEntry.Gui.NoTooltip
+    public boolean appliedToSpawnerBlock = true;
+
     @Comment("开启 DEBUG 模式，开启可能会有日志刷屏")
     @ConfigEntry.Gui.NoTooltip
     public boolean debug = false;
