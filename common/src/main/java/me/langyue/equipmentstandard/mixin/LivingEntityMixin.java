@@ -117,12 +117,12 @@ public abstract class LivingEntityMixin implements ProficiencyAccessor {
     }
 
     @Override
-    public int getProficiency() {
+    public int es$getProficiency() {
         return es$proficiency;
     }
 
     @Override
-    public int incrementProficiency() {
+    public int es$incrementProficiency() {
         return ++es$proficiency;
     }
 }

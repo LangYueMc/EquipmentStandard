@@ -28,7 +28,7 @@ public abstract class ItemMixin {
             String name = BuiltInRegistries.ITEM.getKey(itemStack.getItem()).getPath();
             // 部分不加熟练度的
             if (Stream.of("wooden", "stone", "leather", "chainmail", "turtle").noneMatch(name::contains)) {
-                proficiencyAccessor.incrementProficiency();
+                proficiencyAccessor.es$incrementProficiency();
             }
         }
         ((EquipmentComponentsAccessor) (Object) itemStack).es$updateScore();    // 计算评分

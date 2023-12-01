@@ -30,9 +30,9 @@ public class MerchantResultSlotMixin {
         // 批量购买的装备是直接塞进背包的，传到这里的是复制品
         if (merchant instanceof LivingEntity livingEntity && player instanceof ServerPlayer) {
             ProficiencyAccessor proficiencyAccessor = (ProficiencyAccessor) livingEntity;
-            int proficiency = proficiencyAccessor.getProficiency() / 100;   // 村民熟练度加成 100 点 = 玩家 1 点
+            int proficiency = proficiencyAccessor.es$getProficiency() / 100;   // 村民熟练度加成 100 点 = 玩家 1 点
             if (ModifierUtils.setItemStackAttribute(stack, proficiency, 0))
-                proficiencyAccessor.incrementProficiency();
+                proficiencyAccessor.es$incrementProficiency();
             ((EquipmentComponentsAccessor) (Object) stack).es$updateScore();   // 计算评分
         }
     }

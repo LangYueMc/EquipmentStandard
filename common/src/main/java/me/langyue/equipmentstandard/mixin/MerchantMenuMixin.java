@@ -32,7 +32,7 @@ public abstract class MerchantMenuMixin {
             if (ModifierUtils.setItemStackAttribute(original)
                     && EquipmentStandard.RANDOM.nextDouble() < 0.34)
                 // 批量购买的熟练度也不加那么多了, 大概三分之一
-                proficiencyAccessor.incrementProficiency();
+                proficiencyAccessor.es$incrementProficiency();
             ((EquipmentComponentsAccessor) (Object) original).es$updateScore();    // 计算评分
         }
         return original;

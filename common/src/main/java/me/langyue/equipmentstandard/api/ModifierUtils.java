@@ -63,7 +63,7 @@ public class ModifierUtils {
 
     public static boolean setItemStackAttribute(ItemStack stack, Player player, boolean proficiencyBonus, boolean luckyBonus) {
         double luck = player != null && luckyBonus ? player.getAttributeValue(Attributes.LUCK) : 0;
-        int proficiency = player != null && proficiencyBonus ? ((ProficiencyAccessor) player).getProficiency() : 0;
+        int proficiency = player != null && proficiencyBonus ? ((ProficiencyAccessor) player).es$getProficiency() : 0;
         return setItemStackAttribute(stack, proficiency, luck);
     }
 

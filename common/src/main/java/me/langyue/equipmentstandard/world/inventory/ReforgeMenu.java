@@ -187,7 +187,7 @@ public class ReforgeMenu extends AbstractContainerMenu {
         if (player.getAbilities().instabuild || !itemStack.isEmpty()) {
             this.access.execute((level, blockPos) -> {
                 double luck = player.getAttributeValue(Attributes.LUCK);
-                int proficiency = ((ProficiencyAccessor) player).getProficiency();
+                int proficiency = ((ProficiencyAccessor) player).es$getProficiency();
                 if (!player.getAbilities().instabuild) {
                     scroll.shrink(1);
                     if (scroll.isEmpty()) {
@@ -201,7 +201,7 @@ public class ReforgeMenu extends AbstractContainerMenu {
                 }
                 if (EquipmentStandard.RANDOM.nextInt(10 * COST) < this.cost.get()) {
                     // 每级增加 10% 概率增加熟练度
-                    ((ProficiencyAccessor) player).incrementProficiency();
+                    ((ProficiencyAccessor) player).es$incrementProficiency();
                 }
                 this.slotsChanged(this.reforgeSlots);
                 level.playSound(null, blockPos, SoundEvents.ANVIL_USE, SoundSource.BLOCKS, 1.0f, level.random.nextFloat() * 0.1f + 0.9f);

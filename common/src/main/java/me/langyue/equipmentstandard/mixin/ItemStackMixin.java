@@ -82,7 +82,7 @@ public abstract class ItemStackMixin implements EquipmentComponentsAccessor, Ite
         if (es$getComponents() == null) {
             // 仅能设置一次
             ProficiencyAccessor proficiencyAccessor = (ProficiencyAccessor) player;
-            new EquipmentComponents(player.getDisplayName().getString(), proficiencyAccessor.getProficiency()).save((ItemStack) (Object) this);
+            new EquipmentComponents(player.getDisplayName().getString(), proficiencyAccessor.es$getProficiency()).save((ItemStack) (Object) this);
         }
     }
 
