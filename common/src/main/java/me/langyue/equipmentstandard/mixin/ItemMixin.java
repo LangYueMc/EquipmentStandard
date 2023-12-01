@@ -1,5 +1,6 @@
 package me.langyue.equipmentstandard.mixin;
 
+import me.langyue.equipmentstandard.EquipmentStandard;
 import me.langyue.equipmentstandard.api.EquipmentComponentsAccessor;
 import me.langyue.equipmentstandard.api.ModifierUtils;
 import me.langyue.equipmentstandard.api.ProficiencyAccessor;
@@ -21,6 +22,7 @@ public abstract class ItemMixin {
     @Inject(method = "onCraftedBy", at = @At("TAIL"))
     private void onCraftedByMixin(ItemStack itemStack, Level level, Player player, CallbackInfo ci) {
         if (level.isClientSide() || itemStack.isEmpty()) return;
+        if (!EquipmentStandard.CONFIG.appliedToCrafting) return;
         if (ModifierUtils.setItemStackAttribute(itemStack, player)) {
             ProficiencyAccessor proficiencyAccessor = (ProficiencyAccessor) player;
             ((EquipmentComponentsAccessor) (Object) itemStack).es$setMaker(player);

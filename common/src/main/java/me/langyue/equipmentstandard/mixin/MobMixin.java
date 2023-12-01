@@ -28,6 +28,7 @@ public abstract class MobMixin {
             ServerLevelAccessor serverLevelAccessor, DifficultyInstance difficultyInstance,
             MobSpawnType mobSpawnType, SpawnGroupData spawnGroupData,
             CompoundTag compoundTag, CallbackInfoReturnable<SpawnGroupData> cir) {
+        if (!EquipmentStandard.CONFIG.appliedToMob) return;
         for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
             ItemStack itemStack = this.getItemBySlot(equipmentSlot);
             if (!itemStack.isEmpty()) {
@@ -38,8 +39,9 @@ public abstract class MobMixin {
 
     @Inject(method = "setItemSlot", at = @At("HEAD"))
     private void setItemSlotMixin(EquipmentSlot equipmentSlot, ItemStack itemStack, CallbackInfo ci) {
+        if (!EquipmentStandard.CONFIG.appliedToMob) return;
         if (!itemStack.isEmpty()) {
-            ModifierUtils.setItemStackAttribute(itemStack, EquipmentStandard.nextBetween(0, 2000), 0);
+            ModifierUtils.setItemStackAttribute(itemStack, EquipmentStandard.nextBetween(-9999, 2000), 0);
         }
     }
 

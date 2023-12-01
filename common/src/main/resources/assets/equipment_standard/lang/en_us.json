@@ -9,6 +9,13 @@
   "text.autoconfig.equipment_standard.option.baseCritChance": "Base Crit Chance",
   "text.autoconfig.equipment_standard.option.jumpAttackCritChance": "Jump Attack Crit Chance",
   "text.autoconfig.equipment_standard.option.baseCritDamageMultiplier": "Base crit damage multiplier",
+  "text.autoconfig.equipment_standard.option.appliedToCrafting": "Attributes are applied to player crafting",
+  "text.autoconfig.equipment_standard.option.appliedToLoot": "Attributes are applied to loot chests",
+  "text.autoconfig.equipment_standard.option.appliedToMerchant": "Attributes applied to merchant",
+  "text.autoconfig.equipment_standard.option.appliedToMerchant.@Tooltip": "Villager, Wandering trader",
+  "text.autoconfig.equipment_standard.option.appliedToMob": "Attributes are applied to equipped items on mobs",
+  "text.autoconfig.equipment_standard.option.appliedToWorldGeneration": "Attributes are applied to world generation",
+  "text.autoconfig.equipment_standard.option.appliedToWorldGeneration.@Tooltip": "Armor stands, Item frames, etc",
   "text.autoconfig.equipment_standard.option.debug": "Debug",
 
   "attribute.name.generic.dig_speed": "Dig Speed",

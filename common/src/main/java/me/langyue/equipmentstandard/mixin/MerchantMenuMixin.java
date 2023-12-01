@@ -26,6 +26,7 @@ public abstract class MerchantMenuMixin {
 
     @ModifyVariable(method = "quickMoveStack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/inventory/MerchantMenu;moveItemStackTo(Lnet/minecraft/world/item/ItemStack;IIZ)Z", ordinal = 0), ordinal = 1)
     private ItemStack quickMoveStackMixin(ItemStack original) {
+        if (!EquipmentStandard.CONFIG.appliedToMerchant) return original;
         if (trader instanceof LivingEntity livingEntity && trader.getTradingPlayer() instanceof ServerPlayer) {
             ProficiencyAccessor proficiencyAccessor = (ProficiencyAccessor) livingEntity;
             // 批量产品难免瑕疵, 说不定还是进的货，熟练度设置成 0 吧（很合理）

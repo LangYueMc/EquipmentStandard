@@ -46,7 +46,7 @@ public class Config implements ConfigData {
     public double baseCritChance = 0.01;
 
     /**
-     * 基础暴击率
+     * 跳击暴击率
      */
     @Comment("跳击暴击率\nBase crit chance")
     @ConfigEntry.Gui.NoTooltip
@@ -58,6 +58,26 @@ public class Config implements ConfigData {
     @Comment("基础暴击伤害倍率\nBase crit damage multiplier")
     @ConfigEntry.Gui.NoTooltip
     public double baseCritDamageMultiplier = 1.5;
+
+    @Comment("属性应用于玩家制作\nAttributes are applied to player crafting")
+    @ConfigEntry.Gui.NoTooltip
+    public boolean appliedToCrafting = true;
+
+    @Comment("属性应用于战利品箱子\nAttributes are applied to loot chests")
+    @ConfigEntry.Gui.NoTooltip
+    public boolean appliedToLoot = true;
+
+    @Comment("属性应用于交易（村民等）\nAttributes applied to merchant (eg. villager)")
+    @ConfigEntry.Gui.Tooltip
+    public boolean appliedToMerchant = true;
+
+    @Comment("属性应用于怪物装备\nAttributes are applied to equipped items on mobs")
+    @ConfigEntry.Gui.NoTooltip
+    public boolean appliedToMob = true;
+
+    @Comment("属性应用于世界生成（盔甲架、展示框、等）\nAttributes are applied to world generation (Armor stands, Item frames, etc)")
+    @ConfigEntry.Gui.Tooltip
+    public boolean appliedToWorldGeneration = true;
 
     @Comment("开启 DEBUG 模式，开启可能会有日志刷屏")
     @ConfigEntry.Gui.NoTooltip
