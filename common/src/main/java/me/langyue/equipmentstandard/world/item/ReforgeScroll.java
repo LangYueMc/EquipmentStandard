@@ -6,23 +6,27 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 
 public class ReforgeScroll extends Item {
-    private final int level;
+    private final int bonus;
+    private final int cost;
+    private final float proficiency;
 
-    public ReforgeScroll(int level) {
-        super(new Properties().rarity(switch (level) {
-            case 1 -> Rarity.UNCOMMON;
-            case 2 -> Rarity.RARE;
-            default -> Rarity.EPIC;
-        }).arch$tab(CreativeModeTabs.TOOLS_AND_UTILITIES));
-        this.level = level;
+    public ReforgeScroll(int bonus, int cost, float proficiency, Rarity rarity) {
+        super(new Properties().rarity(rarity).arch$tab(CreativeModeTabs.TOOLS_AND_UTILITIES));
+        this.bonus = bonus;
+        this.cost = cost;
+        this.proficiency = proficiency;
     }
 
     public int getBonus() {
-        return (int) (Math.pow(this.level, 2.2) * 100 - 300);
+        return bonus;
     }
 
-    public int getLevel() {
-        return this.level;
+    public int getCost() {
+        return cost;
+    }
+
+    public float getProficiency() {
+        return proficiency;
     }
 
     @Override

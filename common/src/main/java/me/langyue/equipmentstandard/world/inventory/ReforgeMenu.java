@@ -34,7 +34,7 @@ public class ReforgeMenu extends AbstractContainerMenu {
 
     private final DataSlot cost = DataSlot.standalone();
 
-    private static final int COST = 10;
+    private final DataSlot proficiency = DataSlot.standalone();
 
     public static ReforgeMenu create(int id, Inventory inventory) {
         return new ReforgeMenu(id, inventory);
@@ -84,6 +84,7 @@ public class ReforgeMenu extends AbstractContainerMenu {
         createInventorySlots(inventory);
         this.addDataSlot(this.bonus);
         this.addDataSlot(this.cost);
+        this.addDataSlot(this.proficiency);
     }
 
     private void createInventorySlots(Inventory inventory) {
@@ -105,14 +106,18 @@ public class ReforgeMenu extends AbstractContainerMenu {
             if (itemStack.isEmpty()) {
                 this.bonus.set(0);
                 this.cost.set(0);
+                this.proficiency.set(0);
             } else {
                 this.access.execute((level, blockPos) -> {
                     if (container.getItem(1).getItem() instanceof ReforgeScroll scroll) {
                         this.bonus.set(scroll.getBonus());
-                        this.cost.set(scroll.getLevel() * COST);
+                        this.cost.set(scroll.getCost());
+                        // 只接受整数的，那就乘以 100，也就是最多支持 2 位小数
+                        this.proficiency.set((int) (scroll.getProficiency() * 100));
                     } else {
                         this.bonus.set(0);
                         this.cost.set(0);
+                        this.proficiency.set(0);
                     }
                     this.broadcastChanges();
                 });
@@ -199,8 +204,12 @@ public class ReforgeMenu extends AbstractContainerMenu {
                 if (!player.isCreative()) {
                     player.giveExperiencePoints(-this.cost.get());
                 }
-                if (EquipmentStandard.RANDOM.nextInt(10 * COST) < this.cost.get()) {
-                    // 每级增加 10% 概率增加熟练度
+                for (int j = 0; j < this.proficiency.get() / 100; j++) {
+                    // 熟练度只有整数，proficiency 里存的是乘以 100 的结果
+                    ((ProficiencyAccessor) player).es$incrementProficiency();
+                }
+                if (EquipmentStandard.RANDOM.nextInt(100) < this.proficiency.get() % 100) {
+                    // 小数部分用随机数实现，可接受
                     ((ProficiencyAccessor) player).es$incrementProficiency();
                 }
                 this.slotsChanged(this.reforgeSlots);

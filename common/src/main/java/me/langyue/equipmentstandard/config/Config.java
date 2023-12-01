@@ -6,6 +6,11 @@ import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
+import net.minecraft.world.item.Rarity;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @me.shedaniel.autoconfig.annotation.Config(name = EquipmentStandard.MOD_ID)
 public class Config implements ConfigData {
@@ -86,6 +91,34 @@ public class Config implements ConfigData {
     @Comment("开启 DEBUG 模式，开启可能会有日志刷屏")
     @ConfigEntry.Gui.NoTooltip
     public boolean debug = false;
+
+    @Comment("重铸卷轴\nReforge Scroll")
+    public List<ReforgeScrollData> reforgeScrolls = new ArrayList<>() {{
+        add(new ReforgeScrollData("reforge_scroll_lv1", -200, 10, 0.1f, Rarity.COMMON));
+        add(new ReforgeScrollData("reforge_scroll_lv2", 800, 20, 0.5f, Rarity.RARE));
+        add(new ReforgeScrollData("reforge_scroll_lv3", 1500, 30, 1f, Rarity.EPIC));
+    }};
+
+    public static class ReforgeScrollData {
+        @Comment("卷轴的物品 ID\nThe item ID of the scroll")
+        public final String id;
+        @Comment("卷轴加成，越高重铸出来的属性越好\nScroll bonus, the higher the reforge stat, the better")
+        public final int bonus;
+        @Comment("重铸花费的经验值\nXP cost to reforge")
+        public final int cost;
+        @Comment("重铸增加的熟练度，不建议大于 1，最多两位小数\nReforge increases proficiency and is not recommended to be greater than 1, with a maximum of two decimal places")
+        public final float proficiency;
+        @Comment("稀有度\nRarity")
+        public final Rarity rarity;
+
+        public ReforgeScrollData(String id, int bonus, int cost, float proficiency, Rarity rarity) {
+            this.id = id;
+            this.bonus = bonus;
+            this.cost = cost;
+            this.proficiency = proficiency;
+            this.rarity = Objects.requireNonNullElse(rarity, Rarity.COMMON);
+        }
+    }
 
     public static void init() {
         AutoConfig.register(Config.class, JanksonConfigSerializer::new);
