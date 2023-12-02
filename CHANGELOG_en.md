@@ -1,3 +1,13 @@
+# V1.4.1
+
+2023-12-2
+
+## Changed
+
+1. Use ThreadLocalRandom for random numbers;
+2. Optimize the configuration screen;
+3. The health of spawner or naturally generated monsters when they are born is corrected.
+
 # V1.4.0
 
 2023-12-1
