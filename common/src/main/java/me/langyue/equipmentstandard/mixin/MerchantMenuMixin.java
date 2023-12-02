@@ -1,5 +1,6 @@
 package me.langyue.equipmentstandard.mixin;
 
+import io.netty.util.internal.ThreadLocalRandom;
 import me.langyue.equipmentstandard.EquipmentStandard;
 import me.langyue.equipmentstandard.api.EquipmentComponentsAccessor;
 import me.langyue.equipmentstandard.api.ModifierUtils;
@@ -31,7 +32,7 @@ public abstract class MerchantMenuMixin {
             ProficiencyAccessor proficiencyAccessor = (ProficiencyAccessor) livingEntity;
             // 批量产品难免瑕疵, 说不定还是进的货，熟练度设置成 0 吧（很合理）
             if (ModifierUtils.setItemStackAttribute(original)
-                    && EquipmentStandard.RANDOM.nextDouble() < 0.34)
+                    && ThreadLocalRandom.current().nextDouble() < 0.34)
                 // 批量购买的熟练度也不加那么多了, 大概三分之一
                 proficiencyAccessor.es$incrementProficiency();
             ((EquipmentComponentsAccessor) (Object) original).es$updateScore();    // 计算评分

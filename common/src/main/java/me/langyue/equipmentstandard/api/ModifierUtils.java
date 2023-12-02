@@ -3,6 +3,7 @@ package me.langyue.equipmentstandard.api;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.util.concurrent.AtomicDouble;
+import io.netty.util.internal.ThreadLocalRandom;
 import me.langyue.equipmentstandard.EquipmentStandard;
 import me.langyue.equipmentstandard.api.data.Attribute;
 import me.langyue.equipmentstandard.api.data.Bonus;
@@ -111,7 +112,7 @@ public class ModifierUtils {
                         if (chance >= 1) {
                             return true;
                         }
-                        return EquipmentStandard.RANDOM.nextDouble() < chance;
+                        return ThreadLocalRandom.current().nextDouble() < chance;
                     }).forEach(attribute -> {
                         Attribute.Final attributeFinal = attribute.getFinal(proficiency, luck);
                         if (attributeFinal != null) {

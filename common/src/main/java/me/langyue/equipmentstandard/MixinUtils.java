@@ -2,6 +2,7 @@ package me.langyue.equipmentstandard;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import io.netty.util.internal.ThreadLocalRandom;
 import me.langyue.equipmentstandard.world.entity.ai.attributes.ESAttributes;
 import me.langyue.equipmentstandard.api.CustomTag;
 import me.langyue.equipmentstandard.api.DamageSourcesAccessor;
@@ -81,7 +82,7 @@ public class MixinUtils {
             return true;
         }
         try {
-            return EquipmentStandard.RANDOM.nextDouble() < chance;
+            return ThreadLocalRandom.current().nextDouble() < chance;
         } catch (Throwable e) {
             EquipmentStandard.debug(e.getMessage());
         }

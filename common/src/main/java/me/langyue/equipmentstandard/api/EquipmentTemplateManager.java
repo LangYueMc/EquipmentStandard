@@ -1,6 +1,6 @@
 package me.langyue.equipmentstandard.api;
 
-import me.langyue.equipmentstandard.EquipmentStandard;
+import io.netty.util.internal.ThreadLocalRandom;
 import me.langyue.equipmentstandard.api.data.EquipmentTemplate;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -31,7 +31,7 @@ public class EquipmentTemplateManager {
 
     public static EquipmentTemplate getRandom(ItemStack itemStack) {
         return TEMPLATES.values().stream().filter(it -> it.isValid(itemStack))
-                .min(Comparator.comparing(it -> EquipmentStandard.RANDOM.nextInt()))
+                .min(Comparator.comparing(it -> ThreadLocalRandom.current().nextInt()))
                 .orElse(null);
     }
 

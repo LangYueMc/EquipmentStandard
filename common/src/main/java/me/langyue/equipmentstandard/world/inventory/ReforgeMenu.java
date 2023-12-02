@@ -1,7 +1,7 @@
 package me.langyue.equipmentstandard.world.inventory;
 
 import com.mojang.datafixers.util.Pair;
-import me.langyue.equipmentstandard.EquipmentStandard;
+import io.netty.util.internal.ThreadLocalRandom;
 import me.langyue.equipmentstandard.api.ModifierUtils;
 import me.langyue.equipmentstandard.api.ProficiencyAccessor;
 import me.langyue.equipmentstandard.world.item.ReforgeScroll;
@@ -208,7 +208,7 @@ public class ReforgeMenu extends AbstractContainerMenu {
                     // 熟练度只有整数，proficiency 里存的是乘以 100 的结果
                     ((ProficiencyAccessor) player).es$incrementProficiency();
                 }
-                if (EquipmentStandard.RANDOM.nextInt(100) < this.proficiency.get() % 100) {
+                if (ThreadLocalRandom.current().nextInt(100) < this.proficiency.get() % 100) {
                     // 小数部分用随机数实现，可接受
                     ((ProficiencyAccessor) player).es$incrementProficiency();
                 }

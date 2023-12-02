@@ -1,6 +1,7 @@
 package me.langyue.equipmentstandard.api.data;
 
 import com.google.common.util.concurrent.AtomicDouble;
+import io.netty.util.internal.ThreadLocalRandom;
 import me.langyue.equipmentstandard.EquipmentStandard;
 import me.langyue.equipmentstandard.world.entity.ai.attributes.ESAttributes;
 import me.langyue.equipmentstandard.api.ModifierUtils;
@@ -100,7 +101,7 @@ public class Attribute {
                 totalWeight.addAndGet(weights);
             }
         });
-        double random = EquipmentStandard.RANDOM.nextDouble() * totalWeight.get();
+        double random = ThreadLocalRandom.current().nextDouble() * totalWeight.get();
         double temp = 0;
         for (Map.Entry<AttributeModifier, Double> entry : weightsMap.entrySet()) {
             temp += entry.getValue();
@@ -336,7 +337,7 @@ public class Attribute {
                 if (min == null || max == null) {
                     temp = min != null ? min.doubleValue() : max != null ? max.doubleValue() : 0;
                 } else {
-                    double random = EquipmentStandard.RANDOM.nextDouble();
+                    double random = ThreadLocalRandom.current().nextDouble();
 
                     temp = random * (max.doubleValue() - min.doubleValue()) + min.doubleValue();
                     if (step != null) {
