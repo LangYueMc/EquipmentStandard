@@ -3,7 +3,6 @@
   "minVersion": "0.8",
   "package": "me.langyue.equipmentstandard.fabric.mixin",
   "compatibilityLevel": "JAVA_17",
-  "plugin": "me.langyue.equipmentstandard.fabric.mixin.EquipmentStandardMixinPlugin",
   "mixins": [
     "PlayerMixin"
   ],

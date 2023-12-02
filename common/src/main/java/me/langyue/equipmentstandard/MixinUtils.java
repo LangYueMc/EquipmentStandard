@@ -3,14 +3,17 @@ package me.langyue.equipmentstandard;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import io.netty.util.internal.ThreadLocalRandom;
-import me.langyue.equipmentstandard.world.entity.ai.attributes.ESAttributes;
 import me.langyue.equipmentstandard.api.CustomTag;
 import me.langyue.equipmentstandard.api.DamageSourcesAccessor;
+import me.langyue.equipmentstandard.world.entity.ai.attributes.ESAttributes;
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
@@ -46,9 +49,6 @@ public class MixinUtils {
      * 挖掘速度
      */
     public static float getDestroySpeedMixin(Player player, float f) {
-        if (ESAttributes.DIG_SPEED == null) {
-            return f;
-        }
         var attribute = player.getAttribute(ESAttributes.DIG_SPEED);
         double speed = getFinalAttr(f, attribute);
 
@@ -92,11 +92,20 @@ public class MixinUtils {
     /**
      * 暴伤
      */
-    public static float getCritDamageMultiplier(LivingEntity entity, float f) {
-        if (entity.level().isClientSide() || ESAttributes.CRIT_DAMAGE == null) return f;
+    public static float getCritDamageMultiplier(LivingEntity entity) {
+        if (entity.level().isClientSide()) return (float) EquipmentStandard.CONFIG.baseCritDamageMultiplier;
         // 暴击伤害倍率
         var damageInstance = entity.getAttribute(ESAttributes.CRIT_DAMAGE);
         double damageMultiplier = getFinalAttr(EquipmentStandard.CONFIG.baseCritDamageMultiplier - 1, damageInstance);
+        try {
+            // 兼容 AdditionalEntityAttributes
+            Attribute attribute = BuiltInRegistries.ATTRIBUTE.get(new ResourceLocation("additionalentityattributes:critical_bonus_damage"));
+            if (attribute != null) {
+                // additionalentityattributes:critical_bonus_damage 基础是 0.5
+                damageMultiplier += getFinalAttr(0.5, entity.getAttribute(attribute)) - 0.5;
+            }
+        } catch (Throwable ignored) {
+        }
         return (float) Math.max(damageMultiplier + 1, 1.1);
     }
 

@@ -101,7 +101,6 @@ public class ItemRarityManager {
                 .map(key -> Attribute.Final.fromNbt(nbt.getCompound(key)))
                 .filter(Objects::nonNull)
                 .forEach(attribute -> {
-                    net.minecraft.world.entity.ai.attributes.Attribute attributeO = ESAttributes.getAttribute(attribute.type());
                     if (attribute.operation() == Attribute.Operation.MULTIPLY_ADDITION) {
                         // 增加百分比是在原来的基础上增加，所以只需要获取到原有的值，计算后就能获取准确数值
                         for (EquipmentSlot slot : EquipmentSlot.values()) {
@@ -112,12 +111,12 @@ public class ItemRarityManager {
                                     .findFirst();
                             if (first.isPresent()) {
                                 double amount = first.get().getAmount() * attribute.amount();
-                                atomic.addAndGet(amount * AttributeScoreManager.get(attributeO, AttributeModifier.Operation.ADDITION));
+                                atomic.addAndGet(amount * AttributeScoreManager.get(attribute.type(), AttributeModifier.Operation.ADDITION));
                                 break;
                             }
                         }
                     } else {
-                        atomic.addAndGet(attribute.amount() * AttributeScoreManager.get(attributeO, attribute.operation().convert()));
+                        atomic.addAndGet(attribute.amount() * AttributeScoreManager.get(attribute.type(), attribute.operation().convert()));
                     }
                 });
         return (int) atomic.get();

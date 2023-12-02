@@ -69,7 +69,7 @@ public abstract class MobMixin extends LivingEntity {
         try {
             // 暴击后
             if (MixinUtils.isCrit((Mob) (Object) this)) {
-                critDamageMultiplier = MixinUtils.getCritDamageMultiplier((Mob) (Object) this, 1.5f);
+                critDamageMultiplier = MixinUtils.getCritDamageMultiplier((Mob) (Object) this);
             }
         } catch (Throwable ignored) {
         }

@@ -19,7 +19,7 @@ public abstract class AbstractArrowMixin {
     @Inject(method = "setOwner", at = @At("HEAD"))
     private void getOwner(Entity entity, CallbackInfo ci) {
         if (entity instanceof LivingEntity livingEntity && !livingEntity.level().isClientSide() && MixinUtils.isCrit(livingEntity)) {
-            es$critDamageMultiplier = MixinUtils.getCritDamageMultiplier(livingEntity, 1.5f);
+            es$critDamageMultiplier = MixinUtils.getCritDamageMultiplier(livingEntity);
         }
     }
 

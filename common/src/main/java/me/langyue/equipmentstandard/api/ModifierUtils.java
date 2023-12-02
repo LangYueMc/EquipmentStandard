@@ -9,7 +9,9 @@ import me.langyue.equipmentstandard.api.data.Attribute;
 import me.langyue.equipmentstandard.api.data.Bonus;
 import me.langyue.equipmentstandard.api.data.EquipmentTemplate;
 import me.langyue.equipmentstandard.world.entity.ai.attributes.ESAttributes;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -154,7 +156,7 @@ public class ModifierUtils {
                 .sorted(Comparator.comparing(Attribute.Final::operation))
                 .forEach(attribute -> {
                     var type = attribute.type();
-                    net.minecraft.world.entity.ai.attributes.Attribute entityAttribute = ESAttributes.getAttribute(type);
+                    net.minecraft.world.entity.ai.attributes.Attribute entityAttribute = BuiltInRegistries.ATTRIBUTE.get(new ResourceLocation(type));
                     if (entityAttribute == null) {
                         if (INVALID_ATTRIBUTE.add(type))
                             EquipmentStandard.LOGGER.warn("{} was referenced as an attribute type, but it does not exist!", type);
