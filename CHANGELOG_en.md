@@ -1,3 +1,16 @@
+# V1.4.2
+
+2023-12-3
+
+## Changed
+
+1. The mining tool adds attack attributes again;
+2. Refactor the critical hit code so that `sweeping` can now be triggered after a critical hit.
+
+## Fixed
+
+1. Fixed the bug where the witch's health would be full as long as she used potions.
+
 # V1.4.1
 
 2023-12-2

@@ -1,25 +1,33 @@
-Forge 1.20 和 1.20.1 版本的 YACL 请使用 [特供版本](https://cdn.modrinth.com/data/jxktWeyE/versions/rsIG6BbF/yet-another-config-lib-forge-3.2.2-fix.jar)，否则无法启动。
+Forge YACL 3.2.1 版本有 BUG 会导致崩溃，在 YACL 修复前请使用 [特供版本](https://cdn.modrinth.com/data/jxktWeyE/versions/rsIG6BbF/yet-another-config-lib-forge-3.2.2-fix.jar)
 
-For Forge 1.20 and 1.20.1 versions of YACL, please use [the special version](https://cdn.modrinth.com/data/jxktWeyE/versions/rsIG6BbF/yet-another-config-lib-forge-3.2.2-fix.jar), see attachment, otherwise it will not start.
+Forge YACL version 3.2.1 has a BUG that may cause a crash. Please use [the special version](https://cdn.modrinth.com/data/jxktWeyE/versions/rsIG6BbF/yet-another-config-lib-forge-3.2.2-fix.jar) until YACL is fixed.
+
 
 - - -
+
 
 ## 变更
 
-1. 随机数改用 ThreadLocalRandom；
-2. 优化配置界面；
-3. 刷怪笼或自然生成的怪物出生时血量修正。
+1. 挖掘工具再次添加攻击属性；
+2. 重构暴击代码，现在暴击后也可以触发横扫了。
 
 ## 修复
 
-1. 修复 Fabric 台阶高度属性不生效问题。
+1. 修复女巫只要使用药水就满血的 bug。
 
 [完整更新日志](https://github.com/LangYueMc/EquipmentStandard/blob/master/CHANGELOG.md)
+
+
 - - -
+
+
 ## Changed
 
-1. Use ThreadLocalRandom for random numbers;
-2. Optimize the configuration screen;
-3. The health of spawner or naturally generated monsters when they are born is corrected.
+1. The mining tool adds attack attributes again;
+2. Refactor the critical hit code so that `sweeping` can now be triggered after a critical hit.
+
+## Fixed
+
+1. Fixed the bug where the witch's health would be full as long as she used potions.
  
 [Full CHANGELOG](https://github.com/LangYueMc/EquipmentStandard/blob/master/CHANGELOG_en.md)
