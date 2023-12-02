@@ -1,13 +1,10 @@
 {
   "verifiers": [
-    {
-      "tag": "equipment_standard:melee_weapons"
-    }
+    "#equipment_standard:melee_weapons",
+    "#equipment_standard:diggers"
   ],
   "excludes": [
-    {
-      "tag": "equipment_standard:magic"
-    }
+    "#equipment_standard:magic"
   ],
   "attributes": [
     {
