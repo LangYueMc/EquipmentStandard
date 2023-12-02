@@ -11,15 +11,16 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Rarity;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Config {
+    public static final Path path = Platform.getConfigFolder().resolve(EquipmentStandard.MOD_ID + ".json5");
     public static ConfigClassHandler<Config> HANDLER = ConfigClassHandler.createBuilder(Config.class)
             .id(EquipmentStandard.createResourceLocation("config"))
             .serializer(config -> GsonConfigSerializerBuilder.create(config)
-                    .setPath(Platform.getConfigFolder().resolve(EquipmentStandard.MOD_ID + ".json5"))
+                    .setPath(path)
                     .setJson5(true)
                     .build())
             .build();
@@ -34,11 +35,14 @@ public class Config {
 
     private static final String BASE = "base";
     private static final String MODIFIER = "modifier";
+    private static final String RESTART = "restart";
+    private static final String TOOLTIP = "tooltip";
+    private static final String CRIT = "crit";
 
     /**
      * 显示耐久
      */
-    @AutoGen(category = BASE)
+    @AutoGen(category = BASE, group = TOOLTIP)
     @SerialEntry(comment = "显示耐久\nWhether to show equipment durability")
     @TickBox
     public boolean showDurability = true;
@@ -46,7 +50,7 @@ public class Config {
     /**
      * 显示品质分
      */
-    @AutoGen(category = BASE)
+    @AutoGen(category = BASE, group = TOOLTIP)
     @SerialEntry(comment = "显示品质分\nWhether to show equipment score")
     @TickBox
     public boolean showScore = true;
@@ -54,7 +58,7 @@ public class Config {
     /**
      * 在工具提示里合并同类属性修改器
      */
-    @AutoGen(category = BASE)
+    @AutoGen(category = BASE, group = TOOLTIP)
     @SerialEntry(comment = "合并同类属性修改器\nMerge attribute modifiers of the same type in tooltips")
     @TickBox
     public boolean mergeModifiers = true;
@@ -62,7 +66,7 @@ public class Config {
     /**
      * 在工具提示里显示 MULTIPLY_BASE 和 MULTIPLY_TOTAL 的补充说明
      */
-    @AutoGen(category = BASE)
+    @AutoGen(category = BASE, group = TOOLTIP)
     @SerialEntry(comment = "显示 MULTIPLY_BASE 和 MULTIPLY_TOTAL 的补充说明\nShow additional notes for MULTIPLY_BASE and MULTIPLY_TOTAL")
     @TickBox
     public boolean showMultiplyOperationAdditional = true;
@@ -70,7 +74,7 @@ public class Config {
     /**
      * 基础暴击率
      */
-    @AutoGen(category = BASE)
+    @AutoGen(category = BASE, group = CRIT)
     @SerialEntry(comment = "基础暴击率\nBase crit chance")
     @DoubleSlider(min = 0d, max = 1d, step = 0.01d)
     @CustomFormat(PercentFormatter.class)
@@ -79,8 +83,8 @@ public class Config {
     /**
      * 跳击暴击率
      */
-    @AutoGen(category = BASE)
-    @SerialEntry(comment = "跳击暴击率\nBase crit chance")
+    @AutoGen(category = BASE, group = CRIT)
+    @SerialEntry(comment = "跳击基础暴击率\nJump to attack base crit chance")
     @DoubleSlider(min = 0d, max = 1d, step = 0.01d)
     @CustomFormat(PercentFormatter.class)
     public double jumpAttackCritChance = 0.1;
@@ -88,38 +92,38 @@ public class Config {
     /**
      * 基础暴击伤害倍率
      */
-    @AutoGen(category = BASE)
+    @AutoGen(category = BASE, group = CRIT)
     @SerialEntry(comment = "基础暴击伤害倍率\nBase crit damage multiplier")
     @DoubleSlider(min = 0d, max = 2d, step = 0.1d)
     @CustomFormat(PercentFormatter.class)
     public double baseCritDamageMultiplier = 1.5;
 
-    @AutoGen(category = MODIFIER)
+    @AutoGen(category = BASE, group = MODIFIER)
     @SerialEntry(comment = "属性应用于玩家制作\nAttributeModifier are applied to player crafting")
     @TickBox
     public boolean appliedToCrafting = true;
 
-    @AutoGen(category = MODIFIER)
+    @AutoGen(category = BASE, group = MODIFIER)
     @SerialEntry(comment = "属性应用于战利品箱子\nAttributeModifier are applied to loot chests")
     @TickBox
     public boolean appliedToLoot = true;
 
-    @AutoGen(category = MODIFIER)
+    @AutoGen(category = BASE, group = MODIFIER)
     @SerialEntry(comment = "属性应用于交易（村民等）\nAttributeModifier applied to merchant (eg. villager)")
     @TickBox
     public boolean appliedToMerchant = true;
 
-    @AutoGen(category = MODIFIER)
+    @AutoGen(category = BASE, group = MODIFIER)
     @SerialEntry(comment = "属性应用于怪物装备\nAttributeModifier are applied to equipped items on mobs")
     @TickBox
     public boolean appliedToMob = true;
 
-    @AutoGen(category = MODIFIER)
+    @AutoGen(category = BASE, group = MODIFIER)
     @SerialEntry(comment = "属性应用于世界生成（盔甲架、展示框、等）\nAttributeModifier are applied to world generation (Armor stands, Item frames, etc)")
     @TickBox
     public boolean appliedToWorldGeneration = true;
 
-    @AutoGen(category = MODIFIER)
+    @AutoGen(category = BASE, group = MODIFIER)
     @SerialEntry(comment = "属性应用于刷怪笼\nAttributeModifier are applied to spawner block")
     @TickBox
     public boolean appliedToSpawnerBlock = true;
@@ -129,9 +133,13 @@ public class Config {
     @TickBox
     public boolean debug = false;
 
+    @AutoGen(category = RESTART)
+    @Label
+    private final Component reforge_scroll_tip = Component.translatable("yacl3.config.equipment_standard:config.reforge_scroll", path);
+
     @SerialEntry(comment = """
             重铸卷轴（Reforge Scroll）
-            {
+            [{
                 // 卷轴的物品 ID
                 // The item ID of the scroll
                 id: "reforge_scroll_lv1",
@@ -147,7 +155,7 @@ public class Config {
                 // 稀有度（Rarity）
                 // COMMON UNCOMMON RARE EPIC
                 rarity: "COMMON"
-            },
+            },...]
             """)
     public List<ReforgeScrollData> reforgeScrolls = new ArrayList<>() {{
         add(new ReforgeScrollData("reforge_scroll_lv1", -200, 10, 0.1f, Rarity.COMMON));
@@ -155,30 +163,18 @@ public class Config {
         add(new ReforgeScrollData("reforge_scroll_lv3", 1500, 30, 1f, Rarity.EPIC));
     }};
 
-    public static class ReforgeScrollData implements ListGroup.ValueFactory<ReforgeScrollData> {
-        @SerialEntry
-        public final String id;
-        @SerialEntry
-        public final int bonus;
-        @SerialEntry
-        public final int cost;
-        @SerialEntry
-        public final float proficiency;
-        @SerialEntry
-        public final Rarity rarity;
-
-        public ReforgeScrollData(String id, int bonus, int cost, float proficiency, Rarity rarity) {
-            this.id = id;
-            this.bonus = bonus;
-            this.cost = cost;
-            this.proficiency = proficiency;
-            this.rarity = Objects.requireNonNullElse(rarity, Rarity.COMMON);
-        }
-
-        @Override
-        public ReforgeScrollData provideNewValue() {
-            return new ReforgeScrollData(id, bonus, cost, proficiency, rarity);
-        }
+    public record ReforgeScrollData(
+            @SerialEntry
+            String id,
+            @SerialEntry
+            int bonus,
+            @SerialEntry
+            int cost,
+            @SerialEntry
+            float proficiency,
+            @SerialEntry(nullable = true)
+            Rarity rarity
+    ) {
     }
 
     public static final class PercentFormatter implements ValueFormatter<Double> {

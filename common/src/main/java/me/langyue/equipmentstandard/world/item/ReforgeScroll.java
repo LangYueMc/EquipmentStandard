@@ -5,13 +5,15 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 
+import java.util.Objects;
+
 public class ReforgeScroll extends Item {
     private final int bonus;
     private final int cost;
     private final float proficiency;
 
     public ReforgeScroll(int bonus, int cost, float proficiency, Rarity rarity) {
-        super(new Properties().rarity(rarity).arch$tab(CreativeModeTabs.TOOLS_AND_UTILITIES));
+        super(new Properties().rarity(Objects.requireNonNullElse(rarity, Rarity.COMMON)).arch$tab(CreativeModeTabs.TOOLS_AND_UTILITIES));
         this.bonus = bonus;
         this.cost = cost;
         this.proficiency = proficiency;

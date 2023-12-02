@@ -1,6 +1,9 @@
 {
   "yacl3.config.equipment_standard:config.category.base": "基础设置",
-  "yacl3.config.equipment_standard:config.category.modifier": "应用属性修改器",
+  "yacl3.config.equipment_standard:config.category.base.group.tooltip": "工具提示",
+  "yacl3.config.equipment_standard:config.category.base.group.crit": "暴击",
+  "yacl3.config.equipment_standard:config.category.base.group.modifier": "应用属性修改器",
+  "yacl3.config.equipment_standard:config.category.restart": "需要重启",
   "yacl3.config.equipment_standard:config.showDurability": "显示装备耐久",
   "yacl3.config.equipment_standard:config.showScore": "显示装备分",
   "yacl3.config.equipment_standard:config.mergeModifiers": "合并同类属性修改器",
@@ -20,6 +23,7 @@
   "yacl3.config.equipment_standard:config.appliedToSpawnerBlock": "属性修改应用于刷怪笼",
   "yacl3.config.equipment_standard:config.debug": "Debug 模式",
   "yacl3.config.equipment_standard:config.debug.desc": "是否开启调试日志打印",
+  "yacl3.config.equipment_standard:config.reforge_scroll": "卷轴配置需要在配置文件中直接配置: %s",
 
   "attribute.name.generic.dig_speed": "挖掘速度",
   "attribute.name.generic.crit_chance": "暴击几率",
