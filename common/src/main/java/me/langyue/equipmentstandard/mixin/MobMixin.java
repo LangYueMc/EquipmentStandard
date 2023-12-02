@@ -1,5 +1,6 @@
 package me.langyue.equipmentstandard.mixin;
 
+import com.google.common.collect.Multimap;
 import com.llamalad7.mixinextras.sugar.Local;
 import me.langyue.equipmentstandard.EquipmentStandard;
 import me.langyue.equipmentstandard.MixinUtils;
@@ -7,16 +8,20 @@ import me.langyue.equipmentstandard.api.ModifierUtils;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.util.concurrent.atomic.AtomicReference;
 
 @Mixin(Mob.class)
 public abstract class MobMixin extends LivingEntity {
@@ -47,9 +52,14 @@ public abstract class MobMixin extends LivingEntity {
         if (!EquipmentStandard.CONFIG.appliedToMob) return;
         if (!itemStack.isEmpty()) {
             this.getAttributes().removeAttributeModifiers(itemStack.getAttributeModifiers(equipmentSlot));
-            ModifierUtils.setItemStackAttribute(itemStack, EquipmentStandard.nextBetween(-9999, 2000), 0);
-            this.getAttributes().addTransientAttributeModifiers(itemStack.getAttributeModifiers(equipmentSlot));
-            this.setHealth(this.getMaxHealth());
+            boolean b = ModifierUtils.setItemStackAttribute(itemStack, EquipmentStandard.nextBetween(-9999, 2000), 0);
+            Multimap<Attribute, AttributeModifier> attributeModifiers = itemStack.getAttributeModifiers(equipmentSlot);
+            this.getAttributes().addTransientAttributeModifiers(attributeModifiers);
+            if (b) {
+                AtomicReference<Double> heal = new AtomicReference<>(0d);
+                attributeModifiers.get(Attributes.MAX_HEALTH).forEach(modifier -> heal.updateAndGet(v -> modifier.getAmount()));
+                this.heal(heal.get().floatValue());
+            }
         }
     }
 
