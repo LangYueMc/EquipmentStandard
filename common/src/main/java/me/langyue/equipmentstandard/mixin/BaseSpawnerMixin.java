@@ -7,7 +7,12 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.SpawnData;
 import org.spongepowered.asm.mixin.Mixin;
@@ -17,6 +22,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Mixin(BaseSpawner.class)
@@ -30,8 +38,19 @@ public abstract class BaseSpawnerMixin {
 
     @Unique
     private void es$modifyEntityRecursive(Entity entity) {
-        entity.getHandSlots().forEach(itemStack -> ModifierUtils.setItemStackAttribute(itemStack, EquipmentStandard.nextBetween(-9999, 2000), 0));
-        entity.getArmorSlots().forEach(itemStack -> ModifierUtils.setItemStackAttribute(itemStack, EquipmentStandard.nextBetween(-9999, 2000), 0));
         entity.getPassengers().forEach(this::es$modifyEntityRecursive);
+        if (entity instanceof LivingEntity livingEntity) {
+            List<ItemStack> equipments = new ArrayList<>();
+            for (EquipmentSlot slot : EquipmentSlot.values()) {
+                ItemStack stack = livingEntity.getItemBySlot(slot).copy();
+                livingEntity.getAttributes().removeAttributeModifiers(stack.getAttributeModifiers(slot));
+                if (!stack.isEmpty()) {
+                    ModifierUtils.setItemStackAttribute(stack, EquipmentStandard.nextBetween(-9999, 2000), 0);
+                    livingEntity.setItemSlot(slot, stack);
+                    livingEntity.getAttributes().addTransientAttributeModifiers(stack.getAttributeModifiers(slot));
+                }
+            }
+            livingEntity.setHealth(livingEntity.getMaxHealth());
+        }
     }
 }

@@ -8,6 +8,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -18,10 +19,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Mob.class)
-public abstract class MobMixin {
+public abstract class MobMixin extends LivingEntity {
 
-    @Shadow
-    public abstract ItemStack getItemBySlot(EquipmentSlot arg);
+    protected MobMixin(EntityType<? extends LivingEntity> entityType, Level level) {
+        super(entityType, level);
+    }
 
     @Inject(method = "finalizeSpawn", at = @At("TAIL"))
     private void finalizeSpawnMixin(
@@ -32,16 +34,22 @@ public abstract class MobMixin {
         for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
             ItemStack itemStack = this.getItemBySlot(equipmentSlot);
             if (!itemStack.isEmpty()) {
+                this.getAttributes().removeAttributeModifiers(itemStack.getAttributeModifiers(equipmentSlot));
                 ModifierUtils.setItemStackAttribute(itemStack, EquipmentStandard.nextBetween(-9999, 2000), 0);
+                this.getAttributes().addTransientAttributeModifiers(itemStack.getAttributeModifiers(equipmentSlot));
             }
         }
+        this.setHealth(this.getMaxHealth());
     }
 
     @Inject(method = "setItemSlot", at = @At("HEAD"))
     private void setItemSlotMixin(EquipmentSlot equipmentSlot, ItemStack itemStack, CallbackInfo ci) {
         if (!EquipmentStandard.CONFIG.appliedToMob) return;
         if (!itemStack.isEmpty()) {
+            this.getAttributes().removeAttributeModifiers(itemStack.getAttributeModifiers(equipmentSlot));
             ModifierUtils.setItemStackAttribute(itemStack, EquipmentStandard.nextBetween(-9999, 2000), 0);
+            this.getAttributes().addTransientAttributeModifiers(itemStack.getAttributeModifiers(equipmentSlot));
+            this.setHealth(this.getMaxHealth());
         }
     }
 
