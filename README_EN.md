@@ -212,7 +212,7 @@ example.json
 ```
 
 ### Equipment Rarity
-It needs to be located under `datapack name(.zip)?/data/equipment_standard/template`, you can use the folder.
+It needs to be located under `datapack name(.zip)?/data/equipment_standard/rarity`, you can use the folder.
 
 The default grade has been built in. If there are no special requirements, you do not need to configure this item. You only need to configure the translation of the language file `item.es.rarity.(Rarity)`
 ```java
