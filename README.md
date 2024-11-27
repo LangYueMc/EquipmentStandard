@@ -1,5 +1,26 @@
 # 装备标准 `Equipment Standard`
 
+大家好！我在工作之余创建了这个模组，但现在没有时间精力维护了，所以停止更新！
+
+代码包含了全面文档和注释，使任何人都可以轻松上手。
+
+
+如果你对 Minecraft 模组充满热情，并且有 Java 的经验，我鼓励你联系我！
+
+---
+
+## Seeking New Maintainer
+
+Hey everyone!  In my spare time, I created this mod, and I'm really proud of it. Unfortunately, my current workload doesn't allow me to dedicate the time it needs. That's why I'm reaching out to see if anyone would be interested in taking over as the maintainer!
+
+The codebase is written in Java and  I've included comprehensive documentation and comments to make it as easy as possible for someone to pick up. 
+
+If you're passionate about Minecraft modding and have experience with Java, I encourage you to reach out!
+
+*This description was written by Gemma, an AI assistant.* 
+
+---
+
 [English](README_EN.md)
 
 受 [Tiered](https://github.com/Draylar/tiered) 启发，可通过数据包定制装备属性，但本模组可以使用随机模式，也可使用类似 Tiered 的固定值模式。
