@@ -2,6 +2,8 @@ package me.langyue.equipmentstandard.mixin;
 
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.sugar.Local;
 import me.langyue.equipmentstandard.api.*;
 import me.langyue.equipmentstandard.api.data.EquipmentComponents;
 import me.langyue.equipmentstandard.api.data.ItemRarity;
@@ -15,8 +17,6 @@ import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin implements EquipmentComponentsAccessor, ItemStackAccessor {
@@ -32,19 +32,25 @@ public abstract class ItemStackMixin implements EquipmentComponentsAccessor, Ite
         return attributeModifiers;
     }
 
-    @Inject(method = "getAttributeModifiers", at = @At("TAIL"), cancellable = true)
-    private void hookGetAttributeModifiers(EquipmentSlot equipmentSlot, CallbackInfoReturnable<Multimap<Attribute, AttributeModifier>> cir) {
-        if (!es$shouldHookGetAttributeModifiers) return;
-        Multimap<Attribute, AttributeModifier> modifierMultimap = LinkedListMultimap.create(cir.getReturnValue());
+    @ModifyReturnValue(
+            method = "getAttributeModifiers",
+            at = @At("RETURN")
+    )
+    private Multimap<Attribute, AttributeModifier> hookGetAttributeModifiers(Multimap<Attribute, AttributeModifier> original, @Local(argsOnly = true) EquipmentSlot equipmentSlot) {
+        if (!es$shouldHookGetAttributeModifiers) return original;
+        Multimap<Attribute, AttributeModifier> modifierMultimap = LinkedListMultimap.create(original);
         ModifierUtils.modify((ItemStack) (Object) this, equipmentSlot, modifierMultimap);
-        cir.setReturnValue(modifierMultimap);
+        return modifierMultimap;
     }
 
-    @Inject(method = "getHoverName", at = @At("RETURN"), cancellable = true)
-    private void getHoverNameMixin(CallbackInfoReturnable<Component> cir) {
+    @ModifyReturnValue(
+            method = "getHoverName",
+            at = @At("RETURN")
+    )
+    private Component getHoverNameMixin(Component original) {
         var rarity = this.es$getItemRarity();
         if (rarity != null) {
-            MutableComponent name = (MutableComponent) cir.getReturnValue();
+            MutableComponent name = original.copy();
             if (rarity.getFormatting() != null && rarity.getFormatting().length > 0) {
                 name.withStyle(rarity.getFormatting());
             }
@@ -55,14 +61,20 @@ public abstract class ItemStackMixin implements EquipmentComponentsAccessor, Ite
                 }
                 name = prefix.append(name);
             }
-            cir.setReturnValue(name);
+            return name;
         }
+        return original;
     }
 
-    @Inject(method = "getMaxDamage", at = @At("TAIL"), cancellable = true)
-    private void getMaxDamageMixin(CallbackInfoReturnable<Integer> info) {
-        if (!((ItemStack) (Object) this).isDamageableItem()) return;
-        info.setReturnValue(ModifierUtils.getMaxDamage((ItemStack) (Object) this, info.getReturnValue()));
+    @ModifyReturnValue(
+            method = "getMaxDamage",
+            at = @At("RETURN")
+    )
+    private int getMaxDamageMixin(int original) {
+        ItemStack stack = (ItemStack) (Object) this;
+        if (stack.isDamageableItem())
+            return ModifierUtils.getMaxDamage(stack, original);
+        return original;
     }
 
     @Override
